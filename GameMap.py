@@ -35,7 +35,7 @@ class Map:
             self.tiles[x][y].blocked = False
             self.tiles[x][y].block_sight = False
 
-    def make_map(self, max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities, max_monsters_per_room):
+    def make_map(self, max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities, max_monsters_per_room, max_items_per_room):
         rooms = []
         num_rooms = 0
         for r in range(max_rooms):
@@ -69,7 +69,7 @@ class Map:
                         self.create_v_tunnel(prev_y, new_y, prev_x)
                         self.create_h_tunnel(prev_x, new_x, new_y)
                 #add room to list
-                self.place_entities(new_room, entities, max_monsters_per_room)
+                self.place_entities(new_room, entities, max_monsters_per_room, max_items_per_room)
                 rooms.append(new_room)
                 num_rooms += 1
 
@@ -79,13 +79,13 @@ class Map:
 
         return False
 
-    def place_entities(self, room, entities, max_monsters_per_room):
+    def place_entities(self, room, entities, max_monsters_per_room, max_items_per_room):
         #gets a random number of monsters
         min_monsters = 1
-        if room.x1-room.x2 < 6 or room.y1 - room.y2 < 6:
+        if (room.x1-room.x2 <6 ) and (room.y1 - room.y2 < 6):
             min_monsters = 0
         number_of_monsters = randint(min_monsters, max_monsters_per_room)
-
+        number_of_items = randint(0, max_items_per_room)
         for i in range(number_of_monsters):
             #chose random location to place them
             x = randint(room.x1 + 1, room.x2 -1)
@@ -101,3 +101,10 @@ class Map:
                     monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 entities.append(monster)
 
+        for i in range(number_of_items):
+            x = randint(room.x1 + 1, room.x2 -1)
+            y = randint(room.y1 + 1, room.y2 -1)
+
+            if not any([entity for entity in entities if entity.x == x and entity.y == y]):
+                item = Entity(x, y, '!', libtcod.red, 'Healing Potion', render_order = RenderOrder.ITEM)
+                entities.append(item)
