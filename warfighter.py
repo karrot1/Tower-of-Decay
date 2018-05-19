@@ -24,3 +24,11 @@ class fighter:
         else:
             results.append({'message': Message('{0} attacks {1} but does no damage.'.format(self.owner.name.capitalize(), target.name), libtcod.white)})
         return results
+
+    def heal(self, amount):
+        originalhp = self.hp;
+        self.hp += amount
+        if self.hp > self.max_hp:
+            self.hp = self.max_hp
+        healamount = self.hp - originalhp
+        return {'message': Message('You are healed for ' + str(healamount) + ' HP.')}

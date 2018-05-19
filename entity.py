@@ -4,7 +4,7 @@ from render_functions import RenderOrder
 
 class Entity:
     #a generic object to represent basicaly everything
-    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None):
+    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None, item=None, inventory=None, stack=False):
         self.x = x
         self.y = y
         self.char = char
@@ -14,11 +14,20 @@ class Entity:
         self.fighter = fighter
         self.render_order = render_order
         self.ai = ai
+        self.item = item
+        self.inventory = inventory
+        self.stack = stack
+        if (self.stack == True):
+            self.stack_amount = 1
 
         if self.fighter:
             self.fighter.owner = self
         if self.ai:
             self.ai.owner = self
+        if self.item:
+            self.item.owner = self
+        if self.inventory:
+            self.inventory.owner = self
 
     def move(self, dx, dy):
         #moves entity by amount
@@ -87,3 +96,9 @@ def get_blocking_entities_at_location(entities, destination_x, destination_y):
             if entity.blocks and entity.x == destination_x and entity.y == destination_y:
                 return entity
         return None
+
+def sametile(one, other):
+    if one.x == other.x and one.y == other.y:
+        return True
+    else:
+        return False

@@ -25,5 +25,5 @@ def kill_monster(monster):
     monster.blocks = False
     monster.fighter = None
     monster.ai = None
-    monster.name = 'remains of ' + monster.name
+    monster.name = 'Remains of ' + monster.name
     return death_message

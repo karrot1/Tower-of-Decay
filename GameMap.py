@@ -6,6 +6,8 @@ from rectangle import *
 from entity import *
 from warfighter import *
 from ai import *
+from item import *
+from item_functions import *
 
 class Map:
     def __init__(self, width, height):
@@ -106,5 +108,6 @@ class Map:
             y = randint(room.y1 + 1, room.y2 -1)
 
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
-                item = Entity(x, y, '!', libtcod.red, 'Healing Potion', render_order = RenderOrder.ITEM)
+                item_component = Item(use_function=heal, amount=5)
+                item = Entity(x, y, '!', libtcod.red, 'Major Healing Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
                 entities.append(item)
