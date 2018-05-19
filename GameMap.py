@@ -4,6 +4,8 @@ import libtcodpy as libtcod
 from tile import *
 from rectangle import *
 from entity import *
+from warfighter import *
+from ai import *
 
 class Map:
     def __init__(self, width, height):
@@ -79,7 +81,10 @@ class Map:
 
     def place_entities(self, room, entities, max_monsters_per_room):
         #gets a random number of monsters
-        number_of_monsters = randint(0, max_monsters_per_room)
+        min_monsters = 1
+        if room.x1-room.x2 < 6 or room.y1 - room.y2 < 6:
+            min_monsters = 0
+        number_of_monsters = randint(min_monsters, max_monsters_per_room)
 
         for i in range(number_of_monsters):
             #chose random location to place them
@@ -87,8 +92,12 @@ class Map:
             y = randint(room.y1 + 1, room.y2 -1)
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
                 if randint(0, 100) < 80:
-                    monster = Entity(x, y, 's', libtcod.white)
+                    fighter_component = fighter(hp = 10, defense = 0, power = 3)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 's', libtcod.white, 'Skeleton', blocks=True, fighter=fighter_component, ai= ai_component)
                 else:
-                    monster = Entity(x, y, 'L', libtcod.purple)
+                    fighter_component = fighter(hp=20, defense=2, power=4)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, fighter=fighter_component, ai= ai_component)
                 entities.append(monster)
 
