@@ -33,7 +33,7 @@ def main():
         'light_ground': libtcod.grey
     }
     fighter_component = fighter(hp = 30, defense=2, power=5)
-    player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, fighter=fighter_component)
+    player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component)
     entities = [player]
 
     libtcod.console_set_custom_font('terminal8x12_gs_ro.png', libtcod.FONT_TYPE_GRAYSCALE | libtcod.FONT_LAYOUT_ASCII_INROW)
@@ -56,7 +56,7 @@ def main():
         if fov_recompute:
             recompute_fov(fov_map, player.x, player.y, fov_radius, fov_light_walls, fov_algorithim)
 
-        render_all(con, entities, game_map, fov_map, fov_recompute, screen_width, screen_height, colors)
+        render_all(con, entities, player, game_map, fov_map, fov_recompute, screen_width, screen_height, colors)
         libtcod.console_flush()
         clear_all(con, entities)
 

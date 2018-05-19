@@ -1,9 +1,10 @@
 import libtcodpy as libtcod
 import math
+from render_functions import RenderOrder
 
 class Entity:
     #a generic object to represent basicaly everything
-    def __init__(self, x, y, char, color, name, blocks=False, fighter=None, ai=None):
+    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None):
         self.x = x
         self.y = y
         self.char = char
@@ -11,6 +12,7 @@ class Entity:
         self.name = name
         self.blocks = blocks
         self.fighter = fighter
+        self.render_order = render_order
         self.ai = ai
 
         if self.fighter:

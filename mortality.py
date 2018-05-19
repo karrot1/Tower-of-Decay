@@ -1,15 +1,16 @@
 import libtcodpy as libtcod
+
 from game_states import *
+from render_functions import RenderOrder
 
 def death(player, entity):
+    entity.char = '%'
+    entity.color = libtcod.dark_red
     if player == True:
-        entity.char = '%'
-        entity.color = libtcod.dark_red
         return 'You died!', GameStates.PLAYER_DEAD
     else:
+        entity.render_order = RenderOrder.CORPSE
         death_message = '{0} dies!'.format(entity.name.capitalize())
-        entity.char = '%'
-        entity.color = libtcod.dark_red
         entity.blocks = False
         entity.fighter = None
         entity.ai = None

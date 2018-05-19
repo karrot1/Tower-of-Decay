@@ -94,10 +94,10 @@ class Map:
                 if randint(0, 100) < 80:
                     fighter_component = fighter(hp = 10, defense = 0, power = 3)
                     ai_component = BasicMonster()
-                    monster = Entity(x, y, 's', libtcod.white, 'Skeleton', blocks=True, fighter=fighter_component, ai= ai_component)
+                    monster = Entity(x, y, 's', libtcod.white, 'Skeleton', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 else:
                     fighter_component = fighter(hp=20, defense=2, power=4)
                     ai_component = BasicMonster()
-                    monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, fighter=fighter_component, ai= ai_component)
+                    monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 entities.append(monster)
 
