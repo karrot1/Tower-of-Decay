@@ -108,6 +108,13 @@ class Map:
             y = randint(room.y1 + 1, room.y2 -1)
 
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
-                item_component = Item(use_function=heal, amount=5)
-                item = Entity(x, y, '!', libtcod.red, 'Major Healing Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
+                item_chance = randint(0, 100)
+                if item_chance < 70:
+                    item_component = Item(use_function=heal, amount=5)
+                    item = Entity(x, y, '!', libtcod.red, 'Major Healing Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
+                else:
+                    item_component = Item(use_function=cast_smite, damage=20, maximum_range=5)
+                    item = Entity(x, y, '?', libtcod.lightest_yellow, 'Scroll of Smite', render_order=RenderOrder.ITEM,
+                                  item=item_component, stack=True)
+
                 entities.append(item)

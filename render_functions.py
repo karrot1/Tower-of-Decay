@@ -9,7 +9,8 @@ class RenderOrder(Enum):
     CORPSE = 1
     ITEM = 2
     ACTOR = 3
-    SHOW_INVENTORY = 4
+    CURSOR = 4
+    SHOW_INVENTORY = 5
 
 def get_names_under_mouse(mouse, entities, fov_map):
     (x, y) = (mouse.cx, mouse.cy)
@@ -56,8 +57,13 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
                         libtcod.console_set_default_foreground(con, colors.get('dark_ground'))
                         libtcod.console_put_char(con, x, y, '.', libtcod.BKGND_NONE)
     entities_in_render_order = sorted(entities, key=lambda x: x.render_order.value)
-    for entity in entities_in_render_order:
-        draw_entity(con, entity, fov_map)
+    if (game_state == GameStates.TARGETING):
+        for entity in entities_in_render_order:
+            draw_entity(con, entity, fov_map)
+    else:
+        for entity in entities_in_render_order:
+            if entity.name != 'cursor':
+                draw_entity(con, entity, fov_map)
     libtcod.console_blit(con, 0, 0, screen_width, screen_height, 0, 0, 0)
     libtcod.console_set_default_foreground(con, libtcod.white)
     libtcod.console_set_default_background(panel, libtcod.black)

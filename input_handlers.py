@@ -1,9 +1,9 @@
 import libtcodpy as libtcod
 from game_states import *
 
-def handle_player_turn_keys(key):
+def handle_movement_keys(key):
     key_char = chr(key.c)
-    #movement
+    # movement
     if key.vk == libtcod.KEY_UP or key_char == 'k':
         return {'move': (0, -1)}
     elif key.vk == libtcod.KEY_DOWN or key_char == 'j':
@@ -20,7 +20,13 @@ def handle_player_turn_keys(key):
         return {'move': (-1, 1)}
     elif key_char == 'n':
         return {'move': (1, 1)}
+    return {'move': (0, 0)}
 
+def handle_player_turn_keys(key):
+    key_char = chr(key.c)
+    movement = handle_movement_keys
+    if (movement != {'move': (0, 0)}):
+        return movement
     if key_char == 'g':
         return {'pickup': True}
     elif key_char == 'i':
@@ -44,6 +50,8 @@ def handle_keys(key, game_state):
         return handle_player_turn_keys(key)
     elif game_state == GameStates.PLAYER_DEAD:
         return handle_player_dead_keys(key)
+    elif game_state == GameStates.TARGETING:
+        return handle_targeting_keys(key)
     elif game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
         return handle_inventory_keys(key)
     return{}
@@ -60,3 +68,9 @@ def handle_player_dead_keys(key):
         return{'show_inventory': True}
     return quitscreen(key)
     return{}
+
+def handle_targeting_keys(key):
+    movement = handle_movement_keys
+    if (movement != {'move': (0, 0)}):
+        return movement
+    return quitscreen(key)
