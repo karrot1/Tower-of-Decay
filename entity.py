@@ -4,7 +4,7 @@ from render_functions import RenderOrder
 
 class Entity:
     #a generic object to represent basicaly everything
-    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None, item=None, inventory=None, stack=False):
+    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None, item=None, inventory=None, stack=False, visible=True):
         self.x = x
         self.y = y
         self.char = char
@@ -17,6 +17,7 @@ class Entity:
         self.item = item
         self.inventory = inventory
         self.stack = stack
+        self.visible = visible
         if (self.stack == True):
             self.stack_amount = 1
 
@@ -90,6 +91,9 @@ class Entity:
 
             # Delete the path to free memory
         libtcod.path_delete(my_path)
+
+    def distance(self, x, y):
+        return math.sqrt((x-self.x) ** 2 + (y-self.y) ** 2)
 
 def get_blocking_entities_at_location(entities, destination_x, destination_y):
         for entity in entities:

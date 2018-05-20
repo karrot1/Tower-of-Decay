@@ -31,7 +31,7 @@ def main():
     max_rooms = 15
 
     max_monsters_per_room = 3
-    max_items_per_room = 2
+    max_items_per_room = 50
     fov_algorithim = 0
     fov_light_walls = True
     fov_radius = 10
@@ -46,7 +46,7 @@ def main():
     fighter_component = fighter(hp = 30, defense=2, power=5)
     player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component,
                     inventory=inventory_component)
-    cursor = Entity(0, 0, 'X', libtcod.yellow, 'Cursor', blocks=False, render_order=RenderOrder.CURSOR)
+    cursor = Entity(0, 0, 'X', libtcod.yellow, 'Cursor', blocks=False, render_order=RenderOrder.CURSOR, visible=False)
     entities = [player, cursor]
 
     libtcod.console_set_custom_font('terminal8x12_gs_ro.png', libtcod.FONT_TYPE_GRAYSCALE | libtcod.FONT_LAYOUT_ASCII_INROW)
@@ -67,6 +67,8 @@ def main():
     game_state = GameStates.PLAYERS_TURN
     previous_game_state = game_state
 
+    targeting_item = None
+
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
         if fov_recompute:
@@ -84,9 +86,18 @@ def main():
         inventory_index = action.get('inventory_index')
         drop_inventory = action.get('drop_inventory')
         exit = action.get('exit')
+        targeted = action.get('targeted')
         fullscreen = action.get('fullscreen')
 
         player_turn_results = []
+        if game_state == GameStates.TARGETING:
+            if move:
+                dx, dy = move
+                cursor.move(dx, dy)
+            if targeted:
+                item_use_results = player.inventory.use(targeting_item, entities=entities, fov_map = fov_map, target_x = cursor.x, target_y = cursor.y)
+                player_turn_results.extend(item_use_results)
+                player_turn_results.append({'targeting_over': True})
         if game_state == GameStates.PLAYERS_TURN:
             if move:
                 dx, dy = move
@@ -127,6 +138,8 @@ def main():
         if exit:
             if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
                 game_state = previous_game_state
+            elif game_state == GameStates.TARGETING:
+                player_turn_results.append({'targeting_cancelled': True})
             else:
                 return True
         if fullscreen:
@@ -137,8 +150,20 @@ def main():
             item_added = player_turn_results.get('item_added')
             item_consumed = player_turn_results.get('item_consumed')
             item_dropped = player_turn_results.get('item_dropped')
+            targeting = player_turn_results.get('targeting')
+            targeting_cancelled = player_turn_results.get('targeting_cancelled')
+            targeting_over = player_turn_results.get('targeting_over')
+
             if message:
                 message_log.add_message(message)
+            if targeting:
+                previous_game_state = GameStates.PLAYERS_TURN
+                game_state = GameStates.TARGETING
+                targeting_item = targeting
+                cursor.x = player.x
+                cursor.y = player.y
+                cursor.visible = True
+                message_log.add_message(Message('Press a to select target.'))
             if dead_entity:
                 if dead_entity == player:
                     message, game_state = death(True, dead_entity)
@@ -153,7 +178,11 @@ def main():
             if item_dropped:
                 entities.append(item_dropped)
                 game_state = GameStates.ENEMY_TURN
-
+            if targeting_cancelled:
+                message_log.add_message(Message('Targetting cancelled'))
+            if targeting_cancelled or targeting_over:
+                cursor.visible = False
+                game_state = previous_game_state
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
                 if entity.ai:

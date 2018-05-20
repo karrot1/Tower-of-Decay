@@ -39,13 +39,16 @@ class Inventory:
         if item_component.use_function is None:
             results.append({'message': Message('The {0} cannot be used'.format(item_entity.name))})
         else:
-            kwargs = {**item_component.function_kwargs, **kwargs}
-            item_use_results = item_component.use_function(self.owner, **kwargs)
+            if item_component.targeting and not (kwargs.get('target_x') or kwargs.get('target_y')):
+                results.append({'targeting': item_entity})
+            else:
+                kwargs = {**item_component.function_kwargs, **kwargs}
+                item_use_results = item_component.use_function(self.owner, **kwargs)
 
-            for item_use_result in item_use_results:
-                if item_use_result.get('consumed'):
-                    self.remove_item(item_entity, 1, False)
-            results.extend(item_use_results)
+                for item_use_result in item_use_results:
+                    if item_use_result.get('consumed'):
+                        self.remove_item(item_entity, 1, False)
+                results.extend(item_use_results)
         return results
 
     def remove_item(self, item, amount, all):

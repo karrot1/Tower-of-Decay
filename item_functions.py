@@ -52,4 +52,8 @@ def cast_fireball(*args, **kwargs):
         results.append({'consumed': False, 'message': Message('You can not target a tile you can not see.')})
         return results
     results.append({'consumed': True, 'message': Message('The fireball explodes, doing {0} damage'.format(damage))})
-    results.extend(entity.fighter.take_damage(damage))
+    for entity in entities:
+        if entity.distance(target_x, target_y) <= radius and entity.fighter:
+            results.append({'message': Message('The [0] is burned, taking [1] damage!'.format(entity.name, damage))})
+            results.extend(entity.fighter.take_damage(damage))
+    return results
