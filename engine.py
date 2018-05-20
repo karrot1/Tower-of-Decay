@@ -1,81 +1,40 @@
 import libtcodpy as libtcod
 
+from initialize_new_game import *
 from input_handlers import *
 from entity import *
 from render_functions import *
-from GameMap import *
 from fov_functions import *
 from game_states import *
-from warfighter import *
 from mortality import death
 from game_messages import *
-from inventory import *
 
 def main():
-    screen_width = 80
-    screen_height = 25
-
-    bar_width = 20
-    panel_height = 5
-    panel_y = screen_height - panel_height
-
-    message_x = bar_width + 2
-    message_width = screen_width - bar_width - 2
-    message_height = panel_height -1
-
-    map_width = 80
-    map_height = screen_height - panel_height
-
-    room_max_size = 10
-    room_min_size = 5
-    max_rooms = 15
-
-    max_monsters_per_room = 3
-    max_items_per_room = 50
-    fov_algorithim = 0
-    fov_light_walls = True
-    fov_radius = 10
-
-    colors = {
-        'dark_wall': libtcod.darker_grey,
-        'dark_ground': libtcod.darker_grey,
-        'light_wall': libtcod.grey,
-        'light_ground': libtcod.grey
-    }
-    inventory_component = Inventory(20)
-    fighter_component = fighter(hp = 30, defense=2, power=5)
-    player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component,
-                    inventory=inventory_component)
-    cursor = Entity(0, 0, 'X', libtcod.yellow, 'Cursor', blocks=False, render_order=RenderOrder.CURSOR, visible=False)
-    entities = [player, cursor]
+    constants = get_constants()
 
     libtcod.console_set_custom_font('terminal8x12_gs_ro.png', libtcod.FONT_TYPE_GRAYSCALE | libtcod.FONT_LAYOUT_ASCII_INROW)
-    libtcod.console_init_root(screen_width, screen_height, 'Reverse Crawl', False)
-    con = libtcod.console_new(screen_width, screen_height)
-    panel = libtcod.console_new(screen_width, panel_height)
-    game_map = Map(map_width, map_height)
-    game_map.make_map(max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities, max_monsters_per_room, max_items_per_room)
-
-    fov_recompute = True
-    fov_map = initialize_fov(game_map)
-
-    message_log = MessageLog(message_x, message_width, message_height)
+    libtcod.console_init_root(constants['screen_width'], constants['screen_height'], constants['window_title'], False)
+    con = libtcod.console_new(constants['screen_width'], constants['screen_height'])
+    panel = libtcod.console_new(constants['screen_width'], constants['panel_height'])
+    player, entities, game_map, message_log, game_state, cursor = get_game_variables(constants)
 
     key = libtcod.Key()
     mouse = libtcod.Mouse()
 
-    game_state = GameStates.PLAYERS_TURN
     previous_game_state = game_state
 
+
+    fov_recompute = True
+    fov_map = initialize_fov(game_map)
     targeting_item = None
 
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
         if fov_recompute:
-            recompute_fov(fov_map, player.x, player.y, fov_radius, fov_light_walls, fov_algorithim)
+            recompute_fov(fov_map, player.x, player.y, constants['fov_radius'], constants['fov_light_walls'], constants['fov_algorithim'])
 
-        render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log, screen_width, screen_height,
-                   bar_width, panel_height, panel_y, mouse, colors, game_state)
+        render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log, constants['screen_width'], constants['screen_height'],
+                   constants['bar_width'], constants['panel_height'], constants['panel_y'], mouse, constants['colors'], game_state)
         libtcod.console_flush()
         clear_all(con, entities)
 
