@@ -112,10 +112,14 @@ class Map:
                 if item_chance < 70:
                     item_component = Item(use_function=heal, amount=5)
                     item = Entity(x, y, '!', libtcod.red, 'Major Healing Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
-                elif item_chance < 85:
+                elif item_chance < 80:
                     item_component = Item(use_function=cast_fireball, targeting=True, damage=12, radius = 3)
                     item = Entity(x, y, '?', libtcod.lightest_yellow, 'Scroll of Fireball', render_order=RenderOrder.ITEM,
                       item=item_component, stack=True)
+                elif item_chance < 90:
+                    item_component = Item(use_function=cast_confuse, targeting=True)
+                    item = Entity(x, y, '?', libtcod.lightest_yellow, 'Scroll of Confusion', render_order=RenderOrder.ITEM,
+                              item=item_component, stack=True)
                 else:
                     item_component = Item(use_function=cast_smite, damage=20, maximum_range=5)
                     item = Entity(x, y, '?', libtcod.lightest_yellow, 'Scroll of Smite', render_order=RenderOrder.ITEM,
