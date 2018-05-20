@@ -1,5 +1,3 @@
-import libtcodpy as libtcod
-
 from warfighter import *
 from inventory import Inventory
 from entity import Entity
@@ -26,7 +24,7 @@ def get_constants():
 
     room_max_size = 10
     room_min_size = 5
-    max_rooms = 15
+    max_rooms = 25
 
     max_monsters_per_room = 3
     max_items_per_room = 2
