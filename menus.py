@@ -34,18 +34,22 @@ def main_menu(con,screen_width, screen_height):
 
     libtcod.console_set_default_foreground(0, libtcod.red)
     #libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER, 'Reverse Crawl')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 11, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '______                              ______                                    ')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 10, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '| ___ \\                             |  _  \\                                   ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 9, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '______                               _____                    _ ')
+                             '| |_/ /_____   _____ _ __ ___  ___  | | | |_   _ _ __   __ _  ___  ___  _ __  ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 8, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '| ___ \                             /  __ \                  | |')
+                             '|    // _ \\ \\ / / _ \\ \'__/ __|/ _ \\ | | | | | | | \'_ \\ / _` |/ _ \\/ _ \| \'_ \\ ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 7, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '| |_/ /_____   _____ _ __ ___  ___  | /  \/_ __ __ ___      _| |')
+                             '| |\\ \\  __/\\ V /  __/ |  \\__ \\  __/ | |/ /| |_| | | | | (_| |  __/ (_) | | | |')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 6, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '|    // _ \ \ / / _ \ \'__/ __|/ _ \ | |   | \'__/ _` \ \ /\ / / |')
+                             '\_| \\_\\___| \\_/ \\___|_|  |___/\\___| |___/  \\__,_|_| |_|\\__, |\\___|\\___/|_| |_|')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 5, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '| |\ \  __/\ V /  __/ |  \__ \  __/ | \__/\ | | (_| |\ V  V /| |')
+                             '                                                        __/ |                 ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '\_| \_\___| \_/ \___|_|  |___/\___|  \____/_|  \__,_| \_/\_/ |_|')
+                             '                                                       |___/                  ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height - 2), libtcod.BKGND_NONE, libtcod.CENTER,
                              'By Khalil Sheehan-Miles, with assistance from Justin Zinko')
 

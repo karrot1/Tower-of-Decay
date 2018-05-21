@@ -7,7 +7,7 @@ from GameMap import Map
 from render_functions import RenderOrder
 
 def get_constants():
-    window_title = 'Reverse Crawl'
+    window_title = 'Reverse Dungeon'
     screen_width = 80
     screen_height = 25
 

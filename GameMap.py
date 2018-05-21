@@ -10,10 +10,11 @@ from item import *
 from item_functions import *
 
 class Map:
-    def __init__(self, width, height):
+    def __init__(self, width, height, dungeon_level = 1):
         self.width = width
         self.height = height
         self.tiles = self.initialize_tiles()
+        self.dungeon_level = dungeon_level
     def initialize_tiles(self):
         tiles = [[Tile(True) for y in range(self.height)] for x in range(self.width)]
 
