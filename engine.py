@@ -49,7 +49,7 @@ def main():
                 show_main_menu = False
             elif load_saved_game:
                 try:
-                    player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor= load_game()
+                    player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = load_game()
                     show_main_menu = False
                 except FileNotFoundError:
                     show_load_error_message = True
@@ -123,7 +123,11 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                             floorentities[floor] = entities
                             floor = floor+1
                             game_map = levellist[floor]
+                            playerindex = entities.index(player)
+                            cursorindex = entities.index(cursor)
                             entities = floorentities[floor]
+                            player = entities[playerindex]
+                            cursor = entities[cursorindex]
                             player.x = dstairxy[floor-1][0]
                             player.y = dstairxy[floor-1][1]
                             fov_map = initialize_fov(game_map)
@@ -145,12 +149,19 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                             floorentities[floor] = entities
                         floor = floor-1
                         game_map = levellist[floor]
+                        playerindex = entities.index(player)
+                        cursorindex = entities.index(cursor)
                         entities = floorentities[floor]
+                        player = entities[playerindex]
+                        cursor = entities[cursorindex]
                         player.x = ustairxy[floor][0]
                         player.y = ustairxy[floor][1]
                         fov_map = initialize_fov(game_map)
                         fov_recompute = True
                         libtcod.console_clear(con)
+                        break
+                else:
+                    message_log.add_message(Message('There are no stairs here.', libtcod.white))
             if move:
                 dx, dy = move
                 destination_x = player.x + dx
