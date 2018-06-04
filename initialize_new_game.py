@@ -31,7 +31,6 @@ def get_constants():
     fov_algorithm = 0
     fov_light_walls = True
     fov_radius = 10
-
     colors = {
         'dark_wall': libtcod.darker_grey,
         'dark_ground': libtcod.darker_grey,
@@ -78,5 +77,10 @@ def get_game_variables(constants):
     game_state = GameStates.PLAYERS_TURN
 
     message_log = MessageLog(constants['message_x'], constants['message_width'], constants['message_height'])
-
-    return player, entities, game_map, message_log, game_state, cursor
+    floor = 0
+    highest_floor = 0
+    levellist = []
+    floorentities = []
+    dstairxy = []
+    ustairxy = []
+    return player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor

@@ -44,7 +44,7 @@ def main():
             if show_load_error_message and (new_game or load_saved_game or exit_game):
                 show_load_error_message = False
             elif new_game:
-                player, entities, game_map, message_log, game_state, cursor = get_game_variables(constants)
+                player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = get_game_variables(constants)
                 game_state = GameStates.PLAYERS_TURN
                 show_main_menu = False
             elif load_saved_game:
@@ -57,18 +57,12 @@ def main():
                 break
         else:
             libtcod.console_clear(con)
-            play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, constants)
+            play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants)
 
             show_main_menu = True
 
 
-def play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, constants):
-    floor = 0
-    highest_floor = 0
-    levellist = []
-    floorentities = []
-    dstairxy = []
-    ustairxy = []
+def play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants):
     key = libtcod.Key()
     mouse = libtcod.Mouse()
 
