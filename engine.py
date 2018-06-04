@@ -1,5 +1,5 @@
 import libtcodpy as libtcod
-
+import copy
 from initialize_new_game import *
 from input_handlers import *
 from entity import *
@@ -63,8 +63,12 @@ def main():
 
 
 def play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, constants):
-
-
+    floor = 0
+    highest_floor = 0
+    levellist = []
+    floorentities = []
+    dstairxy = []
+    ustairxy = []
     key = libtcod.Key()
     mouse = libtcod.Mouse()
 
@@ -91,6 +95,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         show_inventory = action.get('show_inventory')
         inventory_index = action.get('inventory_index')
         drop_inventory = action.get('drop_inventory')
+        stairs_up = action.get('stairs_up')
+        stairs_down = action.get('stairs_down')
         exit = action.get('exit')
         targeted = action.get('targeted')
         fullscreen = action.get('fullscreen')
@@ -105,6 +111,52 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 player_turn_results.extend(item_use_results)
                 player_turn_results.append({'targeting_over': True})
         if game_state == GameStates.PLAYERS_TURN:
+            if stairs_up:
+                for entity in entities:
+                    if entity.stairs and entity.x == player.x and entity.y == player.y and entity.downstairs == False:
+                        if floor == highest_floor:
+                            levellist.append(copy.deepcopy(game_map))
+                            floorentities.append(entities)
+                            ustairxy.append([player.x, player.y])
+                            floor = floor + 1
+                            highest_floor = highest_floor + 1
+                            entities = game_map.next_floor(player, cursor, message_log, constants)
+                            fov_map = initialize_fov(game_map)
+                            fov_recompute = True
+                            libtcod.console_clear(con)
+                        else:
+                            levellist[floor] = copy.deepcopy(game_map)
+                            floorentities[floor] = entities
+                            floor = floor+1
+                            game_map = levellist[floor]
+                            entities = floorentities[floor]
+                            player.x = dstairxy[floor-1][0]
+                            player.y = dstairxy[floor-1][1]
+                            fov_map = initialize_fov(game_map)
+                            fov_recompute = True
+                            libtcod.console_clear(con)
+                        break
+
+                else:
+                    message_log.add_message(Message('There are no stairs here.', libtcod.white))
+            if stairs_down:
+                for entity in entities:
+                    if entity.stairs and entity.x == player.x and entity.y == player.y and entity.downstairs == True:
+                        if floor == highest_floor:
+                            levellist.append(copy.deepcopy(game_map))
+                            floorentities.append(entities)
+                            dstairxy.append([player.x, player.y])
+                        else:
+                            levellist[floor] = copy.deepcopy(game_map)
+                            floorentities[floor] = entities
+                        floor = floor-1
+                        game_map = levellist[floor]
+                        entities = floorentities[floor]
+                        player.x = ustairxy[floor][0]
+                        player.y = ustairxy[floor][1]
+                        fov_map = initialize_fov(game_map)
+                        fov_recompute = True
+                        libtcod.console_clear(con)
             if move:
                 dx, dy = move
                 destination_x = player.x + dx

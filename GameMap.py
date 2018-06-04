@@ -1,6 +1,6 @@
 from random import randint
 import libtcodpy as libtcod
-
+from stairs import *
 from tile import *
 from rectangle import *
 from entity import *
@@ -41,6 +41,10 @@ class Map:
     def make_map(self, max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities, max_monsters_per_room, max_items_per_room):
         rooms = []
         num_rooms = 0
+
+        center_of_last_room_x = None
+        center_of_last_room_y = None
+
         for r in range(max_rooms):
             #generates random rooms
             w = randint(room_min_size, room_max_size)
@@ -56,6 +60,8 @@ class Map:
                 #if it did not break, room is valid
                 self.create_room(new_room)
                 (new_x, new_y) = new_room.center()
+                center_of_last_room_x = new_x
+                center_of_last_room_y = new_y
                 if num_rooms == 0:
                     #player starts in first room cuz we don't have stairs or entrances just yet
                     player.x = new_x
@@ -75,7 +81,14 @@ class Map:
                 self.place_entities(new_room, entities, max_monsters_per_room, max_items_per_room)
                 rooms.append(new_room)
                 num_rooms += 1
-
+        stairs_component = Stairs(self.dungeon_level + 1)
+        up_stairs = Entity(center_of_last_room_x, center_of_last_room_y, '<', libtcod.white, 'stairs up', render_order = RenderOrder.STAIRS, stairs=stairs_component)
+        entities.append(up_stairs)
+        if (self.dungeon_level > 1):
+            downstairs_component = Stairs(self.dungeon_level -1)
+            down_stairs = Entity(player.x, player.y, '>', libtcod.white, 'stairs down',
+                               render_order=RenderOrder.STAIRS, stairs=downstairs_component, downstairs=True)
+            entities.append(down_stairs)
     def is_blocked(self, x, y):
         if self.tiles[x][y].blocked:
             return True
@@ -127,3 +140,14 @@ class Map:
                                   item=item_component, stack=True)
 
                 entities.append(item)
+
+    def next_floor(self, player, cursor, message_log, constants):
+        self.dungeon_level += 1
+        entities = [player, cursor]
+        self.tiles = self.initialize_tiles()
+        self.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
+                      constants['map_width'], constants['map_height'], player, entities,
+                      constants['max_monsters_per_room'], constants['max_items_per_room'])
+        #player.fighter.heal(player.fighter.max_hp//2)
+        #message_log.add_message(Message('You take a moment to rest, and recover your strength.', libtcod.light_violet))
+        return entities

@@ -33,6 +33,10 @@ def handle_player_turn_keys(key):
         return {'show_inventory': True}
     elif key_char == 'd':
         return {'drop_inventory': True}
+    elif key_char == ',':
+        return {'stairs_up': True}
+    elif key_char == '.':
+        return {'stairs_down': True}
     result = quitscreen(key)
     return result
 
