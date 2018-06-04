@@ -49,7 +49,7 @@ def main():
                 show_main_menu = False
             elif load_saved_game:
                 try:
-                    player, entities, game_map, message_log, game_state, cursor = load_game()
+                    player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor= load_game()
                     show_main_menu = False
                 except FileNotFoundError:
                     show_load_error_message = True
@@ -199,7 +199,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             elif game_state == GameStates.TARGETING:
                 player_turn_results.append({'targeting_cancelled': True})
             else:
-                save_game(player, entities, game_map, message_log, game_state, cursor)
+                save_game(player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor)
                 return True
         if fullscreen:
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
