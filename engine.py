@@ -11,6 +11,7 @@ from game_messages import *
 from data_loaders import *
 from menus import *
 from mortality import destroy_item, end_item
+import os
 
 def main():
     constants = get_constants()
@@ -22,14 +23,14 @@ def main():
     entities = []
     game_map = None
     game_state = None
-    show_main_menu = True
+    show_main_menu = 0
     show_load_error_message = False
     key = libtcod.Key()
     mouse = libtcod.Mouse()
     while not libtcod.console_is_window_closed():
         libtcod.sys_check_for_event(libtcod.EVENT_KEY_PRESS | libtcod.EVENT_MOUSE, key, mouse)
 
-        if show_main_menu:
+        if show_main_menu == 0:
             main_menu(con, constants['screen_width'], constants['screen_height'])
 
             if show_load_error_message:
@@ -46,26 +47,48 @@ def main():
             elif new_game:
                 player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = get_game_variables(constants)
                 game_state = GameStates.PLAYERS_TURN
-                show_main_menu = False
+                show_main_menu = 3
             elif load_saved_game:
                 try:
                     player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = load_game()
-                    show_main_menu = False
+                    show_main_menu = 3
                 except FileNotFoundError:
                     show_load_error_message = True
             elif exit_game:
                 break
+        elif show_main_menu == 1 or show_main_menu == 2:
+            try:
+                os.remove('savegame.dat')
+            except FileNotFoundError:
+                filedeleted=True
+            if show_main_menu == 1:
+                victory_screen(con, constants['screen_width'], constants['screen_height'])
+            else:
+                game_over(con, constants['screen_width'], constants['screen_height'])
+
+            libtcod.console_flush()
+            action = handle_death(key)
+            new_game = action.get('new_game')
+            exit_game = action.get('exit')
+
+            if show_load_error_message and (new_game or load_saved_game or exit_game):
+                show_load_error_message = False
+            elif new_game:
+                player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = get_game_variables(constants)
+                game_state = GameStates.PLAYERS_TURN
+                show_main_menu = 3
+            elif exit_game:
+                break
         else:
             libtcod.console_clear(con)
-            play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants)
+            show_main_menu = play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants)
 
-            show_main_menu = True
 
 
 def play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants):
     key = libtcod.Key()
     mouse = libtcod.Mouse()
-
+    hasorb = False
     previous_game_state = game_state
 
 
@@ -165,6 +188,16 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                         fov_recompute = True
                         libtcod.console_clear(con)
                         break
+                    elif entity.x == player.x and entity.y == player.y and entity.name == 'exit':
+                        for item in player.inventory.items:
+                            if item.name == "Orb of Undeath":
+                                hasorb = True
+                        if hasorb == False:
+                            message_log.add_message(Message('You can not leave without the Orb! The fate of the world depends on it!.', libtcod.white))
+                            break
+                        else:
+                            message_log.add_message(Message('You escape with the Orb of Undeath! You win!', libtcod.purple))
+                            return 1
                 else:
                     message_log.add_message(Message('There are no stairs here.', libtcod.white))
             if move:
@@ -186,6 +219,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 for entity in entities:
                     if sametile(player, entity):
                         if entity.render_order == RenderOrder.ITEM:
+                            if entity.name == "Orb of Undeath":
+                                hasorb = True
                             pickup_results = player.inventory.add_item(entity)
                             player_turn_results.extend(pickup_results)
                             break
@@ -212,7 +247,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 player_turn_results.append({'targeting_cancelled': True})
             else:
                 save_game(player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor)
-                return True
+                return 0
         if fullscreen:
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
         for player_turn_results in player_turn_results:
@@ -240,7 +275,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 message_log.add_message(Message('Press a to select target.'))
             if dead_entity:
                 if dead_entity == player:
-                    message, game_state = death(True, dead_entity)
+                    return 2
                 else:
                     message = death(False, dead_entity)
                 message_log.add_message(message)
@@ -259,14 +294,14 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 game_state = GameStates.ENEMY_TURN
             if equip:
                 equip_results = player.equipment.toggle_equip(equip)
-                for equip_results in equip_results:
-                    equipped = equip_results.get('equipped')
-                    dequipped = equip_results.get('dequipped')
+                for equip_result in equip_results:
+                    equipped = equip_result.get('equipped')
+                    dequipped = equip_result.get('dequipped')
 
                     if equipped:
                         message_log.add_message(Message('You equipped the {0}'.format(equipped.name)))
                     if dequipped:
-                        message_log.add_message(Message('You removed the {0}'.format(equipped.name)))
+                        message_log.add_message(Message('You removed the {0}'.format(dequipped.name)))
                 game_state = GameStates.ENEMY_TURN
             if targeting_cancelled:
                 message_log.add_message(Message('Targetting cancelled'))
@@ -320,7 +355,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                             end_item(itemdestroyed)
                         if dead_entity:
                             if dead_entity == player:
-                                message, game_state = death(True, dead_entity)
+                                return 2
                             else:
                                 message = death(True, dead_entity)
                             message_log.add_message(message)

@@ -78,6 +78,14 @@ def handle_main_menu(key):
         return {'exit': True}
     return quitscreen(key)
 
+def handle_death(key):
+    key_char = chr(key.c)
+    if key_char == 'a':
+        return {'new_game': True}
+    elif key_char == 'b':
+        return {'exit': True}
+    return quitscreen(key)
+
 def handle_inventory_keys(key):
     index = key.c - ord('a')
     if index>= 0:

@@ -29,7 +29,7 @@ def get_constants():
     room_max_size = 10
     room_min_size = 5
     max_rooms = 25
-
+    top_level = 20
     max_monsters_per_room = 3
     max_items_per_room = 2
     fov_algorithm = 0
@@ -61,7 +61,8 @@ def get_constants():
         'fov_radius': fov_radius,
         'max_monsters_per_room': max_monsters_per_room,
         'max_items_per_room': max_items_per_room,
-        'colors': colors
+        'colors': colors,
+        'top_level': top_level
     }
 
     return constants
@@ -91,7 +92,7 @@ def get_game_variables(constants):
 
     game_map = Map(constants['map_width'], constants['map_height'])
     game_map.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
-                      constants['map_width'], constants['map_height'], player, entities)
+                      constants['map_width'], constants['map_height'], player, entities, constants['top_level'])
     game_state = GameStates.PLAYERS_TURN
 
     message_log = MessageLog(constants['message_x'], constants['message_width'], constants['message_height'])

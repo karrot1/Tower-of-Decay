@@ -67,8 +67,8 @@ class fighter:
         if self.owner.equipment and self.owner.name.capitalize() == "Player":
             if self.owner.equipment.main_hand:
                 itemdamage = target.fighter.defense
-                if itemdamage < 4:
-                    itemdamage = 3
+                if itemdamage < 3:
+                    itemdamage = 2
                 results.append({'message': Message('Your {0} is damaged by the blow.'.format(self.owner.equipment.main_hand.name),libtcod.white)})
                 results.extend(self.owner.equipment.main_hand.equippable.takedamage(itemdamage))
         return results

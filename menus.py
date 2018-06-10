@@ -61,6 +61,44 @@ def main_menu(con,screen_width, screen_height):
 
     menu(con, '', ['Play a new game', 'Continue game', 'Quit'], 24, screen_width, screen_height)
 
+
+def victory_screen(con,screen_width, screen_height):
+
+    libtcod.console_set_default_foreground(0, libtcod.purple)
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 9, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '__   __            _    _ _       _ ')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 8, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '\\ \\ / /           | |  | (_)     | |')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 7, libtcod.BKGND_NONE, libtcod.CENTER,
+                             ' \\ V /___  _   _  | |  | |_ _ __ | |')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 6, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '  \\ // _ \\| | | | | |/\\| | | \'_ \\| |')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 5, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '  | | (_) | |_| | \\  /\\  / | | | |_|')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '  \\_/\\___/ \\__,_|  \\/  \\/|_|_| |_(_)')
+
+    menu(con, '', ['Play a new game', 'Quit'], 24, screen_width, screen_height)
+
+def game_over(con,screen_width, screen_height):
+
+    libtcod.console_set_default_foreground(0, libtcod.red)
+
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 9, libtcod.BKGND_NONE, libtcod.CENTER,
+                             ' _____                        _____                ')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 8, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '|  __ \\                      |  _  |               ')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 7, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '| |  \\/ __ _ _ __ ___   ___  | | | |_   _____ _ __ ')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 6, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '| | __ / _` | \'_ ` _ \\ / _ \\ | | | \\ \\ / / _ \\ \'__|')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 5, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '| |_\\ \\ (_| | | | | | |  __/ \\ \\_/ /\\ V /  __/ |   ')
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER,
+                             ' \\____/\\__,_|_| |_| |_|\\___|  \\___/  \\_/ \\___|_| ')
+
+    menu(con, '', ['Play a new game', 'Quit'], 24, screen_width, screen_height)
+
 def message_box(con, header, width, screen_width, screen_height):
     menu(con, header, [], width, screen_width, screen_height)
 

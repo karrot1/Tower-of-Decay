@@ -41,7 +41,7 @@ class Map:
             self.tiles[x][y].blocked = False
             self.tiles[x][y].block_sight = False
 
-    def make_map(self, max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities):
+    def make_map(self, max_rooms, room_min_size, room_max_size, map_width, map_height, player, entities, toplevel):
         rooms = []
         num_rooms = 0
 
@@ -84,14 +84,22 @@ class Map:
                 self.place_entities(new_room, entities)
                 rooms.append(new_room)
                 num_rooms += 1
-        stairs_component = Stairs(self.dungeon_level + 1)
-        up_stairs = Entity(center_of_last_room_x, center_of_last_room_y, '<', libtcod.white, 'stairs up', render_order = RenderOrder.STAIRS, stairs=stairs_component)
-        entities.append(up_stairs)
+        if (self.dungeon_level < toplevel):
+            stairs_component = Stairs(self.dungeon_level + 1)
+            up_stairs = Entity(center_of_last_room_x, center_of_last_room_y, '<', libtcod.white, 'stairs up', render_order = RenderOrder.STAIRS, stairs=stairs_component)
+            entities.append(up_stairs)
+        else:
+            item_component = Item()
+            orb = Entity(center_of_last_room_x, center_of_last_room_y, '0', libtcod.purple, 'Orb of Undeath', render_order=RenderOrder.ITEM,item=item_component)
+            entities.append(orb)
         if (self.dungeon_level > 1):
             downstairs_component = Stairs(self.dungeon_level -1)
             down_stairs = Entity(player.x, player.y, '>', libtcod.white, 'stairs down',
                                render_order=RenderOrder.STAIRS, stairs=downstairs_component, downstairs=True)
             entities.append(down_stairs)
+        else:
+            exit = Entity(player.x, player.y, '>', libtcod.blue, 'exit', render_order=RenderOrder.STAIRS)
+            entities.append(exit)
     def is_blocked(self, x, y):
         if self.tiles[x][y].blocked:
             return True
@@ -179,7 +187,7 @@ class Map:
         entities = [player, cursor]
         self.tiles = self.initialize_tiles()
         self.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
-                      constants['map_width'], constants['map_height'], player, entities)
+                      constants['map_width'], constants['map_height'], player, entities, constants['top_level'])
         #player.fighter.heal(player.fighter.max_hp//2)
         #message_log.add_message(Message('You take a moment to rest, and recover your strength.', libtcod.light_violet))
         return entities
