@@ -5,3 +5,10 @@ class Equippable:
         self.defense_bonus = defense_bonus
         self.max_hp_bonus = max_hp_bonus
         self.hp = hp
+
+    def takedamage(self, damage):
+        results = []
+        self.hp -= damage
+        if self.hp <= 0:
+            results.append({'itemdestroyed': self.owner})
+        return results

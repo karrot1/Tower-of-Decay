@@ -60,9 +60,17 @@ class fighter:
                 damitem = targetequip.armor
             if itemdamaged:
                 results.append({'message': Message('Your {0} is damaged by the blow.'.format(damitem.name),libtcod.white)})
+                if (damage > 0):
+                    results.extend(damitem.equippable.takedamage(self.power - damage))
+                else:
+                    results.extend(damitem.equippable.takedamage(self.power))
         if self.owner.equipment and self.owner.name.capitalize() == "Player":
             if self.owner.equipment.main_hand:
+                itemdamage = target.fighter.defense
+                if itemdamage == 0:
+                    itemdamage = 1
                 results.append({'message': Message('Your {0} is damaged by the blow.'.format(self.owner.equipment.main_hand.name),libtcod.white)})
+                results.extend(self.owner.equipment.main_hand.equippable.takedamage(itemdamage))
         return results
 
     def heal(self, amount):
