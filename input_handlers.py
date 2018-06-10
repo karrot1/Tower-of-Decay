@@ -20,6 +20,8 @@ def handle_movement_keys(key):
         return {'move': (-1, 1)}
     elif key_char == 'n':
         return {'move': (1, 1)}
+    elif key_char == 'z':
+        return {'wait': True}
     return {'move': (0, 0)}
 
 def handle_player_turn_keys(key):
@@ -37,6 +39,8 @@ def handle_player_turn_keys(key):
         return {'stairs_up': True}
     elif key_char == '.':
         return {'stairs_down': True}
+    elif key_char == 'c':
+        return{'show_character_screen': True}
     result = quitscreen(key)
     return result
 
@@ -58,6 +62,8 @@ def handle_keys(key, game_state):
         result = handle_targeting_keys(key)
     elif game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
         result = handle_inventory_keys(key)
+    elif game_state == GameStates.CHARACTER_SCREEN:
+        result = handle_character_screen(key)
     else:
         result = {}
     return result
@@ -95,3 +101,6 @@ def handle_targeting_keys(key):
         return{'targeted': True}
     result = quitscreen(key)
     return result
+
+def handle_character_screen(key):
+    return quitscreen(key)

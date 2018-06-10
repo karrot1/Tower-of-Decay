@@ -85,17 +85,22 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
 
         action = handle_keys(key, game_state)
         move = action.get('move')
+        wait = action.get('wait')
         pickup = action.get('pickup')
         show_inventory = action.get('show_inventory')
         inventory_index = action.get('inventory_index')
         drop_inventory = action.get('drop_inventory')
         stairs_up = action.get('stairs_up')
         stairs_down = action.get('stairs_down')
+        show_character_screen = action.get('show_character_screen')
         exit = action.get('exit')
         targeted = action.get('targeted')
         fullscreen = action.get('fullscreen')
 
         player_turn_results = []
+        if show_character_screen:
+            previous_game_state = game_state
+            game_state = GameStates.CHARACTER_SCREEN
         if game_state == GameStates.TARGETING:
             if move:
                 dx, dy = move
@@ -175,6 +180,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                         player.move(dx, dy)
                         fov_recompute = True
                 game_state = GameStates.ENEMY_TURN
+            elif wait:
+                game_state = GameStates.ENEMY_TURN
             elif pickup:
                 for entity in entities:
                     if sametile(player, entity):
@@ -199,7 +206,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             elif game_state == GameStates.DROP_INVENTORY:
                 player_turn_results.extend(player.inventory.drop_item(item))
         if exit:
-            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY):
+            if game_state in (GameStates.SHOW_INVENTORY, GameStates.DROP_INVENTORY, GameStates.CHARACTER_SCREEN):
                 game_state = previous_game_state
             elif game_state == GameStates.TARGETING:
                 player_turn_results.append({'targeting_cancelled': True})
@@ -217,6 +224,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             targeting = player_turn_results.get('targeting')
             targeting_cancelled = player_turn_results.get('targeting_cancelled')
             targeting_over = player_turn_results.get('targeting_over')
+            xp = player_turn_results.get('xp')
 
             if message:
                 message_log.add_message(message)
@@ -247,6 +255,34 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if targeting_cancelled or targeting_over:
                 cursor.visible = False
                 game_state = previous_game_state
+            if xp:
+                leveled_up = player.level.add_xp(xp)
+                if (xp < 0):
+                    message_log.add_message(Message('You lose {0} experiance points'.format(abs(xp))))
+                else:
+                    message_log.add_message(Message('You gain {0} experiance points'.format(abs(xp))))
+                if leveled_up == 1:
+                    message_log.add_message(Message(
+                        'You grow stronger! You reached level {0}'.format(
+                            player.level.current_level) + '!', libtcod.yellow))
+                    player.fighter.max_hp += 20
+                    player.fighter.hp += 20
+                    player.fighter.power += 1
+                    player.fighter.power += 1
+                elif leveled_up == 2:
+                    if player.level.current_level > 0:
+                        message_log.add_message(Message(
+                            'You grow weaker. You are now level {0}'.format(
+                                player.level.current_level) + '.', libtcod.red))
+                        player.fighter.max_hp -= 20
+                        player.fighter.hp -= 20
+                        player.fighter.power -= 1
+                        player.fighter.power -= 1
+                    else:
+                        player.level.current_level = 1
+                        message_log.add_message(Message(
+                            'You can grow no weaker. You stay level {0}'.format(
+                                player.level.current_level) + '.', libtcod.red))
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
                 if entity.ai:

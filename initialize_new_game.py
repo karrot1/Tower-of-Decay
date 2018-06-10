@@ -5,9 +5,10 @@ from game_messages import MessageLog
 from game_states import GameStates
 from GameMap import Map
 from render_functions import RenderOrder
+from level import Level
 
 def get_constants():
-    window_title = 'Reverse Dungeon'
+    window_title = 'Tower of Decay'
     screen_width = 80
     screen_height = 25
 
@@ -64,10 +65,12 @@ def get_constants():
 
 def get_game_variables(constants):
     inventory_component = Inventory(20)
-    fighter_component = fighter(hp=300, defense=2, power=5)
+    level_component = Level(current_level = 5)
+    fighter_component = fighter(hp=100, defense=10, power=10)
     player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR,
                     fighter=fighter_component,
-                    inventory=inventory_component)
+                    inventory=inventory_component,
+                    level = level_component)
     cursor = Entity(0, 0, 'X', libtcod.yellow, 'Cursor', blocks=False, render_order=RenderOrder.CURSOR, visible=False)
     entities = [player, cursor]
     game_map = Map(constants['map_width'], constants['map_height'])

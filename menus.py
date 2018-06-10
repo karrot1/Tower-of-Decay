@@ -32,24 +32,24 @@ def inventory_menu(con, header, inventory, inventory_width, screen_width, screen
 
 def main_menu(con,screen_width, screen_height):
 
-    libtcod.console_set_default_foreground(0, libtcod.red)
+    libtcod.console_set_default_foreground(0, libtcod.green)
     #libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER, 'Reverse Crawl')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 11, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '______                              ______                                    ')
+                             ' _____                               __  ______                     ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 10, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '| ___ \\                             |  _  \\                                   ')
+                             '|_   _|                             / _| |  _  \\                    ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 9, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '| |_/ /_____   _____ _ __ ___  ___  | | | |_   _ _ __   __ _  ___  ___  _ __  ')
+                             '  | | _____      _____ _ __    ___ | |_  | | | |___  ___ __ _ _   _ ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 8, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '|    // _ \\ \\ / / _ \\ \'__/ __|/ _ \\ | | | | | | | \'_ \\ / _` |/ _ \\/ _ \| \'_ \\ ')
+                             '  | |/ _ \\ \\ /\\ / / _ \\ \'__|  / _ \\|  _| | | | / _ \\/ __/ _` | | | |')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 7, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '| |\\ \\  __/\\ V /  __/ |  \\__ \\  __/ | |/ /| |_| | | | | (_| |  __/ (_) | | | |')
+                             '  | | (_) \\ V  V /  __/ |    | (_) | |   | |/ /  __/ (_| (_| | |_| |')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 6, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '\_| \\_\\___| \\_/ \\___|_|  |___/\\___| |___/  \\__,_|_| |_|\\__, |\\___|\\___/|_| |_|')
+                             '  \\_/\\___/ \\_/\\_/ \\___|_|     \\___/|_|   |___/ \\___|\\___\\__,_|\\__, |')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 5, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '                                                        __/ |                 ')
+                             '                                                               __/ |')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER,
-                             '                                                       |___/                  ')
+                             '                                                             |___/')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height - 2), libtcod.BKGND_NONE, libtcod.CENTER,
                              'By Khalil Sheehan-Miles, with assistance from Justin Zinko')
 
@@ -57,3 +57,18 @@ def main_menu(con,screen_width, screen_height):
 
 def message_box(con, header, width, screen_width, screen_height):
     menu(con, header, [], width, screen_width, screen_height)
+
+def character_screen(player, character_screen_width, character_screen_height, screen_width, screen_height):
+    window = libtcod.console_new(character_screen_width, character_screen_height)
+    libtcod.console_set_default_foreground(window, libtcod.white)
+    libtcod.console_print_rect_ex(window, 0, 1, character_screen_width, character_screen_height, libtcod.BKGND_NONE, libtcod.LEFT, 'Character Sheet')
+    libtcod.console_print_rect_ex(window, 0, 2, character_screen_width, character_screen_height, libtcod.BKGND_NONE, libtcod.LEFT, 'Level: {0}'.format(player.level.current_level))
+    libtcod.console_print_rect_ex(window, 0, 3, character_screen_width, character_screen_height, libtcod.BKGND_NONE, libtcod.LEFT, 'XP: {0}'.format(player.level.current_xp))
+    libtcod.console_print_rect_ex(window, 0, 4, character_screen_width, character_screen_height, libtcod.BKGND_NONE, libtcod.LEFT, 'XP to Level: {0}'.format(player.level.experiance_to_next_level))
+    libtcod.console_print_rect_ex(window, 0, 6, character_screen_width, character_screen_height, libtcod.BKGND_NONE, libtcod.LEFT, 'Maximum HP: {0}'.format(player.fighter.max_hp))
+    libtcod.console_print_rect_ex(window, 0, 7, character_screen_width, character_screen_height, libtcod.BKGND_NONE, libtcod.LEFT, 'Attack: {0}'.format(player.fighter.power))
+    libtcod.console_print_rect_ex(window, 0, 8, character_screen_width, character_screen_height, libtcod.BKGND_NONE, libtcod.LEFT, 'Defense: {0}'.format(player.fighter.defense))
+
+    x = (screen_width // 2) - (character_screen_width //2)
+    y = (screen_height // 2)- (character_screen_height // 2)
+    libtcod.console_blit(window, 0, 0, character_screen_width, character_screen_height, 0, x, y, 1.0, 0.7)

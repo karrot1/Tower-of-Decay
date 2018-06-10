@@ -4,7 +4,7 @@ from render_functions import RenderOrder
 
 class Entity:
     #a generic object to represent basicaly everything
-    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None, item=None, inventory=None, stack=False, visible=True, stairs=None, downstairs=False):
+    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None, item=None, inventory=None, stack=False, visible=True, stairs=None, downstairs=False, level=None):
         self.x = x
         self.y = y
         self.char = char
@@ -20,6 +20,7 @@ class Entity:
         self.visible = visible
         self.stairs = stairs
         self.downstairs = downstairs
+        self.level = level
         if (self.stack == True):
             self.stack_amount = 1
 
@@ -33,6 +34,9 @@ class Entity:
             self.inventory.owner = self
         if self.stairs:
             self.stairs.owner = self
+        if self.level:
+            self.level.owner = self
+
 
     def move(self, dx, dy):
         #moves entity by amount
