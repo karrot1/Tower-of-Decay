@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="83b48ef0-bc64-4703-9c67-858017cca0c7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Equippable.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/equipment.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/equipment_slots.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.dat" afterPath="$PROJECT_DIR$/savegame.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameMap.py" afterPath="$PROJECT_DIR$/GameMap.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine.py" afterPath="$PROJECT_DIR$/engine.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entity.py" afterPath="$PROJECT_DIR$/entity.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/initialize_new_game.py" afterPath="$PROJECT_DIR$/initialize_new_game.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/inventory.py" afterPath="$PROJECT_DIR$/inventory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/menus.py" afterPath="$PROJECT_DIR$/menus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/random_utils.py" afterPath="$PROJECT_DIR$/random_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/render_functions.py" afterPath="$PROJECT_DIR$/render_functions.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.bak" afterPath="$PROJECT_DIR$/savegame.bak" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.dir" afterPath="$PROJECT_DIR$/savegame.dir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/warfighter.py" afterPath="$PROJECT_DIR$/warfighter.py" />
@@ -42,14 +30,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="engine.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="engine.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/engine.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="677">
-              <caret line="261" column="33" lean-forward="true" selection-start-line="261" selection-start-column="33" selection-end-line="261" selection-end-column="33" />
+            <state relative-caret-position="524">
+              <caret line="252" column="50" lean-forward="true" selection-start-line="252" selection-start-column="50" selection-end-line="252" selection-end-column="50" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="warfighter.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/warfighter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="380">
+              <caret line="52" column="51" lean-forward="false" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -69,8 +67,8 @@
       <file leaf-file-name="equipment.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/equipment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
-              <caret line="85" column="26" lean-forward="false" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
+            <state relative-caret-position="629">
+              <caret line="45" column="51" lean-forward="true" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -184,7 +182,6 @@
         <option value="$PROJECT_DIR$/input_handlers.py" />
         <option value="$PROJECT_DIR$/random_utils.py" />
         <option value="$PROJECT_DIR$/equipment_slots.py" />
-        <option value="$PROJECT_DIR$/warfighter.py" />
         <option value="$PROJECT_DIR$/Equippable.py" />
         <option value="$PROJECT_DIR$/render_functions.py" />
         <option value="$PROJECT_DIR$/GameMap.py" />
@@ -194,6 +191,7 @@
         <option value="$PROJECT_DIR$/inventory.py" />
         <option value="$PROJECT_DIR$/engine.py" />
         <option value="$PROJECT_DIR$/equipment.py" />
+        <option value="$PROJECT_DIR$/warfighter.py" />
       </list>
     </option>
   </component>
@@ -732,14 +730,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/warfighter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/render_functions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
@@ -822,21 +812,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/engine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="524">
+          <caret line="252" column="50" lean-forward="true" selection-start-line="252" selection-start-column="50" selection-end-line="252" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/equipment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="85" column="26" lean-forward="false" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
+        <state relative-caret-position="629">
+          <caret line="45" column="51" lean-forward="true" selection-start-line="45" selection-start-column="51" selection-end-line="45" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/engine.py">
+    <entry file="file://$PROJECT_DIR$/warfighter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="261" column="33" lean-forward="true" selection-start-line="261" selection-start-column="33" selection-end-line="261" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="380">
+          <caret line="52" column="51" lean-forward="false" selection-start-line="52" selection-start-column="51" selection-end-line="52" selection-end-column="51" />
+          <folding />
         </state>
       </provider>
     </entry>

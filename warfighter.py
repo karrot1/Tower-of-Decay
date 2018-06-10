@@ -49,6 +49,20 @@ class fighter:
             results.extend(target.fighter.take_damage(damage))
         else:
             results.append({'message': Message('{0} attacks {1} but does no damage.'.format(self.owner.name.capitalize(), target.name), libtcod.white)})
+        targetequip = target.equipment
+        if targetequip and target.name == "Player":
+            itemdamaged = False
+            if targetequip.off_hand:
+                itemdamaged = True
+                damitem = targetequip.off_hand
+            elif targetequip.armor:
+                itemdamaged = True
+                damitem = targetequip.armor
+            if itemdamaged:
+                results.append({'message': Message('Your {0} is damaged by the blow.'.format(damitem.name),libtcod.white)})
+        if self.owner.equipment and self.owner.name.capitalize() == "Player":
+            if self.owner.equipment.main_hand:
+                results.append({'message': Message('Your {0} is damaged by the blow.'.format(self.owner.equipment.main_hand.name),libtcod.white)})
         return results
 
     def heal(self, amount):
