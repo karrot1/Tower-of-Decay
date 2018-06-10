@@ -10,7 +10,7 @@ from mortality import death
 from game_messages import *
 from data_loaders import *
 from menus import *
-
+from mortality import destroy_item, end_item
 
 def main():
     constants = get_constants()
@@ -226,6 +226,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             targeting_over = player_turn_results.get('targeting_over')
             xp = player_turn_results.get('xp')
             equip = player_turn_results.get('equip')
+            itemdestroyed = player_turn_results.get('itemdestroyed')
 
             if message:
                 message_log.add_message(message)
@@ -243,6 +244,11 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 else:
                     message = death(False, dead_entity)
                 message_log.add_message(message)
+            if itemdestroyed:
+                player.inventory.drop_item(itemdestroyed)
+                message = destroy_item(itemdestroyed)
+                message_log.add_message(message)
+                end_item(itemdestroyed)
             if item_added:
                 entities.remove(item_added)
                 game_state = GameStates.ENEMY_TURN
@@ -304,9 +310,14 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                     for enemy_turn_result in enemy_turn_results:
                         message = enemy_turn_result.get('message')
                         dead_entity = enemy_turn_result.get('dead')
-
+                        itemdestroyed = enemy_turn_result.get('itemdestroyed')
                         if message:
                             message_log.add_message(message)
+                        if itemdestroyed:
+                            player.inventory.drop_item(itemdestroyed)
+                            message = destroy_item(itemdestroyed)
+                            message_log.add_message(message)
+                            end_item(itemdestroyed)
                         if dead_entity:
                             if dead_entity == player:
                                 message, game_state = death(True, dead_entity)

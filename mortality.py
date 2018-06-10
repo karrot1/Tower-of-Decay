@@ -27,3 +27,13 @@ def kill_monster(monster):
     monster.ai = None
     monster.name = 'Remains of ' + monster.name
     return death_message
+
+def destroy_item(equip):
+    death_message = Message('Your {0} is destroyed!'.format(equip.name.capitalize()), libtcod.yellow)
+    equip.char = '`'
+    equip.color = libtcod.dark_grey
+    equip.name = 'Remains of ' + equip.name
+    return death_message
+def end_item(equip):
+    equip.equippable = None
+    equip.item = None
