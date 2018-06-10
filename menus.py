@@ -18,14 +18,20 @@ def menu(con, header, options, width, screen_width, screen_height):
     y = int(screen_height/2 - height/2)
     libtcod.console_blit(window, 0, 0, width, height, 0, x, y, 1.0, .7)
 
-def inventory_menu(con, header, inventory, inventory_width, screen_width, screen_height):
-    if len(inventory.items) == 0:
+def inventory_menu(con, header, player, inventory_width, screen_width, screen_height):
+    if len(player.inventory.items) == 0:
         options = ['Inventory is empty. Pick something up, wouldya?']
     else:
         options = []
-        for item in inventory.items:
+        for item in player.inventory.items:
             if item.stack == False:
-                options.append(item.name)
+                if item.equippable:
+                    if player.equipment.main_hand == item or player.equipment.off_hand == item or player.equipment.ring == item or player.equipment.armor == item:
+                        options.append('{0} (Durability: {1}) (equipped)'.format(item.name, item.equippable.hp))
+                    else:
+                        options.append('{0} (Durability: {1})'.format(item.name, item.equippable.hp))
+                else:
+                    options.append()
             else:
                 options.append(item.name + '<' + str(item.stack_amount) + '>')
     menu(con, header, options, inventory_width, screen_width, screen_height)

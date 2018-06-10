@@ -225,6 +225,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             targeting_cancelled = player_turn_results.get('targeting_cancelled')
             targeting_over = player_turn_results.get('targeting_over')
             xp = player_turn_results.get('xp')
+            equip = player_turn_results.get('equip')
 
             if message:
                 message_log.add_message(message)
@@ -250,6 +251,17 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if item_dropped:
                 entities.append(item_dropped)
                 game_state = GameStates.ENEMY_TURN
+            if equip:
+                equip_results = player.equipment.toggle_equip(equip)
+                for equip_results in equip_results:
+                    equipped = equip_results.get('equipped')
+                    dequipped = equip_results.get('dequipped')
+
+                    if equipped:
+                        message_log.add_message(Message('You equipped the {0}'.format(equipped.name)))
+                    if dequipped:
+                        message_log.add_message(Message('You removed the {0}'.format(equipped.name)))
+                game_state = GameStates.ENEMY_TURN
             if targeting_cancelled:
                 message_log.add_message(Message('Targetting cancelled'))
             if targeting_cancelled or targeting_over:
@@ -265,24 +277,26 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                     message_log.add_message(Message(
                         'You grow stronger! You reached level {0}'.format(
                             player.level.current_level) + '!', libtcod.yellow))
-                    player.fighter.max_hp += 20
+                    player.fighter.base_max_hp += 20
                     player.fighter.hp += 20
-                    player.fighter.power += 1
-                    player.fighter.power += 1
+                    player.fighter.base_power += 2
                 elif leveled_up == 2:
                     if player.level.current_level > 0:
                         message_log.add_message(Message(
                             'You grow weaker. You are now level {0}'.format(
                                 player.level.current_level) + '.', libtcod.red))
-                        player.fighter.max_hp -= 20
-                        player.fighter.hp -= 20
-                        player.fighter.power -= 1
-                        player.fighter.power -= 1
+                        player.fighter.base_max_hp -= 20
+                        if (player.fighter.hp > 20):
+                            player.fighter.hp -= 20
+                        else:
+                            player.fighter.hp = 1
+                        player.fighter.base_power -= 2
                     else:
                         player.level.current_level = 1
                         message_log.add_message(Message(
                             'You can grow no weaker. You stay level {0}'.format(
                                 player.level.current_level) + '.', libtcod.red))
+
         if game_state == GameStates.ENEMY_TURN:
             for entity in entities:
                 if entity.ai:

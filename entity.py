@@ -1,10 +1,12 @@
 import libtcodpy as libtcod
 import math
 from render_functions import RenderOrder
+from item import *
 
 class Entity:
     #a generic object to represent basicaly everything
-    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None, item=None, inventory=None, stack=False, visible=True, stairs=None, downstairs=False, level=None):
+    def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None, item=None,
+                 inventory=None, stack=False, visible=True, stairs=None, downstairs=False, level=None, equipment=None, equippable=None):
         self.x = x
         self.y = y
         self.char = char
@@ -21,6 +23,8 @@ class Entity:
         self.stairs = stairs
         self.downstairs = downstairs
         self.level = level
+        self.equipment = equipment
+        self.equippable = equippable
         if (self.stack == True):
             self.stack_amount = 1
 
@@ -36,6 +40,14 @@ class Entity:
             self.stairs.owner = self
         if self.level:
             self.level.owner = self
+        if self.equipment:
+            self.equipment.owner = self
+        if self.equippable:
+            self.equippable.owner = self
+            if not self.item:
+                item = Item()
+                self.item = item
+                self.item.owner = self
 
 
     def move(self, dx, dy):

@@ -6,6 +6,9 @@ from game_states import GameStates
 from GameMap import Map
 from render_functions import RenderOrder
 from level import Level
+from equipment import *
+from Equippable import *
+from equipment_slots import *
 
 def get_constants():
     window_title = 'Tower of Decay'
@@ -66,17 +69,29 @@ def get_constants():
 def get_game_variables(constants):
     inventory_component = Inventory(20)
     level_component = Level(current_level = 5)
-    fighter_component = fighter(hp=100, defense=10, power=10)
-    player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR,
-                    fighter=fighter_component,
-                    inventory=inventory_component,
-                    level = level_component)
+    equipment_componet = Equipment()
+    fighter_component = fighter(hp=100, defense=0, power=10)
+    player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component,
+                    inventory=inventory_component, level = level_component, equipment=equipment_componet)
     cursor = Entity(0, 0, 'X', libtcod.yellow, 'Cursor', blocks=False, render_order=RenderOrder.CURSOR, visible=False)
     entities = [player, cursor]
+    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus = 5)
+    fsword = Entity(0, 0, '/', libtcod.red, 'Flaming Sword', render_order=RenderOrder.ITEM, equippable=equippable_component)
+    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=3)
+    mshield = Entity(0, 0, '[', libtcod.white, 'Mirror Shield',render_order=RenderOrder.ITEM, equippable=equippable_component)
+    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus=7)
+    parmor = Entity(0, 0, '[', libtcod.light_gray, 'Plate Armor', render_order=RenderOrder.ITEM, equippable=equippable_component)
+
+    player.inventory.add_item(fsword)
+    player.equipment.toggle_equip(fsword)
+    player.inventory.add_item(mshield)
+    player.equipment.toggle_equip(mshield)
+    player.inventory.add_item(parmor)
+    player.equipment.toggle_equip(parmor)
+
     game_map = Map(constants['map_width'], constants['map_height'])
     game_map.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
-                      constants['map_width'], constants['map_height'], player, entities, constants['max_monsters_per_room'],
-                      constants['max_items_per_room'])
+                      constants['map_width'], constants['map_height'], player, entities)
     game_state = GameStates.PLAYERS_TURN
 
     message_log = MessageLog(constants['message_x'], constants['message_width'], constants['message_height'])
