@@ -90,7 +90,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
     mouse = libtcod.Mouse()
     hasorb = False
     previous_game_state = game_state
-
+    levelstodrain = math.floor(constants['top_level'] / constants['start_level'])
 
     fov_recompute = True
     fov_map = initialize_fov(game_map)
@@ -146,6 +146,17 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                             fov_map = initialize_fov(game_map)
                             fov_recompute = True
                             libtcod.console_clear(con)
+                            if ((floor % levelstodrain) == 0)and (player.level.current_level > 1):
+                                    player.level.add_xp(-1*player.level.experiance_to_previous_level)
+                                    message_log.add_message(Message(
+                                        'You grow weaker as you approach the Orb of Undeath. You are now level {0}'.format(
+                                            player.level.current_level) + '.', libtcod.red))
+                                    player.fighter.base_max_hp -= 20
+                                    if (player.fighter.hp > 20):
+                                        player.fighter.hp -= 20
+                                    else:
+                                        player.fighter.hp = 1
+                                    player.fighter.base_power -= 2
                         else:
                             levellist[floor] = copy.deepcopy(game_map)
                             floorentities[floor] = entities

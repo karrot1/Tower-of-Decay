@@ -25,7 +25,7 @@ def get_constants():
 
     map_width = 80
     map_height = screen_height - panel_height
-
+    start_level = 5
     room_max_size = 10
     room_min_size = 5
     max_rooms = 25
@@ -62,7 +62,8 @@ def get_constants():
         'max_monsters_per_room': max_monsters_per_room,
         'max_items_per_room': max_items_per_room,
         'colors': colors,
-        'top_level': top_level
+        'top_level': top_level,
+        'start_level': start_level
     }
 
     return constants
