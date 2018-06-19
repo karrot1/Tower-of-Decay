@@ -112,12 +112,14 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         pickup = action.get('pickup')
         show_inventory = action.get('show_inventory')
         inventory_index = action.get('inventory_index')
+        spell_index = action.get('spell_index')
         drop_inventory = action.get('drop_inventory')
         stairs_up = action.get('stairs_up')
         stairs_down = action.get('stairs_down')
         show_character_screen = action.get('show_character_screen')
         exit = action.get('exit')
         targeted = action.get('targeted')
+        cast_spell = action.get('cast_spell')
         fullscreen = action.get('fullscreen')
 
         player_turn_results = []
@@ -241,6 +243,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         if show_inventory:
             previous_game_state = game_state
             game_state = GameStates.SHOW_INVENTORY
+        if cast_spell:
+            previous_game_state = game_state
+            game_state = GameStates.CAST_SPELL
         if drop_inventory:
             previous_game_state = game_state
             game_state = GameStates.DROP_INVENTORY

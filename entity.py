@@ -6,7 +6,7 @@ from item import *
 class Entity:
     #a generic object to represent basicaly everything
     def __init__(self, x, y, char, color, name, blocks=False, render_order=RenderOrder.CORPSE, fighter=None, ai=None, item=None,
-                 inventory=None, stack=False, visible=True, stairs=None, downstairs=False, level=None, equipment=None, equippable=None):
+                 inventory=None, stack=False, visible=True, stairs=None, downstairs=False, level=None, equipment=None, equippable=None, spellcaster=None):
         self.x = x
         self.y = y
         self.char = char
@@ -25,11 +25,14 @@ class Entity:
         self.level = level
         self.equipment = equipment
         self.equippable = equippable
+        self.spellcaster = spellcaster
         if (self.stack == True):
             self.stack_amount = 1
 
         if self.fighter:
             self.fighter.owner = self
+        if self.spellcaster:
+            self.spellcaster.owner = self
         if self.ai:
             self.ai.owner = self
         if self.item:

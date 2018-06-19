@@ -9,6 +9,7 @@ from level import Level
 from equipment import *
 from Equippable import *
 from equipment_slots import *
+from spellcaster import *
 
 def get_constants():
     window_title = 'Tower of Decay'
@@ -73,8 +74,9 @@ def get_game_variables(constants):
     level_component = Level(current_level = 5)
     equipment_componet = Equipment()
     fighter_component = fighter(hp=100, defense=0, power=10)
+    spellcaster_component = spellcaster(mp = 10, casterl = 5)
     player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component,
-                    inventory=inventory_component, level = level_component, equipment=equipment_componet)
+                    inventory=inventory_component, level = level_component, equipment=equipment_componet, spellcaster=spellcaster_component)
     cursor = Entity(0, 0, 'X', libtcod.yellow, 'Cursor', blocks=False, render_order=RenderOrder.CURSOR, visible=False)
     entities = [player, cursor]
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus = 5)

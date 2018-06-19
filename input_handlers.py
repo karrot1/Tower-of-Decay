@@ -41,6 +41,8 @@ def handle_player_turn_keys(key):
         return {'stairs_down': True}
     elif key_char == 'c':
         return{'show_character_screen': True}
+    elif key_char == 'f':
+        return{'cast_spell': True}
     result = quitscreen(key)
     return result
 
@@ -64,6 +66,8 @@ def handle_keys(key, game_state):
         result = handle_inventory_keys(key)
     elif game_state == GameStates.CHARACTER_SCREEN:
         result = handle_character_screen(key)
+    elif game_state == GameStates.CAST_SPELL:
+        result = handle_spellcasting_keys(key)
     else:
         result = {}
     return result
@@ -90,6 +94,14 @@ def handle_inventory_keys(key):
     index = key.c - ord('a')
     if index>= 0:
         return {'inventory_index': index}
+    result = quitscreen(key)
+    return result
+
+
+def handle_spellcasting_keys(key):
+    index = key.c - ord('a')
+    if index>= 0:
+        return {'spell_index': index}
     result = quitscreen(key)
     return result
 

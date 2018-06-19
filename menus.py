@@ -36,6 +36,21 @@ def inventory_menu(con, header, player, inventory_width, screen_width, screen_he
                 options.append(item.name + '<' + str(item.stack_amount) + '>')
     menu(con, header, options, inventory_width, screen_width, screen_height)
 
+
+def spellcasting_menu(con, header, player, inventory_width, screen_width, screen_height):
+    options = []
+    if player.spellcaster.cl >=5:
+        options.append("Level 5: Disintigrate")
+    if player.spellcaster.cl >=4:
+        options.append("Level 4: Fireball")
+    if player.spellcaster.cl >=3:
+        options.append("Level 3: Confusion")
+    if player.spellcaster.cl >=2:
+        options.append("Level 2: Smite")
+    if player.spellcaster.cl >=1:
+        options.append("Level 1: Magic Missile")
+    menu(con, header, options, inventory_width, screen_width, screen_height)
+
 def main_menu(con,screen_width, screen_height):
 
     libtcod.console_set_default_foreground(0, libtcod.green)

@@ -75,6 +75,8 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
         y+=1
 
     render_bar(panel, 1, 1, bar_width, 'HP', player.fighter.hp, player.fighter.max_hp, libtcod.red, libtcod.dark_grey)
+    render_bar(panel, 1, 2, bar_width, 'MP', player.spellcaster.mp, player.spellcaster.max_mp, libtcod.blue, libtcod.dark_grey)
+
     libtcod.console_print_ex(panel, 1, 3, libtcod.BKGND_NONE, libtcod.LEFT, 'Dungeon level: {0}'.format(game_map.dungeon_level))
     libtcod.console_set_default_foreground(panel, libtcod.light_grey)
     libtcod.console_print_ex(panel, 1, 0, libtcod.BKGND_NONE, libtcod.LEFT,
@@ -86,6 +88,10 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
         else:
             inventory_text = 'Press the key next to an item to drop it, or Esc to cancel.\n'
         inventory_menu(con, inventory_text, player, 50, screen_width, screen_height)
+    elif game_state == GameStates.CAST_SPELL:
+        print("entered cast spell")
+        spellcasting_text = "Press the key next to a spell to cast it, or Esc to cancel.\n"
+        spellcasting_menu(con, spellcasting_text, player, 50, screen_width, screen_height)
     elif game_state == GameStates.CHARACTER_SCREEN:
         character_screen(player, 30, 10, screen_width, screen_height)
 
