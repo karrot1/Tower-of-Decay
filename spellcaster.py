@@ -41,10 +41,11 @@ class spellcaster:
 
     def cast(self, index, **kwargs):
         results = []
-        if self.owner.spellcaster.mp < index + 1 and not(kwargs.get('target_x') or kwargs.get('target_y')):
-            results.append({'message': Message('You don\'t have enough MP to cast that.')})
-            return results
-        if not(kwargs.get('target_x') or kwargs.get('target_y')) and not index == 1:
+
+        if kwargs.get('target_x') or kwargs.get('target_y') or index == 1:
+            if self.owner.spellcaster.mp < index + 1:
+                results.append({'message': Message('You don\'t have enough MP to cast that.')})
+                return results
             self.owner.spellcaster.alter_mp((index + 1)*-1)
         if index == 0:
             #magic missile

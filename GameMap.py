@@ -167,7 +167,7 @@ class Map:
                     item = Entity(x, y, '/', libtcod.sky, 'Sword', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'shield':
                     equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 1)
-                    item = Entity(x, y, '[', libtcod.grey, 'Shield', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                    item = Entity(x, y, ']', libtcod.grey, 'Shield', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'health_ring':
 
                     equippable_component = Equippable(EquipmentSlots.RING, max_hp_bonus=10)
