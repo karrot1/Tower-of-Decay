@@ -8,7 +8,7 @@
                                                                __/ |
                                                               |___/ 
 
-Tower of Decay is a roguelike with a twist: the player levels backwards, becoming weaker as the game goes on
+Tower of Decay is a roguelike with a twist: the player levels backwards, becoming weaker as the game goes on.
 
 Python 3 is required to play Tower of Decay
 
