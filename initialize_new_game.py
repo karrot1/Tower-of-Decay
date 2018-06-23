@@ -36,6 +36,9 @@ def get_constants():
     fov_algorithm = 0
     fov_light_walls = True
     fov_radius = 10
+    hp_per_level = 20
+    mp_per_level = 2
+    power_per_level = 2
     colors = {
         'dark_wall': libtcod.darker_grey,
         'dark_ground': libtcod.darker_grey,
@@ -64,17 +67,21 @@ def get_constants():
         'max_items_per_room': max_items_per_room,
         'colors': colors,
         'top_level': top_level,
-        'start_level': start_level
+        'start_level': start_level,
+        'hp_per_level': hp_per_level,
+        'mp_per_level': mp_per_level,
+        'power_per_level': power_per_level
     }
 
     return constants
 
 def get_game_variables(constants):
     inventory_component = Inventory(20)
-    level_component = Level(current_level = 5)
+    starting_level = 5
+    level_component = Level(current_level = starting_level)
     equipment_componet = Equipment()
-    fighter_component = fighter(hp=100, defense=0, power=10)
-    spellcaster_component = spellcaster(mp = 10, casterl = 5)
+    fighter_component = fighter(hp=starting_level*constants['hp_per_level'], defense=0, power=starting_level*constants['power_per_level'])
+    spellcaster_component = spellcaster(mp = starting_level*constants['mp_per_level'], casterl = starting_level)
     player = Entity(0, 0, '@', libtcod.white, 'Player', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component,
                     inventory=inventory_component, level = level_component, equipment=equipment_componet, spellcaster=spellcaster_component)
     cursor = Entity(0, 0, 'X', libtcod.yellow, 'Cursor', blocks=False, render_order=RenderOrder.CURSOR, visible=False)

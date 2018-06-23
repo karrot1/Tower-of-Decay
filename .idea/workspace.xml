@@ -4,8 +4,10 @@
     <list default="true" id="83b48ef0-bc64-4703-9c67-858017cca0c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.dat" afterPath="$PROJECT_DIR$/savegame.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine.py" afterPath="$PROJECT_DIR$/engine.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/initialize_new_game.py" afterPath="$PROJECT_DIR$/initialize_new_game.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.bak" afterPath="$PROJECT_DIR$/savegame.bak" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.dir" afterPath="$PROJECT_DIR$/savegame.dir" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spellcaster.py" afterPath="$PROJECT_DIR$/spellcaster.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,8 +25,8 @@
       <file leaf-file-name="engine.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/engine.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="341" column="46" lean-forward="true" selection-start-line="341" selection-start-column="46" selection-end-line="341" selection-end-column="46" />
+            <state relative-caret-position="448">
+              <caret line="369" column="39" lean-forward="true" selection-start-line="369" selection-start-column="39" selection-end-line="369" selection-end-column="39" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -35,8 +37,8 @@
       <file leaf-file-name="spellcaster.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spellcaster.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="555">
-              <caret line="57" column="56" lean-forward="false" selection-start-line="57" selection-start-column="56" selection-end-line="57" selection-end-column="56" />
+            <state relative-caret-position="510">
+              <caret line="32" column="26" lean-forward="false" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -57,6 +59,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="108">
               <caret line="50" column="16" lean-forward="true" selection-start-line="50" selection-start-column="16" selection-end-line="50" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="initialize_new_game.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/initialize_new_game.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="68" column="31" lean-forward="true" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -115,8 +127,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>handle_death</find>
-      <find>you died</find>
       <find>die</find>
       <find>if d</find>
       <find>dead</find>
@@ -145,6 +155,8 @@
       <find>wait</find>
       <find>for</find>
       <find>player_cast_spell</find>
+      <find>game_state</find>
+      <find>equip</find>
     </findStrings>
     <replaceStrings>
       <replace>constants['screen_width']</replace>
@@ -182,13 +194,13 @@
         <option value="$PROJECT_DIR$/mortality.py" />
         <option value="$PROJECT_DIR$/warfighter.py" />
         <option value="$PROJECT_DIR$/entity.py" />
-        <option value="$PROJECT_DIR$/initialize_new_game.py" />
         <option value="$PROJECT_DIR$/game_states.py" />
         <option value="$PROJECT_DIR$/input_handlers.py" />
         <option value="$PROJECT_DIR$/inventory.py" />
         <option value="$PROJECT_DIR$/render_functions.py" />
         <option value="$PROJECT_DIR$/GameMap.py" />
         <option value="$PROJECT_DIR$/menus.py" />
+        <option value="$PROJECT_DIR$/initialize_new_game.py" />
         <option value="$PROJECT_DIR$/spellcaster.py" />
         <option value="$PROJECT_DIR$/engine.py" />
       </list>
@@ -645,6 +657,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="10" lean-forward="true" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -753,14 +766,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/initialize_new_game.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="82" column="61" lean-forward="true" selection-start-line="82" selection-start-column="61" selection-end-line="82" selection-end-column="90" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/input_handlers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -803,18 +808,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/initialize_new_game.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="68" column="31" lean-forward="true" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/spellcaster.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="555">
-          <caret line="57" column="56" lean-forward="false" selection-start-line="57" selection-start-column="56" selection-end-line="57" selection-end-column="56" />
+        <state relative-caret-position="510">
+          <caret line="32" column="26" lean-forward="false" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/engine.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="341" column="46" lean-forward="true" selection-start-line="341" selection-start-column="46" selection-end-line="341" selection-end-column="46" />
+        <state relative-caret-position="448">
+          <caret line="369" column="39" lean-forward="true" selection-start-line="369" selection-start-column="39" selection-end-line="369" selection-end-column="39" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
           </folding>

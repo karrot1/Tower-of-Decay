@@ -154,16 +154,18 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                             fov_recompute = True
                             libtcod.console_clear(con)
                             if ((floor % levelstodrain) == 0)and (player.level.current_level > 1):
+                            #if True: #test code obviously
                                     player.level.add_xp(-1*player.level.experiance_to_previous_level)
                                     message_log.add_message(Message(
                                         'You grow weaker as you approach the Orb of Undeath. You are now level {0}'.format(
                                             player.level.current_level) + '.', libtcod.red))
-                                    player.fighter.base_max_hp -= 20
-                                    if (player.fighter.hp > 20):
-                                        player.fighter.hp -= 20
+                                    player.fighter.base_max_hp -= constants['hp_per_level']
+                                    if (player.fighter.hp > constants['hp_per_level']):
+                                        player.fighter.hp -= constants['hp_per_level']
                                     else:
                                         player.fighter.hp = 1
-                                    player.fighter.base_power -= 2
+                                    player.spellcaster.delevel(constants['mp_per_level'])
+                                    player.fighter.base_power -= constants['power_per_level']
                         else:
                             levellist[floor] = copy.deepcopy(game_map)
                             floorentities[floor] = entities
@@ -327,6 +329,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 entities.append(item_dropped)
                 game_state = GameStates.ENEMY_TURN
             if equip:
+                if (player.fighter.hp > player.fighter.max_hp):
+                    player.fighter.hp = player.fighter.max_hp
                 equip_results = player.equipment.toggle_equip(equip)
                 for equip_result in equip_results:
                     equipped = equip_result.get('equipped')
@@ -355,20 +359,22 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                     message_log.add_message(Message(
                         'You grow stronger! You reached level {0}'.format(
                             player.level.current_level) + '!', libtcod.yellow))
-                    player.fighter.base_max_hp += 20
-                    player.fighter.hp += 20
-                    player.fighter.base_power += 2
+                    player.fighter.base_max_hp += constants['hp_per_level']
+                    player.fighter.hp += constants['hp_per_level']
+                    player.fighter.base_power += constants['power_per_level']
+                    player.spellcaster.levelup(constants['mp_per_level'])
                 elif leveled_up == 2:
                     if player.level.current_level > 0:
                         message_log.add_message(Message(
                             'You grow weaker. You are now level {0}'.format(
                                 player.level.current_level) + '.', libtcod.red))
-                        player.fighter.base_max_hp -= 20
-                        if (player.fighter.hp > 20):
-                            player.fighter.hp -= 20
+                        player.fighter.base_max_hp -= constants['hp_per_level']
+                        if (player.fighter.hp > constants['hp_per_level']):
+                            player.fighter.hp -= constants['hp_per_level']
                         else:
                             player.fighter.hp = 1
-                        player.fighter.base_power -= 2
+                        player.fighter.base_power -= constants['power_per_level']
+                        player.spellcaster.delevel(constants['mp_per_level'])
                     else:
                         player.level.current_level = 1
                         message_log.add_message(Message(

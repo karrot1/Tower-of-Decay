@@ -22,6 +22,15 @@ class spellcaster:
 
         return self.base_cl + bonus
 
+    def delevel(self, mpdown):
+        self.base_cl-=1
+        self.alter_mp(-mpdown)
+        self.base_max_mp -=mpdown
+
+    def levelup(self, mpdown):
+        self.base_cl+=1
+        self.alter_mp(mpdown)
+        self.base_max_mp +=mpdown
 
     def alter_mp(self, amount):
         self.mp += amount
