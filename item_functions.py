@@ -41,6 +41,48 @@ def cast_smite(*args, **kwargs):
         results.append({'consumed': False, 'target': None, 'message': Message('No enemy is within range.')})
     return results
 
+def cast_magic_missile(*args, **kwargs):
+    entities = kwargs.get('entities')
+    fov_map = kwargs.get('fov_map')
+    damage = kwargs.get('damage')
+    maximum_range = kwargs.get('maximum_range')
+    target_x = kwargs.get('target_x')
+    target_y = kwargs.get('target_y')
+    results = []
+    target = None
+    if not libtcod.map_is_in_fov(fov_map, target_x, target_y):
+        results.append({'consumed': False, 'message': Message('You can not target a tile you can not see.')})
+        return results
+    for entity in entities:
+        if entity.x == target_x and entity.y == target_y and entity.ai:
+            results.append({'consumed': True, 'target': target, 'message': Message(
+                'The {0}\s atoms are rent in twain! {1} damage!'.format(entity.name, damage))})
+            results.extend(entity.fighter.take_damage(damage))
+    else:
+        results.append({'consumed': False, 'message': Message('There is no targetable enemy at that location.')})
+    return results
+
+def cast_disintigrate(*args, **kwargs):
+    entities = kwargs.get('entities')
+    fov_map = kwargs.get('fov_map')
+    damage = kwargs.get('damage')
+    maximum_range = kwargs.get('maximum_range')
+    target_x = kwargs.get('target_x')
+    target_y = kwargs.get('target_y')
+    results = []
+    target = None
+    if not libtcod.map_is_in_fov(fov_map, target_x, target_y):
+        results.append({'consumed': False, 'message': Message('You can not target a tile you can not see.')})
+        return results
+    for entity in entities:
+        if entity.x == target_x and entity.y == target_y and entity.ai:
+            results.append({'consumed': True, 'target': target, 'message': Message(
+                'The {0} is hit by your magical missile! {1} damage!'.format(entity.name, damage))})
+            results.extend(entity.fighter.take_damage(damage))
+    else:
+        results.append({'consumed': False, 'message': Message('There is no targetable enemy at that location.')})
+    return results
+
 def cast_fireball(*args, **kwargs):
     entities = kwargs.get('entities')
     fov_map = kwargs.get('fov_map')

@@ -51,6 +51,9 @@ class spellcaster:
             #magic missile
             if not(kwargs.get('target_x') or kwargs.get('target_y')):
                 results.append({'targeting_spell': 0})
+            else:
+                results.extend(cast_magic_missile(self.owner, **kwargs))
+                results.append({'player_cast_spell': 1})
         elif index == 1:
             results.extend(cast_smite(self.owner, damage=20, maximum_range=5, **kwargs))
             results.append({'player_cast_spell': 1})
@@ -69,4 +72,7 @@ class spellcaster:
         else:
             if not (kwargs.get('target_x') or kwargs.get('target_y')):
                 results.append({'targeting_spell': 4})
+            else:
+                results.extend(cast_disintigrate(self.owner, **kwargs))
+                results.append({'player_cast_spell': 1})
         return results
