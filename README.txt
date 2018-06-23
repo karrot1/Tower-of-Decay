@@ -1,24 +1,25 @@
 
+ _____                               __  ______                     
+|_   _|                             / _| |  _  \                    
+  | | _____      _____ _ __    ___ | |_  | | | |___  ___ __ _ _   _ 
+  | |/ _ \ \ /\ / / _ \ '__|  / _ \|  _| | | | / _ \/ __/ _` | | | |
+  | | (_) \ V  V /  __/ |    | (_) | |   | |/ /  __/ (_| (_| | |_| |
+  \_/\___/ \_/\_/ \___|_|     \___/|_|   |___/ \___|\___\__,_|\__, |
+                                                               __/ |
+                                                              |___/ 
+
 Tower of Decay is a roguelike with a twist: the player levels backwards, becoming weaker as the game goes on
 
 Python 3 is required to play Tower of Decay
 
 Legend:
-
   @: the player character! That's you.
-
   #: wall
-
   . : ground
-
   <: upwards staircase
-
   >: downwards staircase
-
 Enemies
-
   s: skeleton
-
   L: lich
 Items:
   !: potion
