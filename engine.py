@@ -352,9 +352,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if xp:
                 leveled_up = player.level.add_xp(xp)
                 if (xp < 0):
-                    message_log.add_message(Message('You lose {0} experiance points'.format(abs(xp))))
+                    message_log.add_message(Message('You lose {0} XP'.format(abs(xp))))
                 else:
-                    message_log.add_message(Message('You gain {0} experiance points'.format(abs(xp))))
+                    message_log.add_message(Message('You gain {0} XP'.format(abs(xp))))
                 if leveled_up == 1:
                     message_log.add_message(Message(
                         'You grow stronger! You reached level {0}'.format(
