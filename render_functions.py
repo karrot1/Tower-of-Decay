@@ -89,7 +89,6 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
             inventory_text = 'Press the key next to an item to drop it, or Esc to cancel.\n'
         inventory_menu(con, inventory_text, player, 50, screen_width, screen_height)
     elif game_state == GameStates.CAST_SPELL:
-        print("entered cast spell")
         spellcasting_text = "Press the key next to a spell to cast it, or Esc to cancel.\n"
         spellcasting_menu(con, spellcasting_text, player, 50, screen_width, screen_height)
     elif game_state == GameStates.CHARACTER_SCREEN:

@@ -119,7 +119,7 @@ class Map:
             'skeleton': 80,
             'lich': from_dungeon_level([[15, 3], [30, 5], [60, 7]], self.dungeon_level)
         }
-        item_chances = {
+        item_chance = {
             'healing_potion': 35,
             'lightning_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
             'fireball_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
@@ -129,7 +129,6 @@ class Map:
             'health_ring': from_dungeon_level([[5, 1]], self.dungeon_level),
             'armor': from_dungeon_level([[5, 4]], self.dungeon_level)
         }
-        item_chance = {'healing_potion': 70, 'fireball_scroll': 10, 'confusion_scroll': 10, 'smite_scroll': 10}
         for i in range(number_of_monsters):
             #chose random location to place them
             x = randint(room.x1 + 1, room.x2 -1)
@@ -165,16 +164,18 @@ class Map:
                               item=item_component, stack=True)
                 elif item_choice == 'sword':
                     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
-                    item = Entity(x, y, '/', libtcod.sky, 'Sword', equippable=equippable_component)
+                    item = Entity(x, y, '/', libtcod.sky, 'Sword', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'shield':
                     equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 1)
-                    item = Entity(x, y, '[', libtcod.grey, 'Shield', equippable=equippable_component)
+                    item = Entity(x, y, '[', libtcod.grey, 'Shield', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'health_ring':
+
                     equippable_component = Equippable(EquipmentSlots.RING, max_hp_bonus=10)
-                    item = Entity(x, y, 'o', libtcod.sky, 'Ring of Health', equippable=equippable_component)
+                    item = Entity(x, y, 'o', libtcod.sky, 'Ring of Health', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'armor':
+
                     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus = 2)
-                    item = Entity(x, y, '[', libtcod.darker_gray, 'Chain Mail', equippable=equippable_component)
+                    item = Entity(x, y, '[', libtcod.darker_gray, 'Chain Mail', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 else:
                     item_component = Item(use_function=cast_smite, damage=20, maximum_range=5)
                     item = Entity(x, y, '?', libtcod.lightest_yellow, 'Scroll of Smite', render_order=RenderOrder.ITEM,
