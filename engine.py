@@ -321,9 +321,6 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if item_added:
                 entities.remove(item_added)
                 game_state = GameStates.ENEMY_TURN
-            if player_cast_spell:
-                print("Spell was cast")
-                game_state = GameStates.ENEMY_TURN
             if item_consumed:
                 game_state = GameStates.ENEMY_TURN
             if item_dropped:
@@ -345,6 +342,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if targeting_cancelled or targeting_over:
                 cursor.visible = False
                 game_state = previous_game_state
+            if player_cast_spell:
+                previous_game_state = GameStates.ENEMY_TURN
+                game_state = GameStates.ENEMY_TURN
             if xp:
                 leveled_up = player.level.add_xp(xp)
                 if (xp < 0):

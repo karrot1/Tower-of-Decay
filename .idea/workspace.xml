@@ -3,15 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="83b48ef0-bc64-4703-9c67-858017cca0c7" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.dat" afterPath="$PROJECT_DIR$/savegame.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GameMap.py" afterPath="$PROJECT_DIR$/GameMap.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/engine.py" afterPath="$PROJECT_DIR$/engine.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/inventory.py" afterPath="$PROJECT_DIR$/inventory.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/menus.py" afterPath="$PROJECT_DIR$/menus.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/render_functions.py" afterPath="$PROJECT_DIR$/render_functions.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.bak" afterPath="$PROJECT_DIR$/savegame.bak" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/savegame.dir" afterPath="$PROJECT_DIR$/savegame.dir" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spellcaster.py" afterPath="$PROJECT_DIR$/spellcaster.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,8 +23,8 @@
       <file leaf-file-name="engine.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/engine.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="686">
-              <caret line="401" column="48" lean-forward="true" selection-start-line="401" selection-start-column="48" selection-end-line="401" selection-end-column="48" />
+            <state relative-caret-position="561">
+              <caret line="341" column="46" lean-forward="true" selection-start-line="341" selection-start-column="46" selection-end-line="341" selection-end-column="46" />
               <folding>
                 <element signature="e#0#27#0" expanded="true" />
               </folding>
@@ -195,8 +189,8 @@
         <option value="$PROJECT_DIR$/render_functions.py" />
         <option value="$PROJECT_DIR$/GameMap.py" />
         <option value="$PROJECT_DIR$/menus.py" />
-        <option value="$PROJECT_DIR$/engine.py" />
         <option value="$PROJECT_DIR$/spellcaster.py" />
+        <option value="$PROJECT_DIR$/engine.py" />
       </list>
     </option>
   </component>
@@ -679,6 +673,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="36" column="20" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -818,8 +813,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/engine.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="686">
-          <caret line="401" column="48" lean-forward="true" selection-start-line="401" selection-start-column="48" selection-end-line="401" selection-end-column="48" />
+        <state relative-caret-position="561">
+          <caret line="341" column="46" lean-forward="true" selection-start-line="341" selection-start-column="46" selection-end-line="341" selection-end-column="46" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
           </folding>
