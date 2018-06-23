@@ -78,6 +78,7 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
     render_bar(panel, 1, 2, bar_width, 'MP', player.spellcaster.mp, player.spellcaster.max_mp, libtcod.blue, libtcod.dark_grey)
 
     libtcod.console_print_ex(panel, 1, 3, libtcod.BKGND_NONE, libtcod.LEFT, 'Dungeon level: {0}'.format(game_map.dungeon_level))
+    libtcod.console_print_ex(panel, 1, 4, libtcod.BKGND_NONE, libtcod.LEFT, 'Character Level: {0}'.format(player.level.current_level))
     libtcod.console_set_default_foreground(panel, libtcod.light_grey)
     libtcod.console_print_ex(panel, 1, 0, libtcod.BKGND_NONE, libtcod.LEFT,
                              get_names_under_mouse(mouse, entities, fov_map))
