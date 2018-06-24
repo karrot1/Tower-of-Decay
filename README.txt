@@ -17,7 +17,7 @@ To start the game, run engine.py
 Legend:
   @: the player character! That's you.
   #: wall
-  . : ground
+  .: ground
   <: upwards staircase
   >: downwards staircase
 Enemies
