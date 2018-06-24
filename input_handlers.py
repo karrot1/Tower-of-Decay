@@ -117,7 +117,7 @@ def handle_targeting_keys(key):
     if (movement != {'move': (0, 0)}):
         return movement
     key_char = chr(key.c)
-    if key_char == 'a':
+    if key_char == 'g':
         return{'targeted': True}
     result = quitscreen(key)
     return result

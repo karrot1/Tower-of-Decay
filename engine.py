@@ -302,7 +302,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 cursor.x = player.x
                 cursor.y = player.y
                 cursor.visible = True
-                message_log.add_message(Message('Press a to select target.'))
+                message_log.add_message(Message('Press g to select target.'))
             if targeting_from_spell:
                 previous_game_state = GameStates.PLAYERS_TURN
                 game_state = GameStates.TARGETING
@@ -310,7 +310,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 cursor.x = player.x
                 cursor.y = player.y
                 cursor.visible = True
-                message_log.add_message(Message('Press a to select target.'))
+                message_log.add_message(Message('Press g to select target.'))
             if dead_entity:
                 if dead_entity == player:
                     return 2

@@ -59,5 +59,5 @@ Controls:
     Escape: exits the menu
   Targeting
     Cursor movement is identical to normal gameplay
-    A: selects target
+    G: selects target
     Escape: return to normal gameplay
