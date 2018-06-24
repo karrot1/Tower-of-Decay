@@ -33,15 +33,15 @@ Items:
 Controls:
   Normal Gameplay
     Movement
-      Arrow keys or number pad to move
-	 W: move up
-	 X: move down
-	 A: move left
-	 D: move right
-      Q: move up and to the left
-      E: move up and to the right
-      Z: move down and to the left
-      C: move down and to the right
+     	Arrow keys or number pad to move
+	W: move up
+	X: move down
+	A: move left
+	D: move right
+     	Q: move up and to the left
+     	E: move up and to the right
+     	Z: move down and to the left
+     	C: move down and to the right
     Other
       <: move up a flight of upwards stairs
       >: move down a flight of downwards stairs
