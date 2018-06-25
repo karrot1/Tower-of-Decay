@@ -46,6 +46,9 @@ class spellcaster:
             if self.owner.spellcaster.mp < index + 1:
                 results.append({'message': Message('You don\'t have enough MP to cast that.')})
                 return results
+            if self.owner.spellcaster.cl < index + 1:
+                results.append({'message': Message('You aren\'t high enough level to cast that.')})
+                return results
             self.owner.spellcaster.alter_mp((index + 1)*-1)
         if index == 0:
             #magic missile
