@@ -29,7 +29,27 @@ Items:
   [: armor
   ]: shield
   ?: scroll
-  /: sword 
+  /: weapon
+
+Item stats:
+Weapons:
+    Flaming Sword: +5 atk
+    Longsword: +4 atk
+    Sword: +3 atk
+    Short Sword: +2 atk
+    Rusty Dagger: +1 atk
+Armors:
+    Plate Armor: 6 def
+    Breastplate: 5 def
+    Mail Shirt: 4 def
+    Leather Armor: 3 def
+    Cloth Gambeson: 2 def
+Shields:
+    Mirror Shield: +4 def
+    Tower Shield: +3 def
+    Shield: +2 def
+    Buckler: +1 def
+
 Controls:
   Normal Gameplay
     Movement
@@ -52,7 +72,7 @@ Controls:
      	G: pick up an item
      	Escape: Quits the game
      	Hover the mouse over a space to look at its contents
-        Keyboard only looking is not yet implemented
+        Keyboard looking is not yet implemented
 	S and 5: wait
   Menus
     Select the letter next to the menu option you wish to select

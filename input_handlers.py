@@ -4,23 +4,23 @@ from game_states import *
 def handle_movement_keys(key):
     key_char = chr(key.c)
     # movement
-    if key.vk == libtcod.KEY_UP or key_char == 'w' or key_char == '8':
+    if key.vk == libtcod.KEY_UP or key_char == 'w' or key.vk == libtcod.KEY_KP8:
         return {'move': (0, -1)}
-    elif key.vk == libtcod.KEY_DOWN or key_char == 'x' or key_char == '2':
+    elif key.vk == libtcod.KEY_DOWN or key_char == 'x' or key_char == libtcod.KEY_KP2:
         return {'move': (0, 1)}
-    elif key.vk == libtcod.KEY_LEFT or key_char == 'a' or key_char == '4':
+    elif key.vk == libtcod.KEY_LEFT or key_char == 'a' or key_char == libtcod.KEY_KP:
         return {'move': (-1, 0)}
-    elif key.vk == libtcod.KEY_RIGHT or key_char == 'd' or key_char == '6':
+    elif key.vk == libtcod.KEY_RIGHT or key_char == 'd' or key_char == libtcod.KEY_KP:
         return {'move': (1, 0)}
-    elif key_char == 'q' or key_char == '7':
+    elif key_char == 'q' or key_char == libtcod.KEY_KP7:
         return {'move': (-1, -1)}
-    elif key_char == 'e' or key_char == '9':
+    elif key_char == 'e' or key_char == libtcod.KEY_KP9:
         return {'move': (1, -1)}
-    elif key_char == 'z' or key_char == '1':
+    elif key_char == 'z' or key_char == libtcod.KEY_KP1:
         return {'move': (-1, 1)}
-    elif key_char == 'c' or key_char == '3':
+    elif key_char == 'c' or key_char == libtcod.KEY_KP3:
         return {'move': (1, 1)}
-    elif key_char == 's' or key_char == '5':
+    elif key_char == 's' or key_char == libtcod.KEY_KP5:
         return {'wait': True}
     return {'move': (0, 0)}
 

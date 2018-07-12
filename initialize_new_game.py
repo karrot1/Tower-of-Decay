@@ -88,9 +88,9 @@ def get_game_variables(constants):
     entities = [player, cursor]
     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus = 5)
     fsword = Entity(0, 0, '/', libtcod.red, 'Flaming Sword', render_order=RenderOrder.ITEM, equippable=equippable_component)
-    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=3)
+    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=4)
     mshield = Entity(0, 0, '[', libtcod.white, 'Mirror Shield',render_order=RenderOrder.ITEM, equippable=equippable_component)
-    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus=7)
+    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus=6)
     parmor = Entity(0, 0, '[', libtcod.light_gray, 'Plate Armor', render_order=RenderOrder.ITEM, equippable=equippable_component)
 
     player.inventory.add_item(fsword)

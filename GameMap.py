@@ -117,17 +117,25 @@ class Map:
         number_of_items = randint(0, max_items_per_room)
         monster_chances = {
             'skeleton': 80,
-            'lich': from_dungeon_level([[15, 3], [30, 5], [60, 7]], self.dungeon_level)
+            'lich': from_dungeon_level([[20, 5], [10, 10], [5, 15]], self.dungeon_level)
         }
         item_chance = {
             'healing_potion': 35,
-            'lightning_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
-            'fireball_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
-            'confusion_scroll': from_dungeon_level([[10, 2]], self.dungeon_level),
-            'sword': from_dungeon_level([[5, 4]], self.dungeon_level),
-            'shield': from_dungeon_level([[15, 8]], self.dungeon_level),
+            'lightning_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
+            'fireball_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
+            'confusion_scroll': from_dungeon_level([[10, 8]], self.dungeon_level),
             'health_ring': from_dungeon_level([[5, 1]], self.dungeon_level),
-            'armor': from_dungeon_level([[5, 4]], self.dungeon_level)
+            'sword4': from_dungeon_level([[5, 5]], self.dungeon_level),
+            'shield4': from_dungeon_level([[5, 5]], self.dungeon_level),
+            'armor4': from_dungeon_level([[5, 5]], self.dungeon_level),
+            'sword3': from_dungeon_level([[5, 10]], self.dungeon_level),
+            'shield3': from_dungeon_level([[5, 10]], self.dungeon_level),
+            'armor3': from_dungeon_level([[5, 10]], self.dungeon_level),
+            'sword2': from_dungeon_level([[5, 15]], self.dungeon_level),
+            'shield2': from_dungeon_level([[5, 15]], self.dungeon_level),
+            'armor2': from_dungeon_level([[5, 15]], self.dungeon_level),
+            'sword1': from_dungeon_level([[5, 20]], self.dungeon_level),
+            'armor1': from_dungeon_level([[5, 20]], self.dungeon_level)
         }
         for i in range(number_of_monsters):
             #chose random location to place them
@@ -162,20 +170,44 @@ class Map:
                     item_component = Item(use_function=cast_confuse, targeting=True)
                     item = Entity(x, y, '?', libtcod.lightest_yellow, 'Scroll of Confusion', render_order=RenderOrder.ITEM,
                               item=item_component, stack=True)
-                elif item_choice == 'sword':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
-                    item = Entity(x, y, '/', libtcod.sky, 'Sword', equippable=equippable_component, render_order=RenderOrder.ITEM)
-                elif item_choice == 'shield':
-                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 1)
-                    item = Entity(x, y, ']', libtcod.grey, 'Shield', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'health_ring':
-
                     equippable_component = Equippable(EquipmentSlots.RING, max_hp_bonus=10)
                     item = Entity(x, y, 'o', libtcod.sky, 'Ring of Health', equippable=equippable_component, render_order=RenderOrder.ITEM)
-                elif item_choice == 'armor':
-
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus = 2)
-                    item = Entity(x, y, '[', libtcod.darker_gray, 'Chain Mail', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'sword4':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
+                    item = Entity(x, y, '/', libtcod.sky, 'Longsword', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'shield4':
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 3)
+                    item = Entity(x, y, ']', libtcod.sky, 'Tower Shield', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'armor4':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus = 5)
+                    item = Entity(x, y, '[', libtcod.sky, 'Breastplate', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'sword3':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
+                    item = Entity(x, y, '/', libtcod.sky, 'Sword', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'shield3':
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 2)
+                    item = Entity(x, y, ']', libtcod.sky, 'Shield', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'armor3':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus = 4)
+                    item = Entity(x, y, '[', libtcod.sky, 'Mail Shirt', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'sword2':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=2)
+                    item = Entity(x, y, '/', libtcod.sky, 'Short Sword', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'shield2':
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 1)
+                    item = Entity(x, y, ']', libtcod.dark_sepia, 'Buckler', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'armor2':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus = 3)
+                    item = Entity(x, y, '[', libtcod.dark_sepia, 'Leather Armor', equippable=equippable_component, render_order=RenderOrder.ITEM)
+                elif item_choice == 'sword1':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=1)
+                    item = Entity(x, y, '/', libtcod.sky, 'Rusty Dagger', equippable=equippable_component,
+                                  render_order=RenderOrder.ITEM)
+                elif item_choice == 'armor1':
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus=3)
+                    item = Entity(x, y, '[', libtcod.dark_sepia, 'Cloth Gambeson', equippable=equippable_component,
+                                  render_order=RenderOrder.ITEM)
                 else:
                     item_component = Item(use_function=cast_smite, damage=20, maximum_range=5)
                     item = Entity(x, y, '?', libtcod.lightest_yellow, 'Scroll of Smite', render_order=RenderOrder.ITEM,
@@ -183,12 +215,10 @@ class Map:
 
                 entities.append(item)
 
-    def next_floor(self, player, cursor, message_log, constants):
+    def next_floor(self, player, cursor, constants):
         self.dungeon_level += 1
         entities = [player, cursor]
         self.tiles = self.initialize_tiles()
         self.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
                       constants['map_width'], constants['map_height'], player, entities, constants['top_level'])
-        #player.fighter.heal(player.fighter.max_hp//2)
-        #message_log.add_message(Message('You take a moment to rest, and recover your strength.', libtcod.light_violet))
         return entities
