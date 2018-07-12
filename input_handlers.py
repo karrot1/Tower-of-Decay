@@ -8,9 +8,9 @@ def handle_movement_keys(key):
         return {'move': (0, -1)}
     elif key.vk == libtcod.KEY_DOWN or key_char == 'x' or key_char == libtcod.KEY_KP2:
         return {'move': (0, 1)}
-    elif key.vk == libtcod.KEY_LEFT or key_char == 'a' or key_char == libtcod.KEY_KP:
+    elif key.vk == libtcod.KEY_LEFT or key_char == 'a' or key_char == libtcod.KEY_KP4:
         return {'move': (-1, 0)}
-    elif key.vk == libtcod.KEY_RIGHT or key_char == 'd' or key_char == libtcod.KEY_KP:
+    elif key.vk == libtcod.KEY_RIGHT or key_char == 'd' or key_char == libtcod.KEY_KP6:
         return {'move': (1, 0)}
     elif key_char == 'q' or key_char == libtcod.KEY_KP7:
         return {'move': (-1, -1)}
