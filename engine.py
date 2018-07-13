@@ -234,9 +234,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                         fov_recompute = True
                 game_state = GameStates.ENEMY_TURN
             elif wait:
-                player.spellcaster.alter_mp(1)
-                if (player.fighter.hp < player.fighter.max_hp):
-                    player.fighter.hp +=1
+                #player.spellcaster.alter_mp(1)
+                #if (player.fighter.hp < player.fighter.max_hp):
+                    #player.fighter.hp +=1
                 game_state = GameStates.ENEMY_TURN
             elif pickup:
                 for entity in entities:

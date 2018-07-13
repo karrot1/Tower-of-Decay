@@ -63,12 +63,12 @@ Controls:
      	Z: move down and to the left
      	C: move down and to the right
     Other
-     	<: move up a flight of upwards stairs
-     	>: move down a flight of downwards stairs
+     	,: move up a flight of upwards stairs
+     	.: move down a flight of downwards stairs
      	F: open spellcasting menu
      	V: open character sheet
      	I: Use an item in your inventory
-     	D: Drop an item in  your inventory
+     	R: Drop an item in  your inventory
      	G: pick up an item
      	Escape: Quits the game
      	Hover the mouse over a space to look at its contents

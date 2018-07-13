@@ -50,7 +50,7 @@ def spellcasting_menu(con, header, player, inventory_width, screen_width, screen
     if player.spellcaster.cl >=4:
         options.append("Level 4: Fireball")
     if player.spellcaster.cl >=5:
-        options.append("Level 5: Disintigrate")
+        options.append("Level 5: Disintegrate")
     menu(con, header, options, inventory_width, screen_width, screen_height)
 
 def main_menu(con,screen_width, screen_height):

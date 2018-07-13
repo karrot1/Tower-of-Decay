@@ -6,21 +6,21 @@ def handle_movement_keys(key):
     # movement
     if key.vk == libtcod.KEY_UP or key_char == 'w' or key.vk == libtcod.KEY_KP8:
         return {'move': (0, -1)}
-    elif key.vk == libtcod.KEY_DOWN or key_char == 'x' or key_char == libtcod.KEY_KP2:
+    elif key.vk == libtcod.KEY_DOWN or key_char == 'x' or key.vk == libtcod.KEY_KP2:
         return {'move': (0, 1)}
-    elif key.vk == libtcod.KEY_LEFT or key_char == 'a' or key_char == libtcod.KEY_KP4:
+    elif key.vk == libtcod.KEY_LEFT or key_char == 'a' or key.vk == libtcod.KEY_KP4:
         return {'move': (-1, 0)}
-    elif key.vk == libtcod.KEY_RIGHT or key_char == 'd' or key_char == libtcod.KEY_KP6:
+    elif key.vk == libtcod.KEY_RIGHT or key_char == 'd' or key.vk == libtcod.KEY_KP6:
         return {'move': (1, 0)}
-    elif key_char == 'q' or key_char == libtcod.KEY_KP7:
+    elif key_char == 'q' or key.vk == libtcod.KEY_KP7:
         return {'move': (-1, -1)}
-    elif key_char == 'e' or key_char == libtcod.KEY_KP9:
+    elif key_char == 'e' or key.vk == libtcod.KEY_KP9:
         return {'move': (1, -1)}
-    elif key_char == 'z' or key_char == libtcod.KEY_KP1:
+    elif key_char == 'z' or key.vk == libtcod.KEY_KP1:
         return {'move': (-1, 1)}
-    elif key_char == 'c' or key_char == libtcod.KEY_KP3:
+    elif key_char == 'c' or key.vk == libtcod.KEY_KP3:
         return {'move': (1, 1)}
-    elif key_char == 's' or key_char == libtcod.KEY_KP5:
+    elif key_char == 's' or key.vk == libtcod.KEY_KP5:
         return {'wait': True}
     return {'move': (0, 0)}
 
@@ -33,11 +33,11 @@ def handle_player_turn_keys(key):
         return {'pickup': True}
     elif key_char == 'i':
         return {'show_inventory': True}
-    elif key_char == 'd':
+    elif key_char == 'r':
         return {'drop_inventory': True}
-    elif key_char == ',':
+    elif key_char == ',' or key_char == '<':
         return {'stairs_up': True}
-    elif key_char == '.':
+    elif key_char == '.' or key_char == '>':
         return {'stairs_down': True}
     elif key_char == 'v':
         return{'show_character_screen': True}
