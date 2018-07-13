@@ -39,7 +39,7 @@ def handle_player_turn_keys(key):
         return {'stairs_up': True}
     elif key_char == '.':
         return {'stairs_down': True}
-    elif key_char == 'c':
+    elif key_char == 'v':
         return{'show_character_screen': True}
     elif key_char == 'f':
         return{'cast_spell': True}
