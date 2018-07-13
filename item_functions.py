@@ -42,6 +42,7 @@ def cast_smite(*args, **kwargs):
     return results
 
 def cast_magic_missile(*args, **kwargs):
+    print("casting mm")
     entities = kwargs.get('entities')
     fov_map = kwargs.get('fov_map')
     damage = kwargs.get('damage')

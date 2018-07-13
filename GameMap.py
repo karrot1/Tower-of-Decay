@@ -180,7 +180,7 @@ class Map:
                     equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 3)
                     item = Entity(x, y, ']', libtcod.sky, 'Tower Shield', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'armor4':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus = 5)
+                    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus = 5)
                     item = Entity(x, y, '[', libtcod.sky, 'Breastplate', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'sword3':
                     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
@@ -189,7 +189,7 @@ class Map:
                     equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 2)
                     item = Entity(x, y, ']', libtcod.sky, 'Shield', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'armor3':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus = 4)
+                    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus = 4)
                     item = Entity(x, y, '[', libtcod.sky, 'Mail Shirt', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'sword2':
                     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=2)
@@ -198,14 +198,14 @@ class Map:
                     equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 1)
                     item = Entity(x, y, ']', libtcod.dark_sepia, 'Buckler', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'armor2':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus = 3)
+                    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus = 3)
                     item = Entity(x, y, '[', libtcod.dark_sepia, 'Leather Armor', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'sword1':
                     equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=1)
                     item = Entity(x, y, '/', libtcod.sky, 'Rusty Dagger', equippable=equippable_component,
                                   render_order=RenderOrder.ITEM)
                 elif item_choice == 'armor1':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, defense_bonus=3)
+                    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus=3)
                     item = Entity(x, y, '[', libtcod.dark_sepia, 'Cloth Gambeson', equippable=equippable_component,
                                   render_order=RenderOrder.ITEM)
                 else:
@@ -215,7 +215,7 @@ class Map:
 
                 entities.append(item)
 
-    def next_floor(self, player, cursor, constants, message_log):
+    def next_floor(self, player, cursor, message_log, constants):
         self.dungeon_level += 1
         entities = [player, cursor]
         self.tiles = self.initialize_tiles()

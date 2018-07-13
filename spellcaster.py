@@ -53,6 +53,7 @@ class spellcaster:
         if index == 0:
             #magic missile
             if not(kwargs.get('target_x') or kwargs.get('target_y')):
+
                 results.append({'targeting_spell': 0})
             else:
                 results.extend(cast_magic_missile(self.owner, **kwargs))
