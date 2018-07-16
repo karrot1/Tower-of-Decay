@@ -397,6 +397,10 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                             end_item(itemdestroyed)
                         if dead_entity:
                             if dead_entity == player:
+                                render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log,
+                                           constants['screen_width'], constants['screen_height'],
+                                           constants['bar_width'], constants['panel_height'], constants['panel_y'],
+                                           mouse, constants['colors'], game_state)
                                 return 2
                             else:
                                 message = death(True, dead_entity)

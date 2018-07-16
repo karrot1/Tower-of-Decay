@@ -112,7 +112,7 @@ def game_over(con,screen_width, screen_height):
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 5, libtcod.BKGND_NONE, libtcod.CENTER,
                              '| |_\\ \\ (_| | | | | | |  __/ \\ \\_/ /\\ V /  __/ |   ')
     libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER,
-                             ' \\____/\\__,_|_| |_| |_|\\___|  \\___/  \\_/ \\___|_| ')
+                             '\\____/\\__,_|_| |_| |_|\\___|  \\___/  \\_/ \\___|_| ')
 
     menu(con, '', ['Play a new game', 'Quit'], 24, screen_width, screen_height)
 

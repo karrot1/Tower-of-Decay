@@ -94,6 +94,11 @@ class Map:
             item_component = Item()
             orb = Entity(center_of_last_room_x, center_of_last_room_y, '0', libtcod.purple, 'Orb of Undeath', render_order=RenderOrder.ITEM,item=item_component)
             entities.append(orb)
+            fighter_component = fighter(hp=40, defense=2, power=5, xp=5)
+            ai_component = BasicMonster()
+            monster = Entity(center_of_last_room_x, center_of_last_room_y, 'L', libtcod.red, 'Larry the Undying', blocks=True, render_order=RenderOrder.ACTOR,
+                             fighter=fighter_component, ai=ai_component)
+            entities.append(monster)
         if (self.dungeon_level > 1):
             downstairs_component = Stairs(self.dungeon_level -1)
             down_stairs = Entity(player.x, player.y, '>', libtcod.white, 'stairs down',
@@ -121,29 +126,29 @@ class Map:
         number_of_items = randint(0, max_items_per_room)
         monster_chances = {
             'skeleton': 80,
-            'gskeleton': from_dungeon_level([[40, 5], [40, 10], [5, 15]], self.dungeon_level),
-            'lich': from_dungeon_level([[20, 5], [10, 10], [1, 15]], self.dungeon_level)
+            'gskeleton': from_dungeon_level([[40, 5], [20, 10], [5, 15]], self.dungeon_level),
+            'lich': from_dungeon_level([[20, 5], [1, 10]], self.dungeon_level)
         }
         item_chance = {
-            'healing_potion': from_dungeon_level([[45, 15], [10, 20]], self.dungeon_level),
+            'healing_potion': from_dungeon_level([[35, 15], [20, 20]], self.dungeon_level),
             #'healing_potion': 75,
-            'mana_potion': from_dungeon_level([[45, 15], [10, 20]], self.dungeon_level),
+            'mana_potion': from_dungeon_level([[25, 15], [14, 20]], self.dungeon_level),
             'lightning_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
             'fireball_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
             'smite': from_dungeon_level([[25, 4]], self.dungeon_level),
             'confusion_scroll': from_dungeon_level([[10, 8]], self.dungeon_level),
             'health_ring': from_dungeon_level([[5, 5]], self.dungeon_level),
-            'sword4': from_dungeon_level([[15, 5]], self.dungeon_level),
-            'shield4': from_dungeon_level([[10, 5]], self.dungeon_level),
-            'armor4': from_dungeon_level([[10, 5]], self.dungeon_level),
-            'sword3': from_dungeon_level([[0, 5], [15, 10]], self.dungeon_level),
-            'shield3': from_dungeon_level([[0, 5], [10, 10]], self.dungeon_level),
-            'armor3': from_dungeon_level([[0, 5], [10, 10]], self.dungeon_level),
-            'sword2': from_dungeon_level([[0, 5], [0, 10], [15, 15]], self.dungeon_level),
-            'shield2': from_dungeon_level([[0, 5], [0, 10], [10, 15]], self.dungeon_level),
-            'armor2': from_dungeon_level([[0, 5], [0, 10], [10, 15]], self.dungeon_level),
-            'sword1': from_dungeon_level([[0, 5], [0, 10], [0, 15], [15, 20]], self.dungeon_level),
-            'armor1': from_dungeon_level([[0, 5], [0, 10], [0, 15], [10, 20]], self.dungeon_level)
+            'sword4': from_dungeon_level([[5, 5]], self.dungeon_level),
+            'shield4': from_dungeon_level([[12, 5]], self.dungeon_level),
+            'armor4': from_dungeon_level([[12, 5]], self.dungeon_level),
+            'sword3': from_dungeon_level([[0, 5], [5, 10]], self.dungeon_level),
+            'shield3': from_dungeon_level([[0, 5], [12, 10]], self.dungeon_level),
+            'armor3': from_dungeon_level([[0, 5], [12, 10]], self.dungeon_level),
+            'sword2': from_dungeon_level([[0, 5], [0, 10], [5, 15]], self.dungeon_level),
+            'shield2': from_dungeon_level([[0, 5], [0, 10], [12, 15]], self.dungeon_level),
+            'armor2': from_dungeon_level([[0, 5], [0, 10], [12, 15]], self.dungeon_level),
+            'sword1': from_dungeon_level([[0, 5], [0, 10], [0, 15], [5, 20]], self.dungeon_level),
+            'armor1': from_dungeon_level([[0, 5], [0, 10], [0, 15], [12, 20]], self.dungeon_level)
         }
         for i in range(number_of_monsters):
             #chose random location to place them
@@ -156,11 +161,11 @@ class Map:
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 's', libtcod.white, 'Skeleton', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 elif monster_choice == 'gskeleton':
-                    fighter_component = fighter(hp = 30, defense = 2, power = 4, xp = 2)
+                    fighter_component = fighter(hp = 25, defense = 2, power = 4, xp = 2)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'S', libtcod.white, 'Greater Skeleton', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 elif monster_choice == 'lich':
-                    fighter_component = fighter(hp=50, defense=4, power=8, xp =5)
+                    fighter_component = fighter(hp=30, defense=4, power=8, xp =5)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 entities.append(monster)
@@ -189,7 +194,7 @@ class Map:
                     equippable_component = Equippable(EquipmentSlots.RING, max_hp_bonus=10)
                     item = Entity(x, y, 'o', libtcod.sky, 'Ring of Health', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'sword4':
-                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=4)
                     item = Entity(x, y, '/', libtcod.sky, 'Longsword', equippable=equippable_component, render_order=RenderOrder.ITEM)
                 elif item_choice == 'shield4':
                     equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus = 3)
