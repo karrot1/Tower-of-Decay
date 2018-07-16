@@ -80,8 +80,10 @@ class Map:
                         #first vertical, then horizontal
                         self.create_v_tunnel(prev_y, new_y, prev_x)
                         self.create_h_tunnel(prev_x, new_x, new_y)
-                #add room to list
-                self.place_entities(new_room, entities)
+                if(num_rooms != 0):
+                    #so the player doesn't get ambushed
+                    self.place_entities(new_room, entities)
+                # add room to list
                 rooms.append(new_room)
                 num_rooms += 1
         if (self.dungeon_level < toplevel):
@@ -107,8 +109,8 @@ class Map:
         return False
 
     def place_entities(self, room, entities):
-        max_monsters_per_room = from_dungeon_level([[2, 1],[3,4], [5, 6]], self.dungeon_level)
-        max_items_per_room = from_dungeon_level([[1, 1], [2, 4]], self.dungeon_level)
+        max_monsters_per_room = from_dungeon_level([[5, 5],[4,10], [3, 15], [2, 20]], self.dungeon_level)
+        max_items_per_room = from_dungeon_level([[3, 10], [2, 15], [1, 20]], self.dungeon_level)
         #gets a random number of monsters
         min_monsters = 1
         if (max_monsters_per_room < 2):
@@ -123,23 +125,25 @@ class Map:
             'lich': from_dungeon_level([[40, 5], [20, 10], [1, 15]], self.dungeon_level)
         }
         item_chance = {
-            'healing_potion': from_dungeon_level([[25, 15], [10, 20]], self.dungeon_level),
-            'mana_potion': from_dungeon_level([[25, 15], [10, 20]], self.dungeon_level),
+            'healing_potion': from_dungeon_level([[45, 15], [10, 20]], self.dungeon_level),
+            #'healing_potion': 75,
+            'mana_potion': from_dungeon_level([[45, 15], [10, 20]], self.dungeon_level),
             'lightning_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
             'fireball_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
+            'smite': from_dungeon_level([[25, 4]], self.dungeon_level),
             'confusion_scroll': from_dungeon_level([[10, 8]], self.dungeon_level),
-            'health_ring': from_dungeon_level([[5, 1]], self.dungeon_level),
-            'sword4': from_dungeon_level([[5, 5]], self.dungeon_level),
-            'shield4': from_dungeon_level([[10, 5]], self.dungeon_level),
-            'armor4': from_dungeon_level([[5, 5]], self.dungeon_level),
-            'sword3': from_dungeon_level([[5, 10]], self.dungeon_level),
-            'shield3': from_dungeon_level([[10, 10]], self.dungeon_level),
-            'armor3': from_dungeon_level([[5, 10]], self.dungeon_level),
-            'sword2': from_dungeon_level([[5, 15]], self.dungeon_level),
-            'shield2': from_dungeon_level([[10, 15]], self.dungeon_level),
-            'armor2': from_dungeon_level([[5, 15]], self.dungeon_level),
-            'sword1': from_dungeon_level([[5, 20]], self.dungeon_level),
-            'armor1': from_dungeon_level([[5, 20]], self.dungeon_level)
+            'health_ring': from_dungeon_level([[5, 5]], self.dungeon_level),
+            'sword4': from_dungeon_level([[1, 5]], self.dungeon_level),
+            'shield4': from_dungeon_level([[1, 5]], self.dungeon_level),
+            'armor4': from_dungeon_level([[1, 5]], self.dungeon_level),
+            'sword3': from_dungeon_level([[1, 5], [2, 10]], self.dungeon_level),
+            'shield3': from_dungeon_level([[1, 10], [2, 10]], self.dungeon_level),
+            'armor3': from_dungeon_level([[1, 5], [2, 10]], self.dungeon_level),
+            'sword2': from_dungeon_level([[1, 5], [2, 10], [3, 15]], self.dungeon_level),
+            'shield2': from_dungeon_level([[1, 5], [2, 10], [3, 15]], self.dungeon_level),
+            'armor2': from_dungeon_level([[1, 5], [2, 10], [3, 15]], self.dungeon_level),
+            'sword1': from_dungeon_level([[1, 5], [2, 10], [3, 15], [4, 20]], self.dungeon_level),
+            'armor1': from_dungeon_level([[1, 5], [2, 10], [3, 15], [4, 20]], self.dungeon_level)
         }
         for i in range(number_of_monsters):
             #chose random location to place them
@@ -170,7 +174,7 @@ class Map:
                 if item_choice == 'healing_potion':
                     item_component = Item(use_function=heal, amount=5)
                     item = Entity(x, y, '!', libtcod.red, 'Healing Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
-                if item_choice == 'mana_potion':
+                elif item_choice == 'mana_potion':
                     item_component = Item(use_function=restoremp, amount=5)
                     item = Entity(x, y, '!', libtcod.blue, 'Mana Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
                 elif item_choice == 'fireball_scroll':

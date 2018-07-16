@@ -17,7 +17,8 @@ def random_choice_from_dict(choice_dict):
     return choices[random_choice_index(chances)]
 
 def from_dungeon_level(table, dungeon_level):
-    for(value, level) in reversed(table):
+    for(value, level) in table:
         if dungeon_level <= level:
+            #print("value = " + str(value) + " level = " + str(level) + " dlevel = " + str(dungeon_level))
             return value
     return 0
