@@ -23,7 +23,7 @@ def restoremp(*args, **kwargs):
     if entity.spellcaster.mp == entity.spellcaster.max_mp:
         results.append({'consumed': False, 'message': Message('You are already at full MP.')})
     else:
-        results.append(entity.spellcaster.alter_mp(amount))
+        entity.spellcaster.alter_mp(amount)
         results.append({'consumed': True, 'message': Message('You feel refreshed!', libtcod.blue)})
     return results
 
