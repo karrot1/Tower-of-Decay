@@ -41,42 +41,41 @@ class spellcaster:
 
     def cast(self, index, **kwargs):
         results = []
-
-        if kwargs.get('target_x') or kwargs.get('target_y') or index == 1:
-            if self.owner.spellcaster.mp < index + 1:
+        if kwargs.get('target_x') or kwargs.get('target_y') or index == 2:
+            if self.owner.spellcaster.mp < index:
                 results.append({'message': Message('You don\'t have enough MP to cast that.')})
                 return results
-            if self.owner.spellcaster.cl < index + 1:
+            if self.owner.spellcaster.cl < index:
                 results.append({'message': Message('You aren\'t high enough level to cast that.')})
                 return results
-            self.owner.spellcaster.alter_mp((index + 1)*-1)
-        if index == 0:
+            self.owner.spellcaster.alter_mp((index)*-1)
+        if index == 1:
             #magic missile
             if not(kwargs.get('target_x') or kwargs.get('target_y')):
-
-                results.append({'targeting_spell': 0})
+                results.append({'targeting_spell': 1})
             else:
-                results.extend(cast_magic_missile(self.owner, **kwargs))
+                print("index = 0, casting magic missile")
+                results.extend(cast_magic_missile(self.owner, damage=10, **kwargs))
                 results.append({'player_cast_spell': 1})
-        elif index == 1:
+        elif index == 2:
             results.extend(cast_smite(self.owner, damage=20, maximum_range=5, **kwargs))
             results.append({'player_cast_spell': 1})
-        elif index == 2:
-            if not (kwargs.get('target_x') or kwargs.get('target_y')):
-                results.append({'targeting_spell': 2})
-            else:
-                results.extend(cast_confuse(self.owner, **kwargs))
-                results.append({'player_cast_spell': 1})
         elif index == 3:
             if not (kwargs.get('target_x') or kwargs.get('target_y')):
                 results.append({'targeting_spell': 3})
             else:
-                results.extend(cast_fireball(self.owner, damage=12, radius = 3, **kwargs))
+                results.extend(cast_confuse(self.owner, **kwargs))
                 results.append({'player_cast_spell': 1})
-        else:
+        elif index == 4:
             if not (kwargs.get('target_x') or kwargs.get('target_y')):
                 results.append({'targeting_spell': 4})
             else:
-                results.extend(cast_disintigrate(self.owner, **kwargs))
+                results.extend(cast_fireball(self.owner, damage=30, radius = 3, **kwargs))
+                results.append({'player_cast_spell': 1})
+        elif index == 5:
+            if not (kwargs.get('target_x') or kwargs.get('target_y')):
+                results.append({'targeting_spell': 5})
+            else:
+                results.extend(cast_disintigrate(self.owner, damage=60, **kwargs))
                 results.append({'player_cast_spell': 1})
         return results

@@ -42,7 +42,6 @@ def cast_smite(*args, **kwargs):
     return results
 
 def cast_magic_missile(*args, **kwargs):
-    print("casting mm")
     entities = kwargs.get('entities')
     fov_map = kwargs.get('fov_map')
     damage = kwargs.get('damage')
@@ -57,8 +56,9 @@ def cast_magic_missile(*args, **kwargs):
     for entity in entities:
         if entity.x == target_x and entity.y == target_y and entity.ai:
             results.append({'consumed': True, 'target': target, 'message': Message(
-                'The {0}\s atoms are rent in twain! {1} damage!'.format(entity.name, damage))})
+                'The {0} is hit by your magical missile! {1} damage!'.format(entity.name, damage))})
             results.extend(entity.fighter.take_damage(damage))
+            break
     else:
         results.append({'consumed': False, 'message': Message('There is no targetable enemy at that location.')})
     return results
@@ -78,8 +78,9 @@ def cast_disintigrate(*args, **kwargs):
     for entity in entities:
         if entity.x == target_x and entity.y == target_y and entity.ai:
             results.append({'consumed': True, 'target': target, 'message': Message(
-                'The {0} is hit by your magical missile! {1} damage!'.format(entity.name, damage))})
+                'The {0} screams as its atoms are rent in twain! {1} damage!'.format(entity.name, damage))})
             results.extend(entity.fighter.take_damage(damage))
+            break
     else:
         results.append({'consumed': False, 'message': Message('There is no targetable enemy at that location.')})
     return results

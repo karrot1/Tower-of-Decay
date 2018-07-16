@@ -259,8 +259,8 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         if drop_inventory:
             previous_game_state = game_state
             game_state = GameStates.DROP_INVENTORY
-        if spell_index is not None and spell_index < (player.spellcaster.spell_number -1):
-            player_turn_results.extend(player.spellcaster.cast(spell_index, entities=entities, fov_map=fov_map))
+        if spell_index is not None and spell_index < (player.spellcaster.spell_number):
+            player_turn_results.extend(player.spellcaster.cast(spell_index +1, entities=entities, fov_map=fov_map))
         if inventory_index is not None and previous_game_state != GameStates.PLAYER_DEAD and inventory_index < len(
                 player.inventory.items):
             item=player.inventory.items[inventory_index]
@@ -304,6 +304,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 cursor.visible = True
                 message_log.add_message(Message('Press g to select target.'))
             if targeting_from_spell:
+                print("entered targeting")
                 previous_game_state = GameStates.PLAYERS_TURN
                 game_state = GameStates.TARGETING
                 targeting_spell = targeting_from_spell
