@@ -15,6 +15,18 @@ def heal(*args, **kwargs):
         results.append({'consumed': True, 'message': Message('Your wounds stitch themselves closed!', libtcod.green)})
     return results
 
+def restoremp(*args, **kwargs):
+    entity = args[0]
+    amount = kwargs.get('amount')
+    results = []
+    is_item = kwargs.get('isitem')
+    if entity.spellcaster.mp == entity.spellcaster.max_mp:
+        results.append({'consumed': False, 'message': Message('You are already at full MP.')})
+    else:
+        results.append(entity.spellcaster.alter_mp(amount))
+        results.append({'consumed': True, 'message': Message('You feel refreshed!', libtcod.blue)})
+    return results
+
 def cast_smite(*args, **kwargs):
     caster = args[0]
     entities = kwargs.get('entities')

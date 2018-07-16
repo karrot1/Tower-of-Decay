@@ -123,19 +123,20 @@ class Map:
             'lich': from_dungeon_level([[40, 5], [20, 10], [1, 15]], self.dungeon_level)
         }
         item_chance = {
-            'healing_potion': 35,
+            'healing_potion': from_dungeon_level([[25, 15], [10, 20]], self.dungeon_level),
+            'mana_potion': from_dungeon_level([[25, 15], [10, 20]], self.dungeon_level),
             'lightning_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
             'fireball_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
             'confusion_scroll': from_dungeon_level([[10, 8]], self.dungeon_level),
             'health_ring': from_dungeon_level([[5, 1]], self.dungeon_level),
             'sword4': from_dungeon_level([[5, 5]], self.dungeon_level),
-            'shield4': from_dungeon_level([[5, 5]], self.dungeon_level),
+            'shield4': from_dungeon_level([[10, 5]], self.dungeon_level),
             'armor4': from_dungeon_level([[5, 5]], self.dungeon_level),
             'sword3': from_dungeon_level([[5, 10]], self.dungeon_level),
-            'shield3': from_dungeon_level([[5, 10]], self.dungeon_level),
+            'shield3': from_dungeon_level([[10, 10]], self.dungeon_level),
             'armor3': from_dungeon_level([[5, 10]], self.dungeon_level),
             'sword2': from_dungeon_level([[5, 15]], self.dungeon_level),
-            'shield2': from_dungeon_level([[5, 15]], self.dungeon_level),
+            'shield2': from_dungeon_level([[10, 15]], self.dungeon_level),
             'armor2': from_dungeon_level([[5, 15]], self.dungeon_level),
             'sword1': from_dungeon_level([[5, 20]], self.dungeon_level),
             'armor1': from_dungeon_level([[5, 20]], self.dungeon_level)
@@ -168,7 +169,10 @@ class Map:
                 item_choice = random_choice_from_dict(item_chance)
                 if item_choice == 'healing_potion':
                     item_component = Item(use_function=heal, amount=5)
-                    item = Entity(x, y, '!', libtcod.red, 'Major Healing Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
+                    item = Entity(x, y, '!', libtcod.red, 'Healing Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
+                if item_choice == 'mana_potion':
+                    item_component = Item(use_function=restoremp, amount=5)
+                    item = Entity(x, y, '!', libtcod.blue, 'Mana Potion', render_order = RenderOrder.ITEM, item=item_component, stack=True)
                 elif item_choice == 'fireball_scroll':
                     item_component = Item(use_function=cast_fireball, targeting=True, damage=12, radius = 3)
                     item = Entity(x, y, '?', libtcod.lightest_yellow, 'Scroll of Fireball', render_order=RenderOrder.ITEM,

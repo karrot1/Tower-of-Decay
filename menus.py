@@ -44,9 +44,9 @@ def spellcasting_menu(con, header, player, inventory_width, screen_width, screen
         options.append("Level 1: Magic Missile")
 
     if player.spellcaster.cl >=2:
-        options.append("Level 2: Smite")
+        options.append("Level 2: Confusion")
     if player.spellcaster.cl >=3:
-        options.append("Level 3: Confusion")
+        options.append("Level 3: Smite")
     if player.spellcaster.cl >=4:
         options.append("Level 4: Fireball")
     if player.spellcaster.cl >=5:
