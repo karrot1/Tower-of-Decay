@@ -37,7 +37,7 @@ def get_constants():
     fov_light_walls = True
     fov_radius = 10
     hp_per_level = 20
-    mp_per_level = 2
+    mp_per_level = 5
     power_per_level = 2
     colors = {
         'dark_wall': libtcod.darker_grey,

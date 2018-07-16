@@ -41,7 +41,7 @@ class spellcaster:
 
     def cast(self, index, **kwargs):
         results = []
-        if kwargs.get('target_x') or kwargs.get('target_y') or index == 2:
+        if kwargs.get('target_x') or kwargs.get('target_y') or index == 3:
             if self.owner.spellcaster.mp < index:
                 results.append({'message': Message('You don\'t have enough MP to cast that.')})
                 return results
@@ -54,15 +54,14 @@ class spellcaster:
             if not(kwargs.get('target_x') or kwargs.get('target_y')):
                 results.append({'targeting_spell': 1})
             else:
-                print("index = 0, casting magic missile")
                 results.extend(cast_magic_missile(self.owner, damage=10, **kwargs))
                 results.append({'player_cast_spell': 1})
-        elif index == 2:
+        elif index == 3:
             results.extend(cast_smite(self.owner, damage=20, maximum_range=5, **kwargs))
             results.append({'player_cast_spell': 1})
-        elif index == 3:
+        elif index == 2:
             if not (kwargs.get('target_x') or kwargs.get('target_y')):
-                results.append({'targeting_spell': 3})
+                results.append({'targeting_spell': 2})
             else:
                 results.extend(cast_confuse(self.owner, **kwargs))
                 results.append({'player_cast_spell': 1})
@@ -70,7 +69,7 @@ class spellcaster:
             if not (kwargs.get('target_x') or kwargs.get('target_y')):
                 results.append({'targeting_spell': 4})
             else:
-                results.extend(cast_fireball(self.owner, damage=30, radius = 3, **kwargs))
+                results.extend(cast_fireball(self.owner, damage=20, radius = 3, **kwargs))
                 results.append({'player_cast_spell': 1})
         elif index == 5:
             if not (kwargs.get('target_x') or kwargs.get('target_y')):

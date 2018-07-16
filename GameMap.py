@@ -111,13 +111,16 @@ class Map:
         max_items_per_room = from_dungeon_level([[1, 1], [2, 4]], self.dungeon_level)
         #gets a random number of monsters
         min_monsters = 1
-        if (room.x1-room.x2 <6 ) and (room.y1 - room.y2 < 6):
-            min_monsters = 0
+        if (max_monsters_per_room < 2):
+            max_monsters_per_room = 2
+        if (max_items_per_room < 1):
+            max_items_per_room = 1
         number_of_monsters = randint(min_monsters, max_monsters_per_room)
         number_of_items = randint(0, max_items_per_room)
         monster_chances = {
             'skeleton': 80,
-            'lich': from_dungeon_level([[20, 5], [10, 10], [5, 15]], self.dungeon_level)
+            'gskeleton': from_dungeon_level([[40, 5], [40, 10], [5, 15]], self.dungeon_level),
+            'lich': from_dungeon_level([[40, 5], [20, 10], [1, 15]], self.dungeon_level)
         }
         item_chance = {
             'healing_potion': 35,
@@ -147,8 +150,12 @@ class Map:
                     fighter_component = fighter(hp = 20, defense = 0, power = 4, xp = 1)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 's', libtcod.white, 'Skeleton', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
-                else:
-                    fighter_component = fighter(hp=30, defense=2, power=8, xp =5)
+                elif monster_choice == 'gskeleton':
+                    fighter_component = fighter(hp = 30, defense = 2, power = 4, xp = 2)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'S', libtcod.white, 'Greater Skeleton', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'lich':
+                    fighter_component = fighter(hp=50, defense=4, power=8, xp =5)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 entities.append(monster)
@@ -222,5 +229,6 @@ class Map:
         self.make_map(constants['max_rooms'], constants['room_min_size'], constants['room_max_size'],
                       constants['map_width'], constants['map_height'], player, entities, constants['top_level'])
         player.fighter.heal(player.fighter.max_hp // 2)
+        player.spellcaster.alter_mp(player.spellcaster.max_mp//2)
         message_log.add_message(Message('You take a moment to rest, and recover your strength.', libtcod.light_violet))
         return entities

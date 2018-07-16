@@ -234,9 +234,6 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                         fov_recompute = True
                 game_state = GameStates.ENEMY_TURN
             elif wait:
-                player.spellcaster.alter_mp(1)
-                #if (player.fighter.hp < player.fighter.max_hp):
-                    #player.fighter.hp +=1
                 game_state = GameStates.ENEMY_TURN
             elif pickup:
                 for entity in entities:
@@ -304,7 +301,6 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 cursor.visible = True
                 message_log.add_message(Message('Press g to select target.'))
             if targeting_from_spell:
-                print("entered targeting")
                 previous_game_state = GameStates.PLAYERS_TURN
                 game_state = GameStates.TARGETING
                 targeting_spell = targeting_from_spell
