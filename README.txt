@@ -22,6 +22,7 @@ Legend:
   >: downwards staircase
 Enemies
   s: skeleton
+  S: greater skeleton
   L: lich
 Items:
   !: potion
