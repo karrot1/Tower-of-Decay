@@ -34,6 +34,28 @@ def render_bar(panel, x, y, total_width, name, value, maximum, bar_color, back_c
     libtcod.console_print_ex(panel, int(x + total_width/2), y, libtcod.BKGND_NONE, libtcod.CENTER,
                              '{0}: {1}/{2}'.format(name, value, maximum))
 
+def render_pip(panel, x, y, symbol, color1, color2):
+    libtcod.console_set_default_background(panel, color2)
+    libtcod.console_rect(panel, x+1, y, 1, 1, False, libtcod.BKGND_SCREEN)
+    libtcod.console_set_default_foreground(panel, color1)
+    libtcod.console_print_ex(panel, x, y, libtcod.BKGND_NONE, libtcod.CENTER,
+                             '{0}'.format(symbol))
+
+def decide_color(item):
+    number = 0
+    if item:
+        number = item.equippable.hp
+    if number >75:
+        return libtcod.blue
+    elif number > 50:
+        return libtcod.green
+    elif number > 25:
+        return libtcod.yellow
+    elif number>0:
+        return libtcod.red
+    else:
+        return libtcod.black
+
 def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log, screen_width, screen_height,
                bar_width, panel_height, panel_y, mouse, colors, game_state):
     #draw the map
@@ -76,7 +98,10 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, m
 
     render_bar(panel, 1, 1, bar_width, 'HP', player.fighter.hp, player.fighter.max_hp, libtcod.red, libtcod.dark_grey)
     render_bar(panel, 1, 2, bar_width, 'MP', player.spellcaster.mp, player.spellcaster.max_mp, libtcod.blue, libtcod.dark_grey)
-
+    render_pip(panel, screen_width-3, 1, '[', libtcod.sky, decide_color(player.equipment.armor))
+    render_pip(panel, screen_width-3, 2, ']', libtcod.sky, decide_color(player.equipment.off_hand))
+    render_pip(panel, screen_width-3, 3, '/', libtcod.sky, decide_color(player.equipment.main_hand))
+    libtcod.console_set_default_foreground(panel, libtcod.white)
     libtcod.console_print_ex(panel, 1, 3, libtcod.BKGND_NONE, libtcod.LEFT, 'Dungeon level: {0}'.format(game_map.dungeon_level))
     libtcod.console_print_ex(panel, 1, 4, libtcod.BKGND_NONE, libtcod.LEFT, 'Character Level: {0}'.format(player.level.current_level))
     libtcod.console_set_default_foreground(panel, libtcod.light_grey)
