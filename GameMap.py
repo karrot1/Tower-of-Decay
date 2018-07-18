@@ -138,17 +138,17 @@ class Map:
             'smite': from_dungeon_level([[25, 4]], self.dungeon_level),
             'confusion_scroll': from_dungeon_level([[10, 8]], self.dungeon_level),
             'health_ring': from_dungeon_level([[5, 5]], self.dungeon_level),
-            'sword4': from_dungeon_level([[5, 5]], self.dungeon_level),
-            'shield4': from_dungeon_level([[12, 5]], self.dungeon_level),
-            'armor4': from_dungeon_level([[12, 5]], self.dungeon_level),
-            'sword3': from_dungeon_level([[0, 5], [5, 10]], self.dungeon_level),
-            'shield3': from_dungeon_level([[0, 5], [12, 10]], self.dungeon_level),
-            'armor3': from_dungeon_level([[0, 5], [12, 10]], self.dungeon_level),
-            'sword2': from_dungeon_level([[0, 5], [0, 10], [5, 15]], self.dungeon_level),
-            'shield2': from_dungeon_level([[0, 5], [0, 10], [12, 15]], self.dungeon_level),
-            'armor2': from_dungeon_level([[0, 5], [0, 10], [12, 15]], self.dungeon_level),
-            'sword1': from_dungeon_level([[0, 5], [0, 10], [0, 15], [5, 20]], self.dungeon_level),
-            'armor1': from_dungeon_level([[0, 5], [0, 10], [0, 15], [12, 20]], self.dungeon_level)
+            'sword4': from_dungeon_level([[7, 5]], self.dungeon_level),
+            'shield4': from_dungeon_level([[7, 5]], self.dungeon_level),
+            'armor4': from_dungeon_level([[7, 5]], self.dungeon_level),
+            'sword3': from_dungeon_level([[0, 5], [8, 10]], self.dungeon_level),
+            'shield3': from_dungeon_level([[0, 5], [8, 10]], self.dungeon_level),
+            'armor3': from_dungeon_level([[0, 5], [8, 10]], self.dungeon_level),
+            'sword2': from_dungeon_level([[0, 5], [0, 10], [8, 15]], self.dungeon_level),
+            'shield2': from_dungeon_level([[0, 5], [0, 10], [8, 15]], self.dungeon_level),
+            'armor2': from_dungeon_level([[0, 5], [0, 10], [8, 15]], self.dungeon_level),
+            'sword1': from_dungeon_level([[0, 5], [0, 10], [0, 15], [8, 20]], self.dungeon_level),
+            'armor1': from_dungeon_level([[0, 5], [0, 10], [0, 15], [8, 20]], self.dungeon_level)
         }
         for i in range(number_of_monsters):
             #chose random location to place them

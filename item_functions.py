@@ -47,8 +47,9 @@ def cast_smite(*args, **kwargs):
                     target = entity
                     closest_distance = distance
     if target:
-        results.append({'consumed': True, 'target': target, 'message': Message('The {0} is smote by magical power! {1} damage!'.format(target.name, damage))})
-        results.extend(target.fighter.take_damage(damage))
+        findamage = damage - target.fighter.defense
+        results.append({'consumed': True, 'target': target, 'message': Message('The {0} is smote by magical power! {1} damage!'.format(target.name, findamage))})
+        results.extend(target.fighter.take_damage(findamage))
     else:
         results.append({'consumed': False, 'target': None, 'message': Message('No enemy is within range.')})
     return results
@@ -67,9 +68,10 @@ def cast_magic_missile(*args, **kwargs):
         return results
     for entity in entities:
         if entity.x == target_x and entity.y == target_y and entity.ai:
+            findamage = damage - entity.fighter.defense
             results.append({'consumed': True, 'target': target, 'message': Message(
-                'The {0} is hit by your magical missile! {1} damage!'.format(entity.name, damage))})
-            results.extend(entity.fighter.take_damage(damage))
+                'The {0} is hit by your magical missile! {1} damage!'.format(entity.name, findamage))})
+            results.extend(entity.fighter.take_damage(findamage))
             break
     else:
         results.append({'consumed': False, 'message': Message('There is no targetable enemy at that location.')})
@@ -89,9 +91,10 @@ def cast_disintigrate(*args, **kwargs):
         return results
     for entity in entities:
         if entity.x == target_x and entity.y == target_y and entity.ai:
+            findamage = damage - entity.fighter.defense
             results.append({'consumed': True, 'target': target, 'message': Message(
-                'The {0} screams as its atoms are rent in twain! {1} damage!'.format(entity.name, damage))})
-            results.extend(entity.fighter.take_damage(damage))
+                'The {0} screams as its atoms are rent in twain! {1} damage!'.format(entity.name, findamage))})
+            results.extend(entity.fighter.take_damage(findamage))
             break
     else:
         results.append({'consumed': False, 'message': Message('There is no targetable enemy at that location.')})
@@ -111,8 +114,9 @@ def cast_fireball(*args, **kwargs):
     results.append({'consumed': True, 'message': Message('The fireball explodes, doing {0} damage'.format(damage))})
     for entity in entities:
         if entity.distance(target_x, target_y) <= radius and entity.fighter:
-            results.append({'message': Message('The {0} is burned, taking {1} damage!'.format(entity.name, damage))})
-            results.extend(entity.fighter.take_damage(damage))
+            findamage = damage - entity.fighter.defense
+            results.append({'message': Message('The {0} is burned, taking {1} damage!'.format(entity.name, findamage))})
+            results.extend(entity.fighter.take_damage(findamage))
     return results
 
 def cast_confuse(*args, **kwargs):
@@ -127,7 +131,7 @@ def cast_confuse(*args, **kwargs):
         return results
     for entity in entities:
         if entity.x == target_x and entity.y == target_y and entity.ai:
-            confused_ai = ConfusedMonster(entity.ai, 10)
+            confused_ai = ConfusedMonster(entity.ai, 6- entity.fighter.defense)
             confused_ai.owner = entity
             entity.ai = confused_ai
             results.append({'consumed': True, 'message': Message('The {0}\'s eyes glaze over.'.format(entity.name))})
