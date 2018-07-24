@@ -118,11 +118,18 @@ class Entity:
     def distance(self, x, y):
         return math.sqrt((x-self.x) ** 2 + (y-self.y) ** 2)
 
+    def has_equippable(self):
+        if self.equippable != None:
+            return True
+        else:
+            return False
+
 def get_blocking_entities_at_location(entities, destination_x, destination_y):
         for entity in entities:
             if entity.blocks and entity.x == destination_x and entity.y == destination_y:
                 return entity
         return None
+
 
 def sametile(one, other):
     if one.x == other.x and one.y == other.y:

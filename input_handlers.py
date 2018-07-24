@@ -82,6 +82,15 @@ def handle_main_menu(key):
         return {'exit': True}
     return quitscreen(key)
 
+
+def handle_sure(key):
+    key_char = chr(key.c)
+    if key_char == 'a':
+        return {'sure': True}
+    elif key_char == 'b':
+        return {'exit': True}
+    return quitscreen(key)
+
 def handle_death(key):
     key_char = chr(key.c)
     if key_char == 'a':

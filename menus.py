@@ -78,6 +78,13 @@ def main_menu(con,screen_width, screen_height):
 
     menu(con, '', ['Play a new game', 'Continue game', 'Quit'], 24, screen_width, screen_height)
 
+def areyousure(con,screen_width, screen_height):
+
+    libtcod.console_set_default_foreground(0, libtcod.white)
+
+    libtcod.console_print_ex(0, int(screen_width / 2), int(screen_height / 2) - 4, libtcod.BKGND_NONE, libtcod.CENTER,
+                             'Are you sure? This will delete your previous save.')
+    menu(con, '', ['Yes, I am sure.', 'No, take me back!'], 24, screen_width, screen_height)
 
 def victory_screen(con,screen_width, screen_height):
 

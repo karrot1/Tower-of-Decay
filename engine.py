@@ -45,9 +45,12 @@ def main():
             if show_load_error_message and (new_game or load_saved_game or exit_game):
                 show_load_error_message = False
             elif new_game:
-                player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = get_game_variables(constants)
-                game_state = GameStates.PLAYERS_TURN
-                show_main_menu = 3
+                if not os.path.isfile('savegame.dat'):
+                    player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = get_game_variables(constants)
+                    game_state = GameStates.PLAYERS_TURN
+                    show_main_menu = 3
+                else:
+                    show_main_menu = 4
             elif load_saved_game:
                 try:
                     player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = load_game()
@@ -79,6 +82,21 @@ def main():
                 show_main_menu = 3
             elif exit_game:
                 break
+        elif show_main_menu == 4:
+
+            areyousure(con, constants['screen_width'], constants['screen_height'])
+            libtcod.console_flush()
+            action = handle_sure(key)
+            issure = action.get('sure')
+            notsure = action.get('exit')
+            if issure:
+                player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor = get_game_variables(
+                    constants)
+                game_state = GameStates.PLAYERS_TURN
+                show_main_menu = 3
+            if notsure:
+                show_main_menu = 0
+
         else:
             libtcod.console_clear(con)
             show_main_menu = play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants)
@@ -279,7 +297,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             message = player_turn_result.get('message')
             dead_entity = player_turn_result.get('dead')
             item_added = player_turn_result.get('item_added')
-            item_consumed = player_turn_result.get('item_consumed')
+            item_consumed = player_turn_result.get('consumed')
             player_cast_spell = player_turn_result.get('player_cast_spell')
             item_dropped = player_turn_result.get('item_dropped')
             targeting_from_item = player_turn_result.get('targeting_item')
@@ -320,12 +338,15 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 message_log.add_message(message)
                 end_item(itemdestroyed)
             if item_added:
+                previous_game_state = GameStates.ENEMY_TURN
                 entities.remove(item_added)
                 game_state = GameStates.ENEMY_TURN
             if item_consumed:
+                previous_game_state = GameStates.ENEMY_TURN
                 game_state = GameStates.ENEMY_TURN
             if item_dropped:
                 entities.append(item_dropped)
+                previous_game_state = GameStates.ENEMY_TURN
                 game_state = GameStates.ENEMY_TURN
             if equip:
                 if (player.fighter.hp > player.fighter.max_hp):

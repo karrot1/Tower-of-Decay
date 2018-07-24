@@ -82,7 +82,7 @@ class Map:
                         self.create_h_tunnel(prev_x, new_x, new_y)
                 if(num_rooms != 0):
                     #so the player doesn't get ambushed
-                    self.place_entities(new_room, entities)
+                    self.place_entities(new_room, entities, player)
                 # add room to list
                 rooms.append(new_room)
                 num_rooms += 1
@@ -113,7 +113,7 @@ class Map:
 
         return False
 
-    def place_entities(self, room, entities):
+    def place_entities(self, room, entities, player):
         max_monsters_per_room = from_dungeon_level([[5, 5],[4,10], [3, 15], [2, 20]], self.dungeon_level)
         max_items_per_room = from_dungeon_level([[4, 5],[3, 10], [2, 20]], self.dungeon_level)
         #gets a random number of monsters
@@ -129,14 +129,17 @@ class Map:
             'gskeleton': from_dungeon_level([[40, 5], [20, 10], [5, 15]], self.dungeon_level),
             'lich': from_dungeon_level([[20, 5], [1, 10]], self.dungeon_level)
         }
-        shieldchance = 10
-        swordchance = 10
-        armorchance = 7
+        shieldchance = 13 - shieldcount(player)*3
+        swordchance = 13 - swordcount(player)*3
+        armorchance = 10 - armorcount(player)*3
+        shieldchance = max(1, shieldchance)
+        swordchance = max(1, swordchance)
+        armorchance = max(1, armorchance)
         item_chance = {
 
-            'healing_potion': from_dungeon_level([[35, 15], [20, 20]], self.dungeon_level),
+            'healing_potion': from_dungeon_level([[25, 15], [10, 20]], self.dungeon_level),
             #'healing_potion': 75,
-            'mana_potion': from_dungeon_level([[25, 15], [14, 20]], self.dungeon_level),
+            'mana_potion': from_dungeon_level([[25, 15], [10, 20]], self.dungeon_level),
             'lightning_scroll': from_dungeon_level([[25, 6]], self.dungeon_level),
             'fireball_scroll': from_dungeon_level([[25, 4]], self.dungeon_level),
             'smite': from_dungeon_level([[25, 4]], self.dungeon_level),
@@ -249,3 +252,25 @@ class Map:
         player.spellcaster.alter_mp(player.spellcaster.max_mp//2)
         message_log.add_message(Message('You take a moment to rest, and recover your strength.', libtcod.light_violet))
         return entities
+
+def shieldcount(player):
+    count = 0
+    for item in player.inventory.items:
+        if item.has_equippable():
+            if item.equippable.slot == EquipmentSlots.OFF_HAND:
+                count = count + 1
+    return count
+def swordcount(player):
+    count = 0
+    for item in player.inventory.items:
+        if item.has_equippable():
+            if item.equippable.slot == EquipmentSlots.MAIN_HAND:
+                count = count + 1
+    return count
+def armorcount(player):
+    count = 0
+    for item in player.inventory.items:
+        if item.has_equippable():
+            if item.equippable.slot == EquipmentSlots.ARMOR:
+                count = count + 1
+    return count
