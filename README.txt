@@ -82,3 +82,6 @@ Controls:
     Cursor movement is identical to normal gameplay
     G: selects target
     Escape: return to normal gameplay
+
+Tower of Decay uses lybcodpy, as well as some material from TStand90's roguelike tutorial
+Special thanks to Chuzo15, Penny, and Lukewarm Ice Girl, our amazing playtesters. We couldn’t have done this without you.

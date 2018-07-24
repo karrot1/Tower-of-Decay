@@ -130,7 +130,7 @@ class Map:
             'lich': from_dungeon_level([[20, 5], [1, 10]], self.dungeon_level)
         }
         shieldchance = 10
-        swordchance = 9
+        swordchance = 10
         armorchance = 7
         item_chance = {
 
@@ -229,7 +229,7 @@ class Map:
                     item = Entity(x, y, '/', libtcod.sky, 'Rusty Dagger', equippable=equippable_component,
                                   render_order=RenderOrder.ITEM)
                 elif item_choice == 'armor1':
-                    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus=3)
+                    equippable_component = Equippable(EquipmentSlots.ARMOR, defense_bonus=2)
                     item = Entity(x, y, '[', libtcod.dark_sepia, 'Cloth Gambeson', equippable=equippable_component,
                                   render_order=RenderOrder.ITEM)
                 else:
