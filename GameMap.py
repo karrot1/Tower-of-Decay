@@ -147,9 +147,9 @@ class Map:
 
             'lich': from_dungeon_level([[20, 5],[0, 6], [0, 7], [1, 10]], self.dungeon_level)
         }
-        shieldchance = 13 - shieldcount(player)*3
-        swordchance = 13 - swordcount(player)*3
-        armorchance = 10 - armorcount(player)*3
+        shieldchance = 16 - shieldcount(player)*3
+        swordchance = 16 - swordcount(player)*3
+        armorchance = 13 - armorcount(player)*3
         shieldchance = max(1, shieldchance)
         swordchance = max(1, swordchance)
         armorchance = max(1, armorchance)

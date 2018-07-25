@@ -104,6 +104,7 @@ def main():
 
 
 def play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants):
+    debug = False;
     key = libtcod.Key()
     mouse = libtcod.Mouse()
     hasorb = False
@@ -328,7 +329,15 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                 message_log.add_message(Message('Press g to select target.'))
             if dead_entity:
                 if dead_entity == player:
-                    return 2
+                    if debug==False:
+                        render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log,
+                                   constants['screen_width'], constants['screen_height'],
+                                   constants['bar_width'], constants['panel_height'], constants['panel_y'],
+                                   mouse, constants['colors'], game_state)
+                        return 2
+                    else:
+                        player.fighter.hp = player.fighter.max_hp
+                        message = Message('You get better.', libtcod.red)
                 else:
                     message = death(False, dead_entity)
                 message_log.add_message(message)
@@ -418,11 +427,16 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                             end_item(itemdestroyed)
                         if dead_entity:
                             if dead_entity == player:
-                                render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, message_log,
-                                           constants['screen_width'], constants['screen_height'],
-                                           constants['bar_width'], constants['panel_height'], constants['panel_y'],
-                                           mouse, constants['colors'], game_state)
-                                return 2
+                                if debug == False:
+                                    render_all(con, panel, entities, player, game_map, fov_map, fov_recompute,
+                                               message_log,
+                                               constants['screen_width'], constants['screen_height'],
+                                               constants['bar_width'], constants['panel_height'], constants['panel_y'],
+                                               mouse, constants['colors'], game_state)
+                                    return 2
+                                else:
+                                    player.fighter.hp = player.fighter.max_hp
+                                    message = Message('You get better.', libtcod.red)
                             else:
                                 message = death(True, dead_entity)
                             message_log.add_message(message)
