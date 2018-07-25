@@ -125,9 +125,27 @@ class Map:
         number_of_monsters = randint(min_monsters, max_monsters_per_room)
         number_of_items = randint(0, max_items_per_room)
         monster_chances = {
-            'skeleton': 80,
-            'gskeleton': from_dungeon_level([[40, 5], [20, 10], [5, 15]], self.dungeon_level),
-            'lich': from_dungeon_level([[20, 5], [1, 10]], self.dungeon_level)
+            'skeleton': from_dungeon_level([[80, 5],[0, 6], [0, 7], [80, 20]], self.dungeon_level),
+            'gskeleton': from_dungeon_level([[40, 5],[0, 6], [0, 7], [20, 10], [5, 15]], self.dungeon_level),
+
+            'undead': from_dungeon_level([[0, 5], [90, 6], [0, 7], [10, 15]], self.dungeon_level),
+            'undeads': from_dungeon_level([[0, 5], [90, 6], [0, 7], [0, 15]], self.dungeon_level),
+            'necromancer': from_dungeon_level([[0, 5], [20, 6], [0, 7], [0, 15]], self.dungeon_level),
+
+
+            'mudman': from_dungeon_level([[0, 6], [60, 7], [0, 15]], self.dungeon_level),
+            'sof': from_dungeon_level([[0, 6], [70, 7], [0, 15]], self.dungeon_level),
+            'phorror': from_dungeon_level([[0, 6], [20, 7], [0, 15]], self.dungeon_level),
+
+            'wraith': from_dungeon_level([[0, 10], [30, 11], [0, 15]], self.dungeon_level),
+            'spirit': from_dungeon_level([ [0, 10], [60, 11], [0, 15]], self.dungeon_level),
+            'thorror': from_dungeon_level([[0, 10], [20, 11], [0, 15]], self.dungeon_level),
+
+            'hhound': from_dungeon_level([[0, 16], [30, 17], [0, 20]], self.dungeon_level),
+            'ablob': from_dungeon_level([[0, 16], [60, 17], [0, 20]], self.dungeon_level),
+            'warlock': from_dungeon_level([[0, 16], [20, 17], [0, 20]], self.dungeon_level),
+
+            'lich': from_dungeon_level([[20, 5],[0, 6], [0, 7], [1, 10]], self.dungeon_level)
         }
         shieldchance = 13 - shieldcount(player)*3
         swordchance = 13 - swordcount(player)*3
@@ -171,6 +189,59 @@ class Map:
                     fighter_component = fighter(hp = 25, defense = 2, power = 4, xp = 2)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'S', libtcod.white, 'Greater Skeleton', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+
+                elif monster_choice == 'undead':
+                    fighter_component = fighter(hp = 15, defense = 1, power = 3, xp = 1)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, '%', libtcod.dark_green, 'Undead', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'undeads':
+                    fighter_component = fighter(hp = 15, defense = 1, power = 4, xp = 2)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, '%', libtcod.green, 'Undead Stalker', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'necromancer':
+                    fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'N', libtcod.red, 'Necromancer', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+
+                elif monster_choice == 'mudman':
+                    fighter_component = fighter(hp = 20, defense = 1, power = 4, xp = 2)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'm', libtcod.sepia, 'Mud-Man', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'sof':
+                    fighter_component = fighter(hp = 30, defense = 4, power = 1, xp = 2)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, '"', libtcod.brass, 'Swarm of Flies', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'phorror':
+                    fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'H', libtcod.darker_lime, 'Putrid Horror', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+
+                elif monster_choice == 'wraith':
+                    fighter_component = fighter(hp = 30, defense = 4, power = 4, xp = 3)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'w', libtcod.violet, 'Wraith', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'spirit':
+                    fighter_component = fighter(hp = 15, defense = 2, power = 2, xp = 2)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 's', libtcod.brass, 'Spirit', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'thorror':
+                    fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, '*', libtcod.darkest_blue, 'Tentacled  Horror', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+
+                elif monster_choice == 'hhound':
+                    fighter_component = fighter(hp = 30, defense = 4, power = 4, xp = 3)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'h', libtcod.orange, 'Hellhound', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'ablob':
+                    fighter_component = fighter(hp = 30, defense = 2, power = 2, xp = 2)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'B', libtcod.celadon, 'Amorphous Blob', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                elif monster_choice == 'warlock':
+                    fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
+                    ai_component = BasicMonster()
+                    monster = Entity(x, y, 'W', libtcod.darker_red, 'Warlock', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+
                 elif monster_choice == 'lich':
                     fighter_component = fighter(hp=30, defense=4, power=8, xp =5)
                     ai_component = BasicMonster()
