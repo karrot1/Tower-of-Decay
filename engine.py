@@ -104,7 +104,7 @@ def main():
 
 
 def play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants):
-    debug = False;
+    debug = True;
     key = libtcod.Key()
     mouse = libtcod.Mouse()
     hasorb = False
