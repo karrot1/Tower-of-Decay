@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="83b48ef0-bc64-4703-9c67-858017cca0c7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Reverse_Dungeon.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Reverse_Dungeon.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GameMap.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameMap.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/engine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,7 +16,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="engine.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="engine.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/engine.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
@@ -111,11 +106,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="1" selection-start-column="1" selection-end-column="3" />
+            <state relative-caret-position="68">
+              <caret line="4" column="73" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
             </state>
           </provider>
         </entry>
@@ -141,11 +136,11 @@
       <find>cast_spell</find>
       <find>GameStates.Cast</find>
       <find>skeleton</find>
-      <find>game_state ==</find>
+      <find />
       <find>targeting</find>
       <find>rest</find>
-      <find>you t</find>
-      <find>a m</find>
+      <find />
+      <find />
       <find>major</find>
       <find>consumed</find>
       <find>wall</find>
@@ -153,14 +148,14 @@
       <find>cursor</find>
       <find>game_ov</find>
       <find>show_main_menu</find>
-      <find>show_main_menu = 0</find>
+      <find />
       <find>render_all</find>
       <find>larr</find>
       <find>leave</find>
       <find>from_dunge</find>
       <find>die</find>
       <find>death</find>
-      <find>return 2</find>
+      <find />
     </findStrings>
     <replaceStrings>
       <replace>constants['screen_width']</replace>
@@ -199,7 +194,6 @@
         <option value="$PROJECT_DIR$/game_states.py" />
         <option value="$PROJECT_DIR$/inventory.py" />
         <option value="$PROJECT_DIR$/README.txt" />
-        <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/input_handlers.py" />
         <option value="$PROJECT_DIR$/spellcaster.py" />
         <option value="$PROJECT_DIR$/random_utils.py" />
@@ -209,10 +203,11 @@
         <option value="$PROJECT_DIR$/initialize_new_game.py" />
         <option value="$PROJECT_DIR$/GameMap.py" />
         <option value="$PROJECT_DIR$/engine.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="x" value="-7" />
     <option name="width" value="1680" />
     <option name="height" value="1047" />
@@ -312,10 +307,10 @@
     <frame x="-7" y="0" width="1680" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14603366" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14603366" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5034662" side_tool="true" weight="0.2796158" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49653378" visible="true" weight="0.20708154" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49653378" visible="true" weight="0.20708154" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Python Console" order="8" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -340,13 +335,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/engine.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2210">
-          <caret line="141" column="25" selection-start-line="141" selection-start-column="25" selection-end-line="141" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/inventory.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -641,6 +629,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="106" column="17" selection-start-line="106" selection-start-column="17" selection-end-line="106" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="73" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
         </state>
       </provider>
     </entry>
