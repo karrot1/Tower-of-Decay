@@ -70,7 +70,7 @@ def cast_magic_missile(*args, **kwargs):
         if entity.x == target_x and entity.y == target_y and entity.ai:
             findamage = damage - entity.fighter.defense
             results.append({'consumed': True, 'target': target, 'message': Message(
-                'The {0} is hit by your magical missile! {1} damage!'.format(entity.name, findamage))})
+                'The {0} is hit by the magical missile! {1} damage!'.format(entity.name, findamage))})
             results.extend(entity.fighter.take_damage(findamage))
             break
     else:
@@ -108,7 +108,7 @@ def cast_fireball(*args, **kwargs):
     target_x = kwargs.get('target_x')
     target_y = kwargs.get('target_y')
     results = []
-    if not libtcod.map_is_in_fov(fov_map, target_x, target_y):
+    if not libtcod.map_is_in_fov(fov_map, target_x, target_y) and not kwargs.get('ismon'):
         results.append({'consumed': False, 'message': Message('You can not target a tile you can not see.')})
         return results
     results.append({'consumed': True, 'message': Message('The fireball explodes, doing {0} damage'.format(damage))})

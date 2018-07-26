@@ -14,6 +14,21 @@ class BasicMonster:
                 results.extend(attack_results)
         return results
 
+class SpellMonster:
+    def take_turn(self, target, fov_map, game_map, entities):
+        results = []
+        monster = self.owner
+        if libtcod.map_is_in_fov(fov_map, monster.x, monster.y):
+            if monster.distance_to(target) >= 5:
+                monster.move_astar(target, entities, game_map)
+            elif target.fighter.hp > 0:
+                if monster.distance_to(target)<2:
+                    attack_results = monster.fighter.attack(target)
+                else:
+                    attack_results = monster.moncaster.cast(target, entities, fov_map)
+                results.extend(attack_results)
+        return results
+
 class ConfusedMonster:
     def __init__ (self, previous_ai, number_of_turns=10):
         self.previous_ai = previous_ai

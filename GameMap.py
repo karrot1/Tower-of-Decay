@@ -11,6 +11,7 @@ from item_functions import *
 from random_utils import *
 from equipment import EquipmentSlots
 from Equippable import Equippable
+from moncaster import *
 
 class Map:
     def __init__(self, width, height, dungeon_level = 1):
@@ -153,6 +154,9 @@ class Map:
         shieldchance = max(1, shieldchance)
         swordchance = max(1, swordchance)
         armorchance = max(1, armorchance)
+        lich_spellcasting = {
+            'fireball': 1
+        }
         item_chance = {
 
             'healing_potion': from_dungeon_level([[25, 15], [10, 20]], self.dungeon_level),
@@ -244,8 +248,9 @@ class Map:
 
                 elif monster_choice == 'lich':
                     fighter_component = fighter(hp=30, defense=4, power=8, xp =5)
-                    ai_component = BasicMonster()
-                    monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    ai_component = SpellMonster()
+                    moncaster_component = moncaster(lich_spellcasting)
+                    monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, moncaster = moncaster_component)
                 entities.append(monster)
 
         for i in range(number_of_items):
