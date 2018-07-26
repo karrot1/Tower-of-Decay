@@ -43,6 +43,8 @@ class fighter:
     def attack(self, target):
         results = []
         damage = self.power - target.fighter.defense
+        if self.owner.name == "Player":
+            damage = max(1, damage)
         if damage > 0:
             results.append({'message': Message('{0} attacks {1} for {2} hit points.'.format(
                 self.owner.name.capitalize(), target.name, str(damage)), libtcod.white)})

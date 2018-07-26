@@ -108,8 +108,8 @@ def get_game_variables(constants):
     message_log = MessageLog(constants['message_x'], constants['message_width'], constants['message_height'])
     floor = 0
     highest_floor = 0
-    levellist = []
-    floorentities = []
-    dstairxy = []
-    ustairxy = []
+    levellist = {10000:[0,0]}
+    floorentities = {10000:[0,0]}
+    dstairxy = {10000:[0,0]}
+    ustairxy = {10000:[0,0]}
     return player, entities, game_map, message_log, game_state, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor

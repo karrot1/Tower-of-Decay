@@ -50,7 +50,7 @@ def cast_smite(*args, **kwargs):
                     target = entity
                     closest_distance = distance
     if target:
-        findamage = max(1, damage - entity.fighter.defense)
+        findamage = max(1, damage - target.fighter.defense)
         results.append({'consumed': True, 'target': target, 'message': Message('The {0} is smote by magical power! {1} damage!'.format(target.name, findamage))})
         results.extend(target.fighter.take_damage(findamage))
     else:

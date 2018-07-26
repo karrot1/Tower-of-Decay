@@ -12,7 +12,7 @@ Tower of Decay is a roguelike with a twist: the player levels backwards, becomin
 
 Python 3 is required to play Tower of Decay
 
-To start the game, run engine.exe
+To start the game, run towerofdecay.exe
 
 Legend:
   @: the player character! That's you.
@@ -20,10 +20,6 @@ Legend:
   .: ground
   <: upwards staircase
   >: downwards staircase
-Enemies
-  s: skeleton
-  S: greater skeleton
-  L: lich
 Items:
   !: potion
   o: ring

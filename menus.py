@@ -31,7 +31,7 @@ def inventory_menu(con, header, player, inventory_width, screen_width, screen_he
                     else:
                         options.append('{0} (Durability: {1})'.format(item.name, item.equippable.hp))
                 else:
-                    options.append()
+                    options.append('{0}'.format(item.name))
             else:
                 options.append(item.name + '<' + str(item.stack_amount) + '>')
     menu(con, header, options, inventory_width, screen_width, screen_height)

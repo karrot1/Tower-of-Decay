@@ -91,6 +91,17 @@ class Map:
             stairs_component = Stairs(self.dungeon_level + 1)
             up_stairs = Entity(center_of_last_room_x, center_of_last_room_y, '<', libtcod.white, 'stairs up', render_order = RenderOrder.STAIRS, stairs=stairs_component)
             entities.append(up_stairs)
+            if self.dungeon_level == 6:
+                fighter_component = fighter(hp=30, defense=4, power=8, xp=5)
+                ai_component = SpellMonster()
+                necro_spellcasting = {
+                    'animate_dead': 1,
+                    'magic_missile': 3
+                }
+                moncaster_component = moncaster(necro_spellcasting, 8)
+                monster = Entity(center_of_last_room_x, center_of_last_room_y, 'N', libtcod.red, 'Necromancer', blocks=True, render_order=RenderOrder.ACTOR,
+                                 fighter=fighter_component, ai=ai_component, moncaster=moncaster_component)
+                entities.append(monster)
         else:
             item_component = Item()
             orb = Entity(center_of_last_room_x, center_of_last_room_y, '0', libtcod.purple, 'Orb of Undeath', render_order=RenderOrder.ITEM,item=item_component)
@@ -132,11 +143,11 @@ class Map:
         number_of_monsters = randint(min_monsters, max_monsters_per_room)
         number_of_items = randint(0, max_items_per_room)
         monster_chances = {
-            'skeleton': from_dungeon_level([[80, 5],[0, 6], [0, 7], [80, 20]], self.dungeon_level),
-            'gskeleton': from_dungeon_level([[40, 5],[0, 6], [0, 7], [20, 10], [5, 15]], self.dungeon_level),
+            'skeleton': from_dungeon_level([[80, 5],[90, 6], [0, 7], [80, 20]], self.dungeon_level),
+            'gskeleton': from_dungeon_level([[40, 5],[40, 6], [0, 7], [20, 10], [5, 15]], self.dungeon_level),
 
-            'undead': from_dungeon_level([[0, 5], [90, 6], [0, 7], [10, 15]], self.dungeon_level),
-            'undeads': from_dungeon_level([[0, 5], [90, 6], [0, 7], [0, 15]], self.dungeon_level),
+            'undead': from_dungeon_level([[0, 5], [60, 6], [0, 7], [10, 15]], self.dungeon_level),
+            'undeads': from_dungeon_level([[0, 5], [30, 6], [0, 7], [0, 15]], self.dungeon_level),
             'necromancer': from_dungeon_level([[0, 5], [20, 6], [0, 7], [0, 15]], self.dungeon_level),
 
 
@@ -201,27 +212,27 @@ class Map:
             if not any([entity for entity in entities if entity.x == x and entity.y == y]):
                 monster_choice = random_choice_from_dict(monster_chances)
                 if monster_choice == 'skeleton':
-                    fighter_component = fighter(hp = 20, defense = 0, power = 4, xp = 1)
+                    fighter_component = fighter(hp = 5, defense = 0, power = 3, xp = 1)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'g', libtcod.dark_green, 'Goblin', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 elif monster_choice == 'gskeleton':
-                    fighter_component = fighter(hp = 25, defense = 2, power = 4, xp = 2)
+                    fighter_component = fighter(hp = 15, defense = 2, power = 4, xp = 2)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'o', libtcod.dark_yellow, 'Orc', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
 
                 elif monster_choice == 'undead':
-                    fighter_component = fighter(hp = 15, defense = 1, power = 3, xp = 1)
+                    fighter_component = fighter(hp = 10, defense = 0, power = 3, xp = 1)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, '%', libtcod.dark_green, 'Zombie', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, undead=True)
                 elif monster_choice == 'undeads':
-                    fighter_component = fighter(hp = 15, defense = 1, power = 4, xp = 2)
+                    fighter_component = fighter(hp = 10, defense = 0, power = 4, xp = 2)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, '%', libtcod.green, 'Undead Stalker', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, undead=True)
                 elif monster_choice == 'necromancer':
                     fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
                     ai_component = SpellMonster()
                     moncaster_component = moncaster(necro_spellcasting, 8)
-                    monster = Entity(x, y, 'N', libtcod.red, 'Necromancer', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, spellcaster=moncaster_component)
+                    monster = Entity(x, y, 'N', libtcod.red, 'Necromancer', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, moncaster=moncaster_component)
 
                 elif monster_choice == 'mudman':
                     fighter_component = fighter(hp = 20, defense = 1, power = 4, xp = 2)
@@ -237,28 +248,28 @@ class Map:
                     monster = Entity(x, y, 'H', libtcod.darker_lime, 'Putrid Horror', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
 
                 elif monster_choice == 'wraith':
-                    fighter_component = fighter(hp = 30, defense = 4, power = 4, xp = 3)
+                    fighter_component = fighter(hp = 4, defense = 5, power = 4, xp = 3)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'w', libtcod.violet, 'Wraith', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, undead=True)
                 elif monster_choice == 'spirit':
-                    fighter_component = fighter(hp = 15, defense = 2, power = 2, xp = 2)
+                    fighter_component = fighter(hp = 10, defense = 1, power = 2, xp = 2)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 's', libtcod.brass, 'Spirit', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, undead=True)
                 elif monster_choice == 'thorror':
-                    fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
+                    fighter_component = fighter(hp = 4, defense = 5, power = 8, xp = 5)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, '*', libtcod.darkest_blue, 'Tentacled  Horror', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
 
                 elif monster_choice == 'hhound':
-                    fighter_component = fighter(hp = 25, defense = 1, power = 4, xp = 3)
+                    fighter_component = fighter(hp = 10, defense = 1, power = 4, xp = 3)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'h', libtcod.orange, 'Hellhound', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 elif monster_choice == 'ablob':
-                    fighter_component = fighter(hp = 20, defense = 0, power = 2, xp = 2)
+                    fighter_component = fighter(hp = 5, defense = 0, power = 2, xp = 2)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'B', libtcod.celadon, 'Amorphous Blob', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 elif monster_choice == 'warlock':
-                    fighter_component = fighter(hp = 30, defense = 2, power = 3, xp = 5)
+                    fighter_component = fighter(hp = 10, defense = 0, power = 3, xp = 5)
                     ai_component = SpellMonster()
                     moncaster_component = moncaster(warlock_spellcasting, 5)
                     monster = Entity(x, y, 'W', libtcod.darker_red, 'Warlock', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, moncaster=moncaster_component)
