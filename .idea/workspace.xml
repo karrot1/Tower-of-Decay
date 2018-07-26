@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="83b48ef0-bc64-4703-9c67-858017cca0c7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-    </list>
+    <list default="true" id="83b48ef0-bc64-4703-9c67-858017cca0c7" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -136,11 +134,11 @@
       <find>cast_spell</find>
       <find>GameStates.Cast</find>
       <find>skeleton</find>
-      <find />
+      <find>game_state ==</find>
       <find>targeting</find>
       <find>rest</find>
-      <find />
-      <find />
+      <find>you t</find>
+      <find>a m</find>
       <find>major</find>
       <find>consumed</find>
       <find>wall</find>
@@ -148,14 +146,14 @@
       <find>cursor</find>
       <find>game_ov</find>
       <find>show_main_menu</find>
-      <find />
+      <find>show_main_menu = 0</find>
       <find>render_all</find>
       <find>larr</find>
       <find>leave</find>
       <find>from_dunge</find>
       <find>die</find>
       <find>death</find>
-      <find />
+      <find>return 2</find>
     </findStrings>
     <replaceStrings>
       <replace>constants['screen_width']</replace>
@@ -304,7 +302,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="0" width="1680" height="1047" extended-state="0" />
+    <frame x="-7" y="0" width="1680" height="1047" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14603366" />
