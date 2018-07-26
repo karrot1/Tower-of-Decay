@@ -95,10 +95,16 @@ class Map:
             item_component = Item()
             orb = Entity(center_of_last_room_x, center_of_last_room_y, '0', libtcod.purple, 'Orb of Undeath', render_order=RenderOrder.ITEM,item=item_component)
             entities.append(orb)
-            fighter_component = fighter(hp=40, defense=2, power=5, xp=5)
-            ai_component = BasicMonster()
+            larry_spellcasting = {
+                'fireball': 2,
+                'animate_dead': 3,
+                'magic_missile': 5
+            }
+            fighter_component = fighter(hp=40, defense=2, power=4, xp=5)
+            moncaster_component = moncaster(larry_spellcasting, 6)
+            ai_component = SpellMonster()
             monster = Entity(center_of_last_room_x, center_of_last_room_y, 'L', libtcod.red, 'Larry the Undying', blocks=True, render_order=RenderOrder.ACTOR,
-                             fighter=fighter_component, ai=ai_component)
+                             fighter=fighter_component, ai=ai_component, moncaster = moncaster_component, undead=True)
             entities.append(monster)
         if (self.dungeon_level > 1):
             downstairs_component = Stairs(self.dungeon_level -1)
@@ -155,8 +161,17 @@ class Map:
         swordchance = max(1, swordchance)
         armorchance = max(1, armorchance)
         lich_spellcasting = {
-            'fireball': 1
+            'fireball': 1,
+            'magic_missile':4
         }
+        necro_spellcasting = {
+            'animate_dead': 1,
+            'magic_missile': 3
+        }
+        warlock_spellcasting = {
+            'magic_missile':1
+        }
+
         item_chance = {
 
             'healing_potion': from_dungeon_level([[25, 15], [10, 20]], self.dungeon_level),
@@ -188,24 +203,25 @@ class Map:
                 if monster_choice == 'skeleton':
                     fighter_component = fighter(hp = 20, defense = 0, power = 4, xp = 1)
                     ai_component = BasicMonster()
-                    monster = Entity(x, y, 's', libtcod.white, 'Skeleton', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    monster = Entity(x, y, 'g', libtcod.dark_green, 'Goblin', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 elif monster_choice == 'gskeleton':
                     fighter_component = fighter(hp = 25, defense = 2, power = 4, xp = 2)
                     ai_component = BasicMonster()
-                    monster = Entity(x, y, 'S', libtcod.white, 'Greater Skeleton', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    monster = Entity(x, y, 'o', libtcod.dark_yellow, 'Orc', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
 
                 elif monster_choice == 'undead':
                     fighter_component = fighter(hp = 15, defense = 1, power = 3, xp = 1)
                     ai_component = BasicMonster()
-                    monster = Entity(x, y, '%', libtcod.dark_green, 'Undead', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    monster = Entity(x, y, '%', libtcod.dark_green, 'Zombie', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, undead=True)
                 elif monster_choice == 'undeads':
                     fighter_component = fighter(hp = 15, defense = 1, power = 4, xp = 2)
                     ai_component = BasicMonster()
-                    monster = Entity(x, y, '%', libtcod.green, 'Undead Stalker', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    monster = Entity(x, y, '%', libtcod.green, 'Undead Stalker', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, undead=True)
                 elif monster_choice == 'necromancer':
                     fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
-                    ai_component = BasicMonster()
-                    monster = Entity(x, y, 'N', libtcod.red, 'Necromancer', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    ai_component = SpellMonster()
+                    moncaster_component = moncaster(necro_spellcasting, 8)
+                    monster = Entity(x, y, 'N', libtcod.red, 'Necromancer', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, spellcaster=moncaster_component)
 
                 elif monster_choice == 'mudman':
                     fighter_component = fighter(hp = 20, defense = 1, power = 4, xp = 2)
@@ -223,34 +239,35 @@ class Map:
                 elif monster_choice == 'wraith':
                     fighter_component = fighter(hp = 30, defense = 4, power = 4, xp = 3)
                     ai_component = BasicMonster()
-                    monster = Entity(x, y, 'w', libtcod.violet, 'Wraith', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    monster = Entity(x, y, 'w', libtcod.violet, 'Wraith', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, undead=True)
                 elif monster_choice == 'spirit':
                     fighter_component = fighter(hp = 15, defense = 2, power = 2, xp = 2)
                     ai_component = BasicMonster()
-                    monster = Entity(x, y, 's', libtcod.brass, 'Spirit', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    monster = Entity(x, y, 's', libtcod.brass, 'Spirit', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, undead=True)
                 elif monster_choice == 'thorror':
                     fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, '*', libtcod.darkest_blue, 'Tentacled  Horror', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
 
                 elif monster_choice == 'hhound':
-                    fighter_component = fighter(hp = 30, defense = 4, power = 4, xp = 3)
+                    fighter_component = fighter(hp = 25, defense = 1, power = 4, xp = 3)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'h', libtcod.orange, 'Hellhound', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 elif monster_choice == 'ablob':
-                    fighter_component = fighter(hp = 30, defense = 2, power = 2, xp = 2)
+                    fighter_component = fighter(hp = 20, defense = 0, power = 2, xp = 2)
                     ai_component = BasicMonster()
                     monster = Entity(x, y, 'B', libtcod.celadon, 'Amorphous Blob', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
                 elif monster_choice == 'warlock':
-                    fighter_component = fighter(hp = 30, defense = 4, power = 8, xp = 5)
-                    ai_component = BasicMonster()
-                    monster = Entity(x, y, 'W', libtcod.darker_red, 'Warlock', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component)
+                    fighter_component = fighter(hp = 30, defense = 2, power = 3, xp = 5)
+                    ai_component = SpellMonster()
+                    moncaster_component = moncaster(warlock_spellcasting, 5)
+                    monster = Entity(x, y, 'W', libtcod.darker_red, 'Warlock', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, moncaster=moncaster_component)
 
                 elif monster_choice == 'lich':
-                    fighter_component = fighter(hp=30, defense=4, power=8, xp =5)
+                    fighter_component = fighter(hp=30, defense=4, power=5, xp =5)
                     ai_component = SpellMonster()
-                    moncaster_component = moncaster(lich_spellcasting)
-                    monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, moncaster = moncaster_component)
+                    moncaster_component = moncaster(lich_spellcasting, 8)
+                    monster = Entity(x, y, 'L', libtcod.purple, 'Lich', blocks=True, render_order=RenderOrder.ACTOR, fighter=fighter_component, ai= ai_component, moncaster = moncaster_component, undead=True)
                 entities.append(monster)
 
         for i in range(number_of_items):

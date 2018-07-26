@@ -5,16 +5,31 @@ from game_states import *
 from render_functions import RenderOrder
 
 def death(player, entity):
-    entity.char = '%'
-    entity.color = libtcod.dark_red
     if player == True:
+        entity.char = '%'
+        entity.color = libtcod.dark_red
         return Message('You died!', libtcod.red), GameStates.PLAYER_DEAD
-    else:
+    elif entity.undead == False:
+        entity.char = '%'
+        entity.color = libtcod.dark_red
         entity.render_order = RenderOrder.CORPSE
         death_message = Message('{0} dies!'.format(entity.name.capitalize()), libtcod.yellow)
         entity.blocks = False
         entity.fighter = None
         entity.ai = None
+        entity.moncaster = None
+
+        entity.name = 'remains of ' + entity.name
+        return death_message
+    else:
+        entity.char = '%'
+        entity.color = libtcod.white
+        entity.render_order = RenderOrder.CORPSE
+        death_message = Message('{0} dies again!'.format(entity.name.capitalize()), libtcod.yellow)
+        entity.blocks = False
+        entity.fighter = None
+        entity.ai = None
+        entity.moncaster = None
         entity.name = 'remains of ' + entity.name
         return death_message
 

@@ -1,5 +1,8 @@
 import libtcodpy as libtcod
 from ai import *
+from render_functions import RenderOrder
+from random_utils import *
+from warfighter import *
 
 from game_messages import Message
 
@@ -47,11 +50,67 @@ def cast_smite(*args, **kwargs):
                     target = entity
                     closest_distance = distance
     if target:
-        findamage = damage - target.fighter.defense
+        findamage = max(1, damage - entity.fighter.defense)
         results.append({'consumed': True, 'target': target, 'message': Message('The {0} is smote by magical power! {1} damage!'.format(target.name, findamage))})
         results.extend(target.fighter.take_damage(findamage))
     else:
         results.append({'consumed': False, 'target': None, 'message': Message('No enemy is within range.')})
+    return results
+
+def cast_animate_dead(*args, **kwargs):
+    caster = args[0]
+    entities = kwargs.get('entities')
+    fov_map = kwargs.get('fov_map')
+    number = kwargs.get('number')
+    monchances = {
+        'undead':10-number,
+        'undeads':1
+    }
+    results = []
+    target = None
+    closest_distance = 10000
+    for entity in entities:
+        if entity.render_order == RenderOrder.CORPSE and entity.undead == False and entity != caster and entity.visible:
+            distance = caster.distance_to(entity)
+            if distance < closest_distance:
+                target = entity
+                closest_distance = distance
+                if distance < closest_distance:
+                    target = entity
+                    closest_distance = distance
+    if target:
+        results.append({'consumed': False, 'target': None, 'message': Message('The dead rise from their graves!')})
+        monster_choice = random_choice_from_dict(monchances)
+        if monster_choice == 'undead':
+            target.name = 'Zombie'
+            fighter_component = fighter(hp=15, defense=1, power=3, xp=1)
+            ai_component = BasicMonster()
+            target.char = '%'
+            target.color = libtcod.dark_green
+            target.render_order = RenderOrder.ACTOR
+            target.blocks = True
+            fighter_component.owner = target
+            target.fighter = fighter_component
+            target.ai = ai_component
+            ai_component.owner = target
+            target.moncaster = None
+            target.undead = True
+        else:
+            entity.name = 'Undead Stalker'
+            fighter_component = fighter(hp=15, defense=1, power=4, xp=2)
+            ai_component = BasicMonster()
+            target.char = '%'
+            target.color = libtcod.dark_green
+            target.render_order = RenderOrder.ACTOR
+            target.blocks = True
+            fighter_component.owner = target
+            target.fighter = fighter_component
+            target.ai = ai_component
+            ai_component.owner = target
+            target.moncaster = None
+            target.undead = True
+    else:
+        results.append({'consumed': False, 'target': None, 'message': Message('The dead continue to slumber.')})
     return results
 
 def cast_magic_missile(*args, **kwargs):
@@ -63,12 +122,12 @@ def cast_magic_missile(*args, **kwargs):
     target_y = kwargs.get('target_y')
     results = []
     target = None
-    if not libtcod.map_is_in_fov(fov_map, target_x, target_y):
+    if not libtcod.map_is_in_fov(fov_map, target_x, target_y)and not kwargs.get('ismon'):
         results.append({'consumed': False, 'message': Message('You can not target a tile you can not see.')})
         return results
     for entity in entities:
-        if entity.x == target_x and entity.y == target_y and entity.ai:
-            findamage = damage - entity.fighter.defense
+        if entity.x == target_x and entity.y == target_y and (entity.ai or kwargs.get('ismon')):
+            findamage = max(1, damage - entity.fighter.defense)
             results.append({'consumed': True, 'target': target, 'message': Message(
                 'The {0} is hit by the magical missile! {1} damage!'.format(entity.name, findamage))})
             results.extend(entity.fighter.take_damage(findamage))
@@ -114,7 +173,7 @@ def cast_fireball(*args, **kwargs):
     results.append({'consumed': True, 'message': Message('The fireball explodes, doing {0} damage'.format(damage))})
     for entity in entities:
         if entity.distance(target_x, target_y) <= radius and entity.fighter:
-            findamage = damage - entity.fighter.defense
+            findamage = max(1, damage - entity.fighter.defense)
             results.append({'message': Message('The {0} is burned, taking {1} damage!'.format(entity.name, findamage))})
             results.extend(entity.fighter.take_damage(findamage))
     return results
@@ -131,7 +190,7 @@ def cast_confuse(*args, **kwargs):
         return results
     for entity in entities:
         if entity.x == target_x and entity.y == target_y and entity.ai:
-            confused_ai = ConfusedMonster(entity.ai, 6- entity.fighter.defense)
+            confused_ai = ConfusedMonster(entity.ai, max(0, 6 - entity.fighter.defense))
             confused_ai.owner = entity
             entity.ai = confused_ai
             results.append({'consumed': True, 'message': Message('The {0}\'s eyes glaze over.'.format(entity.name))})
