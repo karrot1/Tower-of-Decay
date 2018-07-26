@@ -83,7 +83,7 @@ def main():
             elif exit_game:
                 break
         elif show_main_menu == 4:
-
+            #checking to see if player is sure
             areyousure(con, constants['screen_width'], constants['screen_height'])
             libtcod.console_flush()
             action = handle_sure(key)
@@ -295,6 +295,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
         if fullscreen:
             libtcod.console_set_fullscreen(not libtcod.console_is_fullscreen())
         for player_turn_result in player_turn_results:
+            #checking through results of the player's turn
             message = player_turn_result.get('message')
             dead_entity = player_turn_result.get('dead')
             item_added = player_turn_result.get('item_added')
@@ -411,6 +412,7 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                                 player.level.current_level) + '.', libtcod.red))
 
         if game_state == GameStates.ENEMY_TURN:
+            #enemy turn
             for entity in entities:
                 if entity.ai:
                     enemy_turn_results = entity.ai.take_turn(player, fov_map, game_map, entities)

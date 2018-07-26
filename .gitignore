@@ -7,3 +7,7 @@ build/tower_of_decay.zip
 *.pyc
 *.pyc
 .idea/workspace.xml
+.idea/workspace.xml
+*.pyc
+*.xml
+*.pyc
