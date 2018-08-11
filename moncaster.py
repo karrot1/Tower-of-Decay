@@ -6,7 +6,7 @@ class moncaster:
         self.spelllist = spelllist
         self.power = power
 
-    def cast(self, target, entities, fov_map):
+    def cast(self, target, entities, fov_map, game_map):
         results = []
         castspell = random_choice_from_dict(self.spelllist)
         if castspell == 'fireball':
@@ -15,4 +15,6 @@ class moncaster:
             results.extend(cast_magic_missile(entities = entities, damage=self.power, target_x = target.x, target_y = target.y, ismon = True))
         elif castspell == 'animate_dead':
             results.extend(cast_animate_dead(self.owner, entities = entities, number=self.power, player=target))
+        elif castspell == 'summon_demon':
+            results.extend(summon_demons(self.owner, entities = entities, number=self.power-2, gamemap=game_map))
         return results

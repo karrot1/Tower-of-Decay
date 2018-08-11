@@ -104,7 +104,7 @@ def main():
 
 
 def play_game(player, entities, game_map, message_log, game_state, con, panel, cursor, levellist, floorentities, dstairxy, ustairxy, floor, highest_floor, constants):
-    debug = True;
+    debug = False
     key = libtcod.Key()
     mouse = libtcod.Mouse()
     hasorb = False
@@ -179,6 +179,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                                     message_log.add_message(Message(
                                         'You grow weaker as you approach the Orb of Undeath. You are now level {0}'.format(
                                             player.level.current_level) + '.', libtcod.red))
+                                    if (debug == True):
+                                        message_log.add_message(Message(
+                                            'Did I mention debug mode was on?', libtcod.red))
                                     player.fighter.base_max_hp -= constants['hp_per_level']
                                     if (player.fighter.hp > constants['hp_per_level']):
                                         player.fighter.hp -= constants['hp_per_level']
@@ -210,6 +213,9 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
             if stairs_down:
                 for entity in entities:
                     if entity.stairs and entity.x == player.x and entity.y == player.y and entity.downstairs == True:
+                        for item in player.inventory.items:
+                            if item.name == "Orb of Undeath":
+                                hasorb = True
                         if floor == highest_floor:
                             levellist[floor] = copy.deepcopy(game_map)
                             floorentities[floor] = entities
@@ -224,25 +230,28 @@ def play_game(player, entities, game_map, message_log, game_state, con, panel, c
                         playerindex = entities.index(player)
                         cursorindex = entities.index(cursor)
                         entities = floorentities[floor]
-                        player = entities[playerindex]
-                        cursor = entities[cursorindex]
+                        entities[playerindex] = player
+                        entities[cursorindex] = cursor
                         xyref = ustairxy[floor]
                         player.x = xyref[0]
                         player.y = xyref[1]
                         fov_map = initialize_fov(game_map)
                         fov_recompute = True
                         libtcod.console_clear(con)
+                        messageresult = animate_all(entities=entities, number=5, player = player)
+                        message_log.add_message(messageresult[0].get('message'))
                         break
-                    elif entity.x == player.x and entity.y == player.y and entity.name == 'exit':
+                    elif entity.x == player.x and entity.y == player.y:
                         for item in player.inventory.items:
                             if item.name == "Orb of Undeath":
                                 hasorb = True
-                        if hasorb == False:
+                        if hasorb == False and entity.name == 'exit':
                             message_log.add_message(Message('You can not leave without the Orb! The fate of the world depends on it!.', libtcod.white))
                             break
-                        else:
+                        elif hasorb == True and entity.name == 'exit':
                             message_log.add_message(Message('You escape with the Orb of Undeath! You win!', libtcod.purple))
                             return 1
+
                 else:
                     message_log.add_message(Message('There are no stairs here.', libtcod.white))
             if move:

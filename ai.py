@@ -25,7 +25,7 @@ class SpellMonster:
                 if monster.distance_to(target)<2:
                     attack_results = monster.fighter.attack(target)
                 else:
-                    attack_results = monster.moncaster.cast(target, entities, fov_map)
+                    attack_results = monster.moncaster.cast(target, entities, fov_map, game_map)
                 results.extend(attack_results)
         return results
 

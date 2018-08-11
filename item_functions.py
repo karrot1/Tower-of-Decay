@@ -3,7 +3,8 @@ from ai import *
 from render_functions import RenderOrder
 from random_utils import *
 from warfighter import *
-
+from entity import *
+from GameMap import *
 from game_messages import Message
 
 def heal(*args, **kwargs):
@@ -57,10 +58,118 @@ def cast_smite(*args, **kwargs):
         results.append({'consumed': False, 'target': None, 'message': Message('No enemy is within range.')})
     return results
 
+def animate_all(*args, **kwargs):
+    entities = kwargs.get('entities')
+    number = kwargs.get('number')
+    monchances = {
+        'undead': 10 - number,
+        'undeads': 1
+    }
+    results = []
+    deadmessage = False
+    for entity in entities:
+        if entity.render_order == RenderOrder.CORPSE and entity.undead == False and get_blocking_entities_at_location(entities, entity.x, entity.y) is None:
+            if deadmessage == False:
+                results.append({'consumed': False, 'target': None, 'message': Message('The dead rise from their graves!', libtcod.yellow)})
+                deadmessage = True
+            monster_choice = random_choice_from_dict(monchances)
+            if monster_choice == 'undead':
+                entity.name = 'Zombie'
+                fighter_component = fighter(hp=5, defense=0, power=3, xp=1)
+                ai_component = BasicMonster()
+                entity.char = '%'
+                entity.color = libtcod.dark_green
+                entity.render_order = RenderOrder.ACTOR
+                entity.blocks = True
+                fighter_component.owner = entity
+                entity.fighter = fighter_component
+                entity.ai = ai_component
+                ai_component.owner = entity
+                entity.moncaster = None
+                entity.undead = True
+            else:
+                entity.name = 'Greater Zombie'
+                fighter_component = fighter(hp = 10, defense = 0, power = 4, xp = 2)
+                ai_component = BasicMonster()
+                entity.char = '%'
+                entity.color = libtcod.dark_green
+                entity.render_order = RenderOrder.ACTOR
+                entity.blocks = True
+                fighter_component.owner = entity
+                entity.fighter = fighter_component
+                entity.ai = ai_component
+                ai_component.owner = entity
+                entity.moncaster = None
+                entity.undead = True
+    return results
+
+def summon_demons(*args, **kwargs):
+    caster = args[0]
+    entities = kwargs.get('entities')
+    number = kwargs.get('number')
+    game_map = kwargs.get('gamemap')
+    results = []
+    monchances = {
+        'thorror':10,
+        'hhound':10,
+        'ablob':10
+    }
+    castx = caster.x
+    casty = caster.y
+    i = 0
+    monsterssummoned = 0
+    messageyet = False
+    while i<8 and monsterssummoned < number:
+        x = castx
+        y = casty
+        if i == 0:
+            y = casty + 1
+        elif i == 1:
+            x = castx + 1
+            y = casty + 1
+        elif i == 2:
+            x = castx + 1
+        elif i == 3:
+            x = castx + 1
+            y = casty - 1
+        elif i == 4:
+            y = casty -1
+        elif i == 5:
+            y = casty -1
+            x = castx -1
+        elif i == 6:
+            x = castx -1
+        elif i == 7:
+            x = castx -1
+            y = casty +1
+
+        if (get_blocking_entities_at_location(entities, x, y) is None) and game_map.is_blocked(x, y) == False:
+            if messageyet == False:
+                results.append({'message': Message('The {0} summons things from beyond the void!'.format(caster.name))})
+                messageyet = True
+            monster_choice = random_choice_from_dict(monchances)
+            if monster_choice == 'thorror':
+                fighter_component = fighter(hp=4, defense=5, power=8, xp=5)
+                ai_component = BasicMonster()
+                monster = Entity(x, y, '*', libtcod.darkest_blue, 'Tentacled Horror', blocks=True,
+                             render_order=RenderOrder.ACTOR, fighter=fighter_component, ai=ai_component)
+            elif monster_choice == 'hhound':
+                fighter_component = fighter(hp=10, defense=1, power=4, xp=3)
+                ai_component = BasicMonster()
+                monster = Entity(x, y, 'h', libtcod.orange, 'Hellhound', blocks=True, render_order=RenderOrder.ACTOR,
+                         fighter=fighter_component, ai=ai_component)
+            else:
+                fighter_component = fighter(hp=5, defense=0, power=2, xp=2)
+                ai_component = BasicMonster()
+                monster = Entity(x, y, 'B', libtcod.celadon, 'Amorphous Blob', blocks=True, render_order=RenderOrder.ACTOR,
+                         fighter=fighter_component, ai=ai_component)
+            entities.append(monster)
+            monsterssummoned = monsterssummoned + 1
+        i = i+1
+    return results
 def cast_animate_dead(*args, **kwargs):
     caster = args[0]
     entities = kwargs.get('entities')
-    fov_map = kwargs.get('fov_map')
     number = kwargs.get('number')
     monchances = {
         'undead':10-number,
@@ -70,7 +179,7 @@ def cast_animate_dead(*args, **kwargs):
     target = None
     closest_distance = 10000
     for entity in entities:
-        if entity.render_order == RenderOrder.CORPSE and entity.undead == False and entity != caster and entity.visible:
+        if entity.render_order == RenderOrder.CORPSE and entity.undead == False and entity != caster and entity.visible and get_blocking_entities_at_location(entities, entity.x, entity.y) is None:
             distance = caster.distance_to(entity)
             if distance < closest_distance:
                 target = entity
@@ -83,7 +192,7 @@ def cast_animate_dead(*args, **kwargs):
         monster_choice = random_choice_from_dict(monchances)
         if monster_choice == 'undead':
             target.name = 'Zombie'
-            fighter_component = fighter(hp=15, defense=1, power=3, xp=1)
+            fighter_component = fighter(hp=5, defense=0, power=3, xp=1)
             ai_component = BasicMonster()
             target.char = '%'
             target.color = libtcod.dark_green
@@ -96,11 +205,11 @@ def cast_animate_dead(*args, **kwargs):
             target.moncaster = None
             target.undead = True
         else:
-            entity.name = 'Undead Stalker'
-            fighter_component = fighter(hp=15, defense=1, power=4, xp=2)
+            entity.name = 'Greater Zombie'
+            fighter_component = fighter(hp = 10, defense = 0, power = 4, xp = 2)
             ai_component = BasicMonster()
             target.char = '%'
-            target.color = libtcod.dark_green
+            target.color = libtcod.green
             target.render_order = RenderOrder.ACTOR
             target.blocks = True
             fighter_component.owner = target
